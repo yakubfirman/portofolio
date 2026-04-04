@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   title: "Yakub Firman Mustofa",
   description:
     "Portofolio Yakub Firman Mustofa, Full Stack Web Developer dan SEO Specialist dari Surakarta, Jawa Tengah.",
+  icons: {
+    icon: "/iconweb.png",
+    apple: "/iconweb.png",
+  },
   alternates: {
     canonical: "/",
   },
