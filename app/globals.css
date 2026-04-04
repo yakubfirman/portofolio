@@ -72,7 +72,23 @@ body {
   animation: fade-in-up 0.5s ease forwards;
 }
 
-/* Terminal cursor blink */
+/* Navbar entrance */
+@keyframes navbar-enter {
+  from { opacity: 0; transform: translateY(-100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.navbar-enter {
+  animation: navbar-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hire Me button pulse glow */
+@keyframes btn-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.5); }
+  60%       { box-shadow: 0 0 0 7px rgba(185, 28, 28, 0); }
+}
+.btn-pulse {
+  animation: btn-pulse 2.4s ease-in-out infinite;
+}
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
