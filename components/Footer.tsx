@@ -1,10 +1,12 @@
 import { NAV_LINKS, SOCIALS } from "@/lib/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Reveal from "@/components/ui/Reveal";
 
 export default function Footer() {
   return (
     <footer className="bg-[#080808]">
       <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8">
+        <Reveal>
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
           {/* Brand */}
           <div>
@@ -48,7 +50,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   title={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-xs border border-red-900/25 text-gray-600 transition-all hover:border-red-700/50 hover:text-red-400"
+                  className="flex h-11 w-11 items-center justify-center rounded-xs border border-red-900/25 text-gray-600 transition-all hover:border-red-700/50 hover:text-red-400"
                 >
                   <FontAwesomeIcon icon={icon} className="h-3.5 w-3.5" />
                 </a>
@@ -56,6 +58,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
+        </Reveal>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-2 pt-6 sm:flex-row">
           <p className="text-xs text-gray-700">

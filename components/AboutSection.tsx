@@ -1,16 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ABOUT_STATS } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
+import Reveal from "@/components/ui/Reveal";
 
 export default function AboutSection() {
   return (
     <section id="about" className="py-20 px-5 sm:px-8 md:py-28">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading tag="About Me" title="Tentang Saya" />
+        <Reveal>
+          <SectionHeading tag="About Me" title="Tentang Saya" />
+        </Reveal>
 
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
           {/* Bio — 3 cols */}
-          <div className="lg:col-span-3">
+          <Reveal delay={100} className="lg:col-span-3">
+          <div>
             {/* Profile row */}
             <div className="mb-8 flex items-center gap-4">
               <div className="relative shrink-0">
@@ -46,15 +50,16 @@ export default function AboutSection() {
                 teknologi modern lainnya.
               </p>
             </div>
-          </div>
+          </div></Reveal>
 
           {/* Stats — 2 cols */}
-          <div className="lg:col-span-2">
+          <Reveal delay={220} className="lg:col-span-2">
+          <div>
             <div className="grid grid-cols-2 gap-3">
               {ABOUT_STATS.map(({ label, value, icon }) => (
                 <div
                   key={label}
-                  className="group rounded-xs bg-red-950/20 p-4 transition-all duration-200 hover:bg-red-950/35"
+                  className="group rounded-xs bg-red-950/20 p-3 sm:p-4 transition-all duration-200 hover:bg-red-950/35"
                 >
                   <FontAwesomeIcon
                     icon={icon}
@@ -65,7 +70,7 @@ export default function AboutSection() {
                 </div>
               ))}
             </div>
-          </div>
+          </div></Reveal>
         </div>
       </div>
     </section>

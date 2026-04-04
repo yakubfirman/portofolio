@@ -4,6 +4,7 @@ import { SOCIALS } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
 import AvailabilityPill from "@/components/ui/AvailabilityPill";
 import { BUTTON_VARIANTS, BUTTON_SIZES } from "@/components/ui/Button";
+import Reveal from "@/components/ui/Reveal";
 
 export default function ContactSection() {
   return (
@@ -13,12 +14,14 @@ export default function ContactSection() {
       style={{ background: "linear-gradient(to bottom, #0a0a0a, #0d0508, #0a0a0a)" }}
     >
       <div className="mx-auto max-w-3xl">
-        <SectionHeading tag="Get In Touch" title="Mari Berkolaborasi" centered />
+        <Reveal>
+          <SectionHeading tag="Get In Touch" title="Mari Berkolaborasi" centered />
+        </Reveal>
 
         <div className="grid gap-6 lg:grid-cols-5">
           {/* ── Left: CTA card ── */}
-          <div className="lg:col-span-3">
-            <div className="relative overflow-hidden rounded-xs bg-[#0d0404] p-8">
+          <Reveal delay={100} className="lg:col-span-3">
+            <div className="relative overflow-hidden rounded-xs bg-[#0d0404] p-5 sm:p-8">
               {/* Top accent */}
               <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-red-700/60 to-transparent" />
               {/* Glow */}
@@ -51,10 +54,10 @@ export default function ContactSection() {
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* ── Right: Social links ── */}
-          <div className="lg:col-span-2">
+          <Reveal delay={220} className="lg:col-span-2">
             <div className="rounded-xs bg-[#0d0404] p-6">
               {/* Top accent */}
               <div className="absolute h-0" />
@@ -83,7 +86,7 @@ export default function ContactSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -7,7 +7,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-5 pt-20 sm:px-8"
+      className="relative flex min-h-[calc(100svh-4rem)] sm:min-h-screen flex-col justify-center overflow-hidden px-5 sm:px-8 sm:pt-20"
     >
       {/* Grid background */}
       <div
@@ -42,7 +42,7 @@ export default function HeroSection() {
           {/* ── Left: text ── */}
           <div className="flex-1 text-center lg:text-left">
             {/* Role badge */}
-            <div className="mb-5 flex items-center justify-center gap-3 lg:justify-start">
+            <div className="hero-animate hero-delay-1 mb-5 flex items-center justify-center gap-3 lg:justify-start">
               <span className="hidden sm:block h-px w-8 bg-linear-to-r from-transparent to-red-700/50" />
               <span className="flex items-center gap-2 rounded-xs bg-red-950/50 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-red-400/90">
                 <FontAwesomeIcon icon={faTerminal} className="h-2.5 w-2.5" />
@@ -52,7 +52,7 @@ export default function HeroSection() {
             </div>
 
             {/* Name */}
-            <h1 className="mb-5 text-[clamp(2.8rem,9vw,5.5rem)] font-black leading-[0.9] tracking-tighter">
+            <h1 className="hero-animate hero-delay-2 mb-5 text-[clamp(2rem,9vw,5.5rem)] font-black leading-[0.9] tracking-tighter">
               <span className="block text-white">Yakub Firman</span>
               <span className="shimmer-text block bg-linear-to-r from-red-500 via-rose-400 to-red-300 bg-clip-text text-transparent">
                 Mustofa
@@ -60,17 +60,17 @@ export default function HeroSection() {
             </h1>
 
             {/* Tagline */}
-            <p className="mx-auto mb-1.5 max-w-sm lg:max-w-md text-sm leading-relaxed text-gray-400 sm:text-base lg:mx-0">
+            <p className="hero-animate hero-delay-3 mx-auto mb-1.5 max-w-sm lg:max-w-md text-sm leading-relaxed text-gray-400 sm:text-base lg:mx-0">
               Saya seorang Fullstack Web Developer dan SEO Specialist. Saya berfokus pada pengembangan website yang fungsional sekaligus mudah ditemukan oleh pengguna di mesin pencari. Berasal dari Tuban dan saat ini berdomisili di Surakarta.
             </p>
 
             {/* CTAs */}
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:justify-center sm:gap-4 lg:justify-start">
-              <Button href="#projects">
+            <div className="hero-animate hero-delay-4 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4 lg:justify-start">
+              <Button href="#projects" className="w-full sm:w-auto">
                 Lihat Proyek
                 <FontAwesomeIcon icon={faArrowRight} className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
               </Button>
-              <Button href="/resume" variant="outline">
+              <Button href="/resume" variant="outline" className="w-full sm:w-auto">
                 <FontAwesomeIcon icon={faDownload} className="h-3.5 w-3.5 text-red-500" />
                 Download CV
               </Button>
@@ -78,7 +78,7 @@ export default function HeroSection() {
           </div>
 
           {/* ── Right: terminal card (desktop only) ── */}
-          <div className="hidden w-[320px] shrink-0 lg:block">
+          <div className="hero-animate hero-delay-3 hidden w-[320px] shrink-0 lg:block">
             <div className="overflow-hidden rounded-xs bg-[#0d0404]">
               {/* Title bar */}
               <div className="flex items-center gap-1.5 bg-[#130808] px-4 py-3">
@@ -143,7 +143,7 @@ export default function HeroSection() {
         </div>
 
         {/* Stats */}
-        <div className="mt-12 flex lg:mt-16">
+        <div className="hero-animate hero-delay-5 mt-12 flex lg:mt-16">
           {[
             { num: "14+", label: "Proyek Selesai" },
             { num: "2+", label: "Tahun Pengalaman" },
@@ -154,7 +154,7 @@ export default function HeroSection() {
               className={`flex-1 py-4 text-center${i > 0 ? " border-l border-red-900/20" : ""}`}
             >
               <p className="text-xl font-black text-white sm:text-2xl">{num}</p>
-              <p className="mt-0.5 text-[10px] uppercase tracking-widest text-gray-600">{label}</p>
+              <p className="mt-0.5 text-[10px] uppercase tracking-wide sm:tracking-widest text-gray-600">{label}</p>
             </div>
           ))}
         </div>

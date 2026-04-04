@@ -4,21 +4,24 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { PROJECTS } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
+import Reveal from "@/components/ui/Reveal";
 
 export default function ProjectsSection() {
   return (
     <section id="projects" className="py-20 px-5 sm:px-8 md:py-28">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading tag="Portfolio" title="Proyek Saya" />
+        <Reveal>
+          <SectionHeading tag="Portfolio" title="Proyek Saya" />
+        </Reveal>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {PROJECTS.map((project, index) => (
+            <Reveal key={project.name} delay={index * 100} className="h-full">
             <a
-              key={project.name}
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex flex-col overflow-hidden rounded-xs bg-[#0d0404] transition-all duration-300 hover:shadow-2xl hover:shadow-red-950/30 hover:-translate-y-1"
+              className="group relative flex flex-col h-full overflow-hidden rounded-xs bg-[#0d0404] transition-all duration-300 hover:shadow-2xl hover:shadow-red-950/30 hover:-translate-y-1"
             >
               {/* Top accent line */}
               <div className="h-px w-full bg-linear-to-r from-red-800/60 via-red-600/30 to-transparent" />
@@ -59,16 +62,19 @@ export default function ProjectsSection() {
                 </div>
               </div>
             </a>
+            </Reveal>
           ))}
         </div>
 
         {/* GitHub CTA */}
+        <Reveal delay={150}>
         <div className="mt-10 flex justify-center">
           <Button
             href="https://github.com/yakubfirman"
             target="_blank"
             rel="noopener noreferrer"
             variant="ghost"
+            className="w-full sm:w-auto"
           >
             <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
             Lihat Semua Proyek di GitHub
@@ -78,6 +84,7 @@ export default function ProjectsSection() {
             />
           </Button>
         </div>
+        </Reveal>
       </div>
     </section>
   );

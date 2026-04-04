@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SKILLS } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
+import Reveal from "@/components/ui/Reveal";
 
 const CATEGORIES = [
   {
@@ -30,13 +31,15 @@ export default function SkillsSection() {
       style={{ background: "linear-gradient(to bottom, #0a0a0a, #0d0508, #0a0a0a)" }}
     >
       <div className="mx-auto max-w-5xl">
-        <SectionHeading tag="Tech Stack" title="Keahlian Teknologi" />
+        <Reveal>
+          <SectionHeading tag="Tech Stack" title="Keahlian Teknologi" />
+        </Reveal>
 
         <div className="space-y-10">
-          {CATEGORIES.map((cat) => {
+          {CATEGORIES.map((cat, catIndex) => {
             const items = cat.keys.map((k) => skillMap[k]).filter(Boolean);
             return (
-              <div key={cat.label} className="group/cat">
+              <Reveal key={cat.label} delay={catIndex * 150} className="group/cat">
                 {/* Category header */}
                 <div className="mb-4 flex items-center gap-3">
                   <span className="font-mono text-[10px] font-bold text-red-900/50">{cat.num}</span>
@@ -63,7 +66,7 @@ export default function SkillsSection() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </Reveal>
             );
           })}
         </div>
