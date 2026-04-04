@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ABOUT_STATS } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -18,18 +19,20 @@ export default function AboutSection() {
             {/* Profile row */}
             <div className="mb-8 flex items-center gap-4">
               <div className="relative shrink-0">
-                <div className="flex h-16 w-16 items-center justify-center rounded-xs bg-linear-to-br from-red-950 to-[#0d0d0d]">
-                  <span className="text-lg font-black tracking-widest text-red-400">YFM</span>
+                <div className="relative h-16 w-16 sm:h-24 sm:w-24 overflow-hidden rounded-xs">
+                  <Image
+                    src="/photo.png"
+                    alt="Yakub Firman Mustofa"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <span className="absolute -bottom-1 -right-1 block h-3.5 w-3.5 rounded-full border-2 border-[#0a0a0a] bg-green-500" />
               </div>
               <div>
                 <p className="font-semibold text-white">Yakub Firman Mustofa</p>
                 <p className="text-sm text-gray-500">Full Stack Web Dev &amp; SEO Specialist</p>
-                <span className="mt-1 inline-flex items-center gap-1.5 text-xs text-green-400/80">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-500" />
-                  Open to Work
-                </span>
+                
               </div>
             </div>
 

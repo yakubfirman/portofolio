@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { NAV_LINKS } from "@/lib/data";
@@ -13,8 +14,11 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-red-900/30 bg-[#0a0a0a]/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         {/* Logo */}
-        <a href="#hero" className="text-lg font-bold tracking-tight text-white">
-          YFM<span className="text-red-500">.</span>
+        <a href="#hero" className="flex items-center gap-2.5">
+          <div className="relative h-8 w-8 overflow-hidden rounded-full">
+            <Image src="/photo.png" alt="Yakub Firman Mustofa" fill className="object-cover" />
+          </div>
+          <span className="text-md hidden md:block font-bold tracking-tight text-white">Yakub <span className="text-red-500">Firman</span> Mustofa <span className="text-red-500">.</span></span>
         </a>
 
         {/* Desktop nav */}

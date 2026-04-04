@@ -52,11 +52,14 @@ export default function HeroSection() {
             </div>
 
             {/* Name */}
-            <h1 className="hero-animate hero-delay-2 mb-5 text-[clamp(2rem,9vw,5.5rem)] font-black leading-[0.9] tracking-tighter">
-              <span className="block text-white">Yakub Firman</span>
-              <span className="shimmer-text block bg-linear-to-r from-red-500 via-rose-400 to-red-300 bg-clip-text text-transparent">
-                Mustofa
+            <h1 className="hero-animate hero-delay-2 mb-6 text-[clamp(2.4rem,8vw,5.5rem)] font-black leading-[1] tracking-tighter">
+              <span className="block text-white">
+                Yakub{" "}
+                <span className="text-red-500">
+                  Firman
+                </span>
               </span>
+              <span className="block text-white">Mustofa</span>
             </h1>
 
             {/* Tagline */}
