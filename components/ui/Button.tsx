@@ -34,7 +34,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <a
-      className={`group inline-flex items-center justify-center gap-2.5 ${BUTTON_VARIANTS[variant]} ${BUTTON_SIZES[size]} ${className}`}
+      className={`group inline-flex items-center justify-center gap-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${BUTTON_VARIANTS[variant]} ${BUTTON_SIZES[size]} ${className}`}
       {...props}
     >
       {children}

@@ -11,7 +11,6 @@ export default function ContactSection() {
     <section
       id="contact"
       className="py-20 px-5 sm:px-8 md:py-28"
-      style={{ background: "linear-gradient(to bottom, #0a0a0a, #0d0508, #0a0a0a)" }}
     >
       <div className="mx-auto max-w-3xl">
         <Reveal>
@@ -71,15 +70,18 @@ export default function ContactSection() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-3 rounded-xs px-3 py-2.5 text-sm text-gray-500 transition-all hover:bg-red-950/30 hover:text-gray-200"
+                    aria-label={`${label} (buka di tab baru)`}
+                    className="group flex items-center gap-3 rounded-xs px-3 py-2.5 text-sm text-gray-500 transition-all hover:bg-red-950/30 hover:text-gray-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70"
                   >
                     <FontAwesomeIcon
                       icon={icon}
+                      aria-hidden="true"
                       className="h-3.5 w-3.5 shrink-0 text-red-800/60 transition-colors group-hover:text-red-400"
                     />
                     <span className="flex-1">{label}</span>
                     <FontAwesomeIcon
                       icon={faArrowRight}
+                      aria-hidden="true"
                       className="h-2.5 w-2.5 shrink-0 -rotate-45 opacity-0 transition-all group-hover:opacity-100"
                     />
                   </a>

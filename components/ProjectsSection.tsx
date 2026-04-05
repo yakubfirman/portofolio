@@ -21,6 +21,7 @@ export default function ProjectsSection() {
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`Lihat proyek ${project.name}`}
               className="group relative flex flex-col h-full overflow-hidden rounded-xs bg-[#0d0404] transition-all duration-300 hover:shadow-2xl hover:shadow-red-950/30 hover:-translate-y-1"
             >
               {/* Top accent line */}

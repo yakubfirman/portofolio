@@ -63,10 +63,10 @@ export const SOCIALS: { label: string; href: string; icon: IconDefinition }[] = 
 
 export const PROJECTS = [
   {
-    name: "Maroon Vote ",
+    name: "Maroon Vote",
     description:
       "Mengembangkan aplikasi e-voting berbasis web menggunakan Laravel dan React dengan konsep modern monolith untuk menciptakan sistem pemungutan suara yang aman dan efisien.",
-    tech: ["PHP", "JavaScript", "Laravel", "React", "Tailwind CSS", "SQL", "Google Search Console", "SEO"],
+    tech: ["Laravel", "React", "Tailwind CSS", "SQL", "Google Search Console", "SEO"],
     url: "https://maroonvote.immsolo.or.id",
   },
   {
@@ -84,10 +84,10 @@ export const PROJECTS = [
     url: "https://github.com/yakubfirman/presensi",
   },
   {
-    name: "Web Developer Intern DISKOMINFO SP Kota Surakarta (SiData) ",
+    name: "Web Developer Intern DISKOMINFO SP Kota Surakarta (SiData)",
     description:
       "Halaman link-in-bio personal, menampilkan semua tautan penting dalam satu halaman yang bersih.",
-    tech: ["HTML", "CSS"],
+    tech: ["Laravel", "Tailwind CSS", "Github"],
     url: "https://github.com/yakubfirman/links",
   },
   {

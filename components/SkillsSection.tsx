@@ -28,7 +28,6 @@ export default function SkillsSection() {
     <section
       id="skills"
       className="py-20 px-5 sm:px-8 md:py-28"
-      style={{ background: "linear-gradient(to bottom, #0a0a0a, #0d0508, #0a0a0a)" }}
     >
       <div className="mx-auto max-w-5xl">
         <Reveal>
@@ -58,6 +57,7 @@ export default function SkillsSection() {
                     >
                       <FontAwesomeIcon
                         icon={icon}
+                        aria-hidden="true"
                         className="h-4 w-4 shrink-0 text-red-700/70 transition-colors group-hover:text-red-400"
                       />
                       <span className="text-xs font-medium text-gray-500 transition-colors group-hover:text-gray-200">

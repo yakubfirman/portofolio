@@ -111,3 +111,28 @@ body {
 .hero-delay-3 { animation-delay: 400ms; }
 .hero-delay-4 { animation-delay: 550ms; }
 .hero-delay-5 { animation-delay: 700ms; }
+
+/* ── Keyboard focus ring — visible only when navigating with keyboard ── */
+:focus-visible {
+  outline: 2px solid rgba(239, 68, 68, 0.65);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ── Respect reduced-motion OS preference (WCAG 2.3.3) ── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* Hero CSS animations: instantly show instead of animate */
+  .hero-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}

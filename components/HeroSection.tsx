@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTerminal, faArrowRight, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faTerminal, faArrowRight, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import AvailabilityPill from "@/components/ui/AvailabilityPill";
 import Button from "@/components/ui/Button";
 
@@ -8,36 +8,8 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[calc(100svh-4rem)] sm:min-h-screen flex-col justify-center overflow-hidden px-5 sm:px-8 sm:pt-20"
+      className="relative flex min-h-svh flex-col justify-center px-5 sm:px-8 sm:pt-20"
     >
-      {/* Grid background */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(220,38,38,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(220,38,38,0.04) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-        }}
-      />
-
-      {/* Radial vignette */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 100% 80% at 50% 0%, transparent 30%, #0a0a0a 80%)",
-        }}
-      />
-
-      {/* Glow orbs */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/4 h-125 w-125 -translate-x-1/2 rounded-full bg-red-800/15 blur-[160px]" />
-        <div className="absolute top-1/3 right-[-10%] h-80 w-80 rounded-full bg-red-900/15 blur-[120px]" />
-        <div className="absolute bottom-0 left-[-5%] h-72 w-72 rounded-full bg-red-950/25 blur-[100px]" />
-        {/* Center subtle glow */}
-        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-900/8 blur-[140px]" />
-      </div>
-
       {/* Main layout */}
       <div className="relative z-10 mx-auto w-full max-w-5xl">
         <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-center lg:gap-16">
@@ -55,7 +27,7 @@ export default function HeroSection() {
                   <Image src="/photo.png" alt="Yakub Firman Mustofa" fill className="object-cover" />
                 </div>
                 {/* Online dot */}
-                <span className="absolute bottom-1 right-1 block h-4 w-4 rounded-full border-2 border-[#0a0a0a] bg-green-500" />
+                <span aria-hidden="true" className="absolute bottom-1 right-1 block h-4 w-4 rounded-full border-2 border-[#0a0a0a] bg-green-500" />
               </div>
             </div>
 
@@ -73,7 +45,7 @@ export default function HeroSection() {
             <h1 className="hero-animate hero-delay-3 mb-6 text-[clamp(2.4rem,8vw,5.5rem)] font-black leading-none tracking-tighter">
               <span className="block text-white">
                 Yakub{" "}
-                <span className="text-red-500">Firman</span>
+                <span className="text-red-700">Firman</span>
               </span>
               <span className="block text-white">Mustofa</span>
             </h1>
@@ -89,9 +61,9 @@ export default function HeroSection() {
                 Lihat Proyek
                 <FontAwesomeIcon icon={faArrowRight} className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
               </Button>
-              <Button href="/resume" variant="outline" className="w-full sm:w-auto">
-                <FontAwesomeIcon icon={faDownload} className="h-3.5 w-3.5 text-red-500" />
-                Download CV
+              <Button href="#contact" variant="outline" className="w-full sm:w-auto">
+                <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5 text-red-500" />
+                Hubungi Saya
               </Button>
             </div>
           </div>

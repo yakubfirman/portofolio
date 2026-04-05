@@ -27,7 +27,7 @@ export default function AboutSection() {
                     className="object-cover"
                   />
                 </div>
-                <span className="absolute -bottom-1 -right-1 block h-3.5 w-3.5 rounded-full border-2 border-[#0a0a0a] bg-green-500" />
+                <span aria-hidden="true" className="absolute -bottom-1 -right-1 block h-3.5 w-3.5 rounded-full border-2 border-[#0a0a0a] bg-green-500" />
               </div>
               <div>
                 <p className="font-semibold text-white">Yakub Firman Mustofa</p>
