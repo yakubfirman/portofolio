@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTerminal, faArrowRight, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faTerminal, faArrowRight, faDownload } from "@fortawesome/free-solid-svg-icons";
 import AvailabilityPill from "@/components/ui/AvailabilityPill";
 import Button from "@/components/ui/Button";
 
@@ -16,21 +16,6 @@ export default function HeroSection() {
 
           {/* ── Left: text ── */}
           <div className="flex-1 text-center lg:text-left">
-
-            {/* Mobile photo */}
-            <div className="hero-animate hero-delay-1 mb-6 flex justify-center lg:hidden">
-              <div className="relative">
-                {/* Outer pulse ring */}
-                <div className="absolute inset-0 rounded-full bg-red-600/20 blur-xl" />
-                <div className="absolute -inset-1 rounded-full border border-red-700/30" />
-                <div className="relative h-24 w-24 overflow-hidden rounded-full ring-2 ring-red-800/50">
-                  <Image src="/photo.png" alt="Yakub Firman Mustofa" fill className="object-cover" />
-                </div>
-                {/* Online dot */}
-                <span aria-hidden="true" className="absolute bottom-1 right-1 block h-4 w-4 rounded-full border-2 border-[#0a0a0a] bg-green-500" />
-              </div>
-            </div>
-
             {/* Role badge */}
             <div className="hero-animate hero-delay-2 mb-5 flex items-center justify-center gap-3 lg:justify-start">
               <span className="hidden sm:block h-px w-8 bg-linear-to-r from-transparent to-red-700/50" />
@@ -61,9 +46,9 @@ export default function HeroSection() {
                 Lihat Proyek
                 <FontAwesomeIcon icon={faArrowRight} className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
               </Button>
-              <Button href="#contact" variant="outline" className="w-full sm:w-auto">
-                <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5 text-red-500" />
-                Hubungi Saya
+              <Button href="/resumefirman.pdf" download variant="outline" className="w-full sm:w-auto">
+                <FontAwesomeIcon icon={faDownload} className="h-3.5 w-3.5 text-red-500" />
+                Download CV
               </Button>
             </div>
           </div>

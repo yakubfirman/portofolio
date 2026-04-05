@@ -1,77 +1,58 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SKILLS } from "@/lib/data";
+import { SKILL_CATEGORIES } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 
-const CATEGORIES = [
-  {
-    label: "Frontend",
-    num: "01",
-    keys: ["HTML5", "CSS3", "JavaScript", "TypeScript", "React", "Next.js", "Tailwind CSS"],
-  },
-  {
-    label: "Backend",
-    num: "02",
-    keys: ["PHP", "Laravel", "Python", "MySQL"],
-  },
-  {
-    label: "Tools & Version Control",
-    num: "03",
-    keys: ["Git"],
-  },
-];
-
 export default function SkillsSection() {
-  const skillMap = Object.fromEntries(SKILLS.map((s) => [s.name, s]));
-
   return (
-    <section
-      id="skills"
-      className="py-20 px-5 sm:px-8 md:py-28"
-    >
+    <section id="skills" className="py-20 px-5 sm:px-8 md:py-28">
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <SectionHeading tag="Tech Stack" title="Keahlian Teknologi" />
         </Reveal>
 
-        <div className="space-y-10">
-          {CATEGORIES.map((cat, catIndex) => {
-            const items = cat.keys.map((k) => skillMap[k]).filter(Boolean);
-            return (
-              <Reveal key={cat.label} delay={catIndex * 150} className="group/cat">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SKILL_CATEGORIES.map((cat, i) => (
+            <Reveal key={cat.label} delay={i * 80}>
+              <div className="flex h-full flex-col rounded-xs border border-red-900/20 bg-[#0f0505] p-5 transition-all duration-200 hover:border-red-800/40 hover:bg-red-950/20">
                 {/* Category header */}
-                <div className="mb-4 flex items-center gap-3">
-                  <span className="font-mono text-[10px] font-bold text-red-900/50">{cat.num}</span>
-                  <div className="h-px flex-1 bg-red-900/20" />
-                  <span className="text-[11px] font-semibold uppercase tracking-widest text-gray-600">
-                    {cat.label}
-                  </span>
+                <div className="mb-5 flex items-center gap-3">
+                  <div
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xs ${cat.iconBg}`}
+                  >
+                    <FontAwesomeIcon
+                      icon={cat.icon}
+                      aria-hidden="true"
+                      className="h-5 w-5 text-white"
+                    />
+                  </div>
+                  <h3 className="text-base font-bold text-white">{cat.label}</h3>
                 </div>
 
-                {/* Skill pills */}
-                <div className="flex flex-wrap gap-2">
-                  {items.map(({ name, icon }) => (
-                    <div
-                      key={name}
-                      className="group flex items-center gap-2.5 rounded-xs bg-[#0f0505] px-4 py-2.5 transition-all duration-200 hover:bg-red-950/40"
-                    >
-                      <FontAwesomeIcon
-                        icon={icon}
-                        aria-hidden="true"
-                        className="h-4 w-4 shrink-0 text-red-700/70 transition-colors group-hover:text-red-400"
-                      />
-                      <span className="text-xs font-medium text-gray-500 transition-colors group-hover:text-gray-200">
-                        {name}
-                      </span>
+                {/* Skills list */}
+                <div className="space-y-3.5">
+                  {cat.skills.map(({ name, pct }) => (
+                    <div key={name}>
+                      <div className="mb-1.5 flex items-center justify-between">
+                        <span className="text-xs text-gray-400">{name}</span>
+                        <span className="text-xs font-semibold text-red-400">{pct}%</span>
+                      </div>
+                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-red-950/60">
+                        <div
+                          className="h-full rounded-full bg-linear-to-r from-red-900 to-red-500"
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
-              </Reveal>
-            );
-          })}
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
 
