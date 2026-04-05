@@ -47,6 +47,9 @@ export const metadata: Metadata = {
     description:
       "Portofolio Yakub Firman Mustofa, Full Stack Web Developer dan SEO Specialist dari Surakarta, Jawa Tengah.",
   },
+  verification: {
+    google: "vZvOJFKUyjkf51wp4QB-PVebBu8QDUxgB7HHfB-g_zs",
+  },
 };
 
 export default function RootLayout({
