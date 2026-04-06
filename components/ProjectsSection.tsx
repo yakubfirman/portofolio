@@ -3,11 +3,8 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { PROJECTS } from "@/lib/data/projects";
-import SectionHeading from "@/components/ui/SectionHeading";
-import Button from "@/components/ui/Button";
-import Reveal from "@/components/ui/Reveal";
-import TechBadge from "@/components/ui/TechBadge";
+import { PROJECTS } from "@/lib/data";
+import { SectionHeading, Button, Reveal, TechBadge } from "@/components/ui";
 
 export default function ProjectsSection() {
   return (

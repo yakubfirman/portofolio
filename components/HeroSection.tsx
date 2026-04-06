@@ -1,13 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTerminal, faArrowRight, faDownload } from "@fortawesome/free-solid-svg-icons";
-import AvailabilityPill from "@/components/ui/AvailabilityPill";
-import Button from "@/components/ui/Button";
+import { AvailabilityPill, Button } from "@/components/ui";
 
 export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-svh flex-col justify-center px-5 sm:px-8 sm:pt-20"
+      className="relative flex min-h-svh flex-col justify-center px-5 sm:px-8 sm:pt-10"
     >
       {/* Main layout */}
       <div className="relative z-10 mx-auto w-full max-w-5xl">
@@ -145,7 +144,7 @@ export default function HeroSection() {
 
         {/* Stats */}
         <div className="hero-animate hero-delay-5 mt-12 lg:mt-16">
-          <div className="flex overflow-hidden rounded-xs bg-red-950/10">
+          <div className="flex overflow-hidden rounded-xs">
             {[
               { num: "14+", label: "Proyek Selesai" },
               { num: "2+", label: "Tahun Pengalaman" },

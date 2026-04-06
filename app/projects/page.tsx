@@ -2,19 +2,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowUpRightFromSquare,
-  faBookOpen,
-  faBriefcase,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowUpRightFromSquare, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { PROJECTS } from "@/lib/data/projects";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import SectionHeading from "@/components/ui/SectionHeading";
-import Reveal from "@/components/ui/Reveal";
-import PageBackground from "@/components/ui/PageBackground";
-import TechBadge from "@/components/ui/TechBadge";
+import { PROJECTS } from "@/lib/data";
+import { Navbar, Footer } from "@/components";
+import {
+  Button,
+  SectionHeading,
+  Reveal,
+  PageBackground,
+  TechBadge,
+  RoleBadge,
+} from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Proyek — Yakub Firman Mustofa",
@@ -76,11 +75,8 @@ export default function ProjectsPage() {
                   {/* ── Content ── */}
                   <div className="relative flex flex-1 flex-col p-5">
                     {/* Role badge */}
-                    <div className="mb-2 flex items-center gap-1.5">
-                      <FontAwesomeIcon icon={faBriefcase} className="h-2.5 w-2.5 text-red-700" />
-                      <span className="text-[10px] font-semibold tracking-wider text-red-700/80 uppercase">
-                        {project.details.role}
-                      </span>
+                    <div className="mb-2">
+                      <RoleBadge role={project.details.role} />
                     </div>
 
                     <h2 className="mb-3 line-clamp-2 leading-snug font-bold text-white">
@@ -96,25 +92,29 @@ export default function ProjectsPage() {
 
                     {/* ── Action buttons ── */}
                     <div className="mt-auto flex gap-1.5 border-t border-red-900/15 pt-4">
-                      <Link
+                      <Button
                         href={`/projects/${project.slug}`}
-                        className="flex flex-1 items-center justify-center gap-1.5 rounded-xs border border-red-800/50 bg-red-950/30 px-2 py-1.5 text-[11px] font-semibold text-gray-300 transition-all hover:border-red-600/60 hover:bg-red-950/50 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs"
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 justify-center gap-1.5 px-2 py-1.5 text-[11px] sm:gap-2 sm:px-3 sm:py-2 sm:text-xs"
                       >
                         <FontAwesomeIcon icon={faBookOpen} className="h-3 w-3 shrink-0" />
                         Lihat Detail
-                      </Link>
-                      <a
+                      </Button>
+                      <Button
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex flex-1 items-center justify-center gap-1.5 rounded-xs border border-red-900/30 bg-red-950/20 px-2 py-1.5 text-[11px] font-medium text-gray-400 transition-all hover:border-red-700/50 hover:bg-red-950/30 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs"
+                        variant="ghost"
+                        size="sm"
+                        className="flex-1 justify-center gap-1.5 px-2 py-1.5 text-[11px] sm:gap-2 sm:px-3 sm:py-2 sm:text-xs"
                       >
                         <FontAwesomeIcon
                           icon={faArrowUpRightFromSquare}
                           className="h-3 w-3 shrink-0"
                         />
                         Lihat Live
-                      </a>
+                      </Button>
                     </div>
                   </div>
                 </div>

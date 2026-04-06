@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SKILL_CATEGORIES } from "@/lib/data/skills";
-import SectionHeading from "@/components/ui/SectionHeading";
-import Reveal from "@/components/ui/Reveal";
+import { SKILL_CATEGORIES } from "@/lib/data";
+import { SectionHeading, Reveal } from "@/components/ui";
 
 export default function SkillsSection() {
   return (

@@ -6,15 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
   faArrowUpRightFromSquare,
-  faBriefcase,
   faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { PROJECTS } from "@/lib/data/projects";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Reveal from "@/components/ui/Reveal";
-import PageBackground from "@/components/ui/PageBackground";
-import TechBadge from "@/components/ui/TechBadge";
+import { PROJECTS } from "@/lib/data";
+import { Navbar, Footer } from "@/components";
+import { Reveal, PageBackground, TechBadge, RoleBadge } from "@/components/ui";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -88,11 +84,8 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           {/* ── Header ── */}
           <div className="hero-animate hero-delay-3">
             <div className="mt-8">
-              <div className="mb-3 flex items-center gap-2">
-                <FontAwesomeIcon icon={faBriefcase} className="h-3.5 w-3.5 text-red-500" />
-                <span className="text-xs font-semibold tracking-widest text-red-500 uppercase">
-                  {project.details.role}
-                </span>
+              <div className="mb-3">
+                <RoleBadge role={project.details.role} size="md" />
               </div>
               <h1 className="text-2xl leading-snug font-bold text-white sm:text-3xl">
                 {project.name}

@@ -115,13 +115,13 @@ export default function PageLoader() {
             className="text-xl font-bold tracking-[0.18em] text-white uppercase"
             style={{ animation: "loader-text-in 0.5s ease 0.4s both" }}
           >
-            Yakub Firman
+            Yakub <span className="text-red-500">Firman</span> Mustofa
           </h1>
           <p
             className="mt-1 text-[10px] tracking-[0.3em] text-red-500/80 uppercase"
             style={{ animation: "loader-text-in 0.5s ease 0.55s both" }}
           >
-            Full Stack Developer
+            Full Stack Developer & SEO Specialist
           </p>
         </div>
 

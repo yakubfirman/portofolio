@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import SectionHeading from "@/components/ui/SectionHeading";
-import Reveal from "@/components/ui/Reveal";
-import { ABOUT_META, ABOUT_EDUCATION } from "@/lib/data/about";
+import { SectionHeading, Reveal } from "@/components/ui";
+import { ABOUT_META, ABOUT_EDUCATION } from "@/lib/data";
 
 export default function AboutSection() {
   return (

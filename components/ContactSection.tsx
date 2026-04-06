@@ -5,10 +5,8 @@ import {
   faMapPin,
   faArrowUpRightFromSquare,
 } from "@fortawesome/free-solid-svg-icons";
-import { SOCIALS } from "@/lib/data/socials";
-import SectionHeading from "@/components/ui/SectionHeading";
-import AvailabilityPill from "@/components/ui/AvailabilityPill";
-import Reveal from "@/components/ui/Reveal";
+import { SOCIALS } from "@/lib/data";
+import { SectionHeading, AvailabilityPill, Reveal } from "@/components/ui";
 
 export default function ContactSection() {
   return (

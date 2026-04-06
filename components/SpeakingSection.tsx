@@ -11,9 +11,8 @@ import {
   faChevronDown,
   faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
-import { SPEAKING } from "@/lib/data/speaking";
-import SectionHeading from "@/components/ui/SectionHeading";
-import Reveal from "@/components/ui/Reveal";
+import { SPEAKING } from "@/lib/data";
+import { SectionHeading, Reveal } from "@/components/ui";
 
 const INITIAL_SHOW = 2;
 

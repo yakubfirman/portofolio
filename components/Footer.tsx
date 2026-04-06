@@ -1,8 +1,8 @@
-import { NAV_LINKS } from "@/lib/data/nav";
-import { SOCIALS } from "@/lib/data/socials";
+import { NAV_LINKS } from "@/lib/data";
+import { SOCIALS } from "@/lib/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faArrowRight, faArrowUp, faMapPin } from "@fortawesome/free-solid-svg-icons";
-import Reveal from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui";
 
 export default function Footer() {
   return (
