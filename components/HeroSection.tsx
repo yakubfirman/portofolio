@@ -163,9 +163,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-
-      {/* Bottom line */}
-      <div className="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-red-800/40 to-transparent" />
     </section>
   );
 }

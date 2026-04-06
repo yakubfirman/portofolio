@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://yakubfirman.id"),
-  title: "Yakub Firman Mustofa | Full Stack Web Developer & SEO Specialist",
+  title: "Yakub Firman Mustofa",
   description:
     "Full Stack Web Developer dan SEO Specialist di Surakarta. Yakub Firman Mustofa — membangun website modern dengan React, Next.js, Laravel, dan mengoptimalkan peringkat di Google Search.",
   keywords: [
