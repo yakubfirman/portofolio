@@ -6,7 +6,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-svh flex-col justify-center px-5 sm:px-8 sm:pt-10"
+      className="relative -top-14 flex min-h-svh flex-col justify-center px-5 sm:-top-8 sm:px-8"
     >
       {/* Main layout */}
       <div className="relative z-10 mx-auto w-full max-w-5xl">
@@ -18,7 +18,7 @@ export default function HeroSection() {
               <span className="hidden h-px w-8 bg-linear-to-r from-transparent to-red-700/50 sm:block" />
               <span className="flex items-center gap-2 rounded-xs bg-red-950/50 px-3 py-1 text-[10px] font-semibold tracking-widest text-red-400/90 uppercase">
                 <FontAwesomeIcon icon={faTerminal} className="h-2.5 w-2.5" />
-                Full Stack Dev · SEO Specialist
+                Full Stack Web Dev · SEO Specialist
               </span>
               <span className="hidden h-px w-8 bg-linear-to-l from-transparent to-red-700/50 sm:block" />
             </div>
@@ -92,7 +92,7 @@ export default function HeroSection() {
                     <p>
                       <span className="text-red-300/70">role</span>
                       <span className="text-gray-400">: </span>
-                      <span className="text-green-400/80">&quot;Full Stack Dev&quot;</span>
+                      <span className="text-green-400/80">&quot;Full Stack Web Dev&quot;</span>
                       <span className="text-gray-600">,</span>
                     </p>
                     <p>
@@ -139,27 +139,6 @@ export default function HeroSection() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="hero-animate hero-delay-5 mt-12 lg:mt-16">
-          <div className="flex overflow-hidden rounded-xs">
-            {[
-              { num: "14+", label: "Proyek Selesai" },
-              { num: "2+", label: "Tahun Pengalaman" },
-              { num: "∞", label: "Semangat Belajar" },
-            ].map(({ num, label }, i) => (
-              <div
-                key={label}
-                className={`flex-1 py-5 text-center transition-all duration-200 hover:bg-red-950/20${i > 0 ? "border-l border-red-900/20" : ""}`}
-              >
-                <p className="text-xl font-black text-white sm:text-2xl">{num}</p>
-                <p className="mt-0.5 text-[10px] tracking-widest text-gray-600 uppercase">
-                  {label}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </div>

@@ -3,5 +3,6 @@ export const NAV_LINKS = [
   { href: "/#skills", label: "Skills" },
   { href: "/projects", label: "Projects" },
   { href: "/#speaking", label: "Speaking" },
+  { href: "/#workflow", label: "Workflow" },
   { href: "/#contact", label: "Contact" },
 ];

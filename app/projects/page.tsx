@@ -84,11 +84,11 @@ export default function ProjectsPage() {
                     </h2>
 
                     {/* Tech tags */}
-                    <div className="mb-5 flex flex-wrap gap-1.5">
+                    {/* <div className="mb-5 flex flex-wrap gap-1.5">
                       {project.tech.map((t) => (
                         <TechBadge key={t} label={t} />
                       ))}
-                    </div>
+                    </div> */}
 
                     {/* ── Action buttons ── */}
                     <div className="mt-auto flex gap-1.5 border-t border-red-900/15 pt-4">
@@ -132,7 +132,7 @@ export default function ProjectsPage() {
                 className="group inline-flex items-center gap-2.5 rounded-xs border border-red-900/30 bg-red-950/20 px-6 py-3 text-sm font-medium text-gray-400 transition-all hover:border-red-700/50 hover:bg-red-950/30 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70"
               >
                 <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
-                Lihat Semua Repository di GitHub
+                Lihat Repository GitHub
                 <FontAwesomeIcon
                   icon={faArrowUpRightFromSquare}
                   className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

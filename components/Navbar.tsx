@@ -100,7 +100,7 @@ export default function Navbar() {
                 Yakub <span className="text-red-500">Firman</span> Mustofa
               </span>
               <span className="hidden text-[9px] font-semibold tracking-[0.18em] text-gray-600 uppercase sm:block">
-                Full Stack · SEO
+                Portofolio
               </span>
             </div>
           </Link>
@@ -108,7 +108,7 @@ export default function Navbar() {
           {/* ── Desktop nav — floating pill ── */}
           <nav className="hidden items-center md:flex" aria-label="Main navigation">
             <div
-              className={`flex items-center gap-0.5 rounded-full px-1.5 py-1.5 transition-all duration-500 ${
+              className={`flex items-center gap-0.5 rounded-xs px-1.5 py-1.5 transition-all duration-500 ${
                 scrolled ? "bg-white/4 shadow-lg ring-1 shadow-black/30 ring-white/8" : ""
               }`}
             >
@@ -118,7 +118,7 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative rounded-full px-4 py-1.5 text-[13px] font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${
+                    className={`relative rounded-xs px-4 py-1.5 text-[13px] font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${
                       active
                         ? "bg-red-700/20 text-red-300 shadow-sm ring-1 ring-red-700/25"
                         : "text-gray-400 hover:bg-white/5 hover:text-white"
@@ -138,7 +138,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2.5">
             <a
               href="mailto:yakubfirmanmustofa@gmail.com"
-              className="btn-pulse group hidden items-center gap-2 rounded-full bg-red-700 px-4 py-1.5 text-[13px] font-semibold text-white ring-1 ring-red-600/40 transition-all duration-200 hover:bg-red-600 hover:shadow-lg hover:shadow-red-950/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 md:inline-flex"
+              className="btn-pulse group hidden items-center gap-2 rounded-xs bg-red-700 px-4 py-1.5 text-[13px] font-semibold text-white ring-1 ring-red-600/40 transition-all duration-200 hover:bg-red-600 hover:shadow-lg hover:shadow-red-950/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 md:inline-flex"
             >
               <FontAwesomeIcon icon={faEnvelope} className="h-3 w-3 opacity-80" />
               Hire Me
@@ -150,7 +150,7 @@ export default function Navbar() {
               aria-label={open ? "Tutup menu" : "Buka menu"}
               aria-expanded={open}
               aria-controls="mobile-drawer"
-              className={`relative flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 md:hidden ${
+              className={`relative flex h-9 w-9 items-center justify-center rounded-xs border transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 md:hidden ${
                 open
                   ? "border-red-600/50 bg-red-950/50 text-red-400"
                   : "border-red-900/30 bg-white/3 text-gray-400 hover:border-red-800/50 hover:bg-white/7 hover:text-white"
@@ -205,7 +205,7 @@ export default function Navbar() {
             <button
               onClick={() => setOpen(false)}
               aria-label="Tutup menu"
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-red-900/30 text-gray-500 transition-all duration-200 hover:border-red-700/50 hover:bg-red-950/30 hover:text-red-400"
+              className="flex h-7 w-7 items-center justify-center rounded-xs border border-red-900/30 text-gray-500 transition-all duration-200 hover:border-red-700/50 hover:bg-red-950/30 hover:text-red-400"
             >
               <FontAwesomeIcon icon={faXmark} className="h-3 w-3" />
             </button>
@@ -224,7 +224,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`group flex items-center gap-3 rounded-xl px-4 py-3 text-[15px] font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${
+                  className={`group flex items-center gap-3 rounded-xs px-4 py-3 text-[15px] font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${
                     active
                       ? "bg-red-700/15 text-white ring-1 ring-red-700/20"
                       : "text-gray-400 hover:bg-white/4 hover:text-white"
@@ -269,7 +269,7 @@ export default function Navbar() {
             <a
               href="mailto:yakubfirmanmustofa@gmail.com"
               onClick={() => setOpen(false)}
-              className="btn-pulse flex w-full items-center justify-center gap-2.5 rounded-full bg-red-700 py-2.5 text-sm font-bold text-white shadow-lg shadow-red-950/40 transition-all duration-200 hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 active:scale-[0.97]"
+              className="btn-pulse flex w-full items-center justify-center gap-2.5 rounded-xs bg-red-700 py-2.5 text-sm font-bold text-white shadow-lg shadow-red-950/40 transition-all duration-200 hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 active:scale-[0.97]"
             >
               <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />
               Hire Me

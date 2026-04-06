@@ -5,6 +5,8 @@ import {
   SkillsSection,
   SpeakingSection,
   ProjectsSection,
+  WorkflowSection,
+  GitHubSection,
   ContactSection,
   Footer,
 } from "@/components";
@@ -51,6 +53,8 @@ export default function Home() {
           <SkillsSection />
           <ProjectsSection />
           <SpeakingSection />
+          <WorkflowSection />
+          <GitHubSection />
           <ContactSection />
         </main>
         <Footer />
