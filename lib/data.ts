@@ -161,7 +161,7 @@ export const PROJECTS = [
     description:
       "Sistem absensi berbasis web menggunakan Laravel/Blade, dibangun untuk memudahkan pencatatan kehadiran.",
     tech: ["Google Search Console", "Yoast SEO", "SEO"],
-    url: "https://github.com/yakubfirman/presensi",
+    url: "https://perkaderan.immsolo.or.id",
   },
   {
     name: "Web Developer Intern DISKOMINFO SP Kota Surakarta (SiData)",
