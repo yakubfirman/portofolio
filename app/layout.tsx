@@ -14,9 +14,19 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://yakubfirman.id"),
-  title: "Yakub Firman Mustofa",
+  title: "Yakub Firman Mustofa | Full Stack Web Developer & SEO Specialist",
   description:
-    "Portofolio Yakub Firman Mustofa, Full Stack Web Developer dan SEO Specialist dari Surakarta, Jawa Tengah.",
+    "Full Stack Web Developer dan SEO Specialist di Surakarta. Yakub Firman Mustofa — membangun website modern dengan React, Next.js, Laravel, dan mengoptimalkan peringkat di Google Search.",
+  keywords: [
+    "Full Stack Web Developer",
+    "SEO Specialist",
+    "Web Developer Surakarta",
+    "Next.js Developer",
+    "Laravel Developer",
+    "React Developer",
+    "Jasa Pembuatan Website",
+    "Yakub Firman Mustofa",
+  ],
   icons: {
     icon: "/iconweb.png",
     apple: "/iconweb.png",
@@ -25,9 +35,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Yakub Firman Mustofa",
+    title: "Yakub Firman Mustofa | Full Stack Web Developer & SEO Specialist",
     description:
-      "Portofolio Yakub Firman Mustofa, Full Stack Web Developer dan SEO Specialist dari Surakarta, Jawa Tengah.",
+      "Full Stack Web Developer dan SEO Specialist di Surakarta. Membangun website modern dengan React, Next.js, Laravel, dan mengoptimalkan peringkat di Google Search.",
     url: "https://yakubfirman.id",
     siteName: "yakubfirman.id",
     locale: "id_ID",
@@ -43,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yakub Firman Mustofa — Full Stack Dev & SEO Specialist",
+    title: "Yakub Firman Mustofa | Full Stack Web Developer & SEO Specialist",
     description:
-      "Portofolio Yakub Firman Mustofa, Full Stack Web Developer dan SEO Specialist dari Surakarta, Jawa Tengah.",
+      "Full Stack Web Developer dan SEO Specialist di Surakarta. Membangun website modern dengan React, Next.js, Laravel, dan mengoptimalkan peringkat di Google Search.",
   },
   verification: {
     google: "vZvOJFKUyjkf51wp4QB-PVebBu8QDUxgB7HHfB-g_zs",
@@ -57,11 +67,56 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Yakub Firman Mustofa",
+    url: "https://yakubfirman.id",
+    image: "https://yakubfirman.id/photo.png",
+    jobTitle: "Full Stack Web Developer & SEO Specialist",
+    worksFor: {
+      "@type": "Organization",
+      name: "Freelance",
+    },
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "Universitas Muhammadiyah Surakarta",
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Surakarta",
+      addressRegion: "Jawa Tengah",
+      addressCountry: "ID",
+    },
+    sameAs: [
+      "https://github.com/yakubfirman",
+      "https://linkedin.com/in/Yakub-Firman-Mustofa",
+      "https://instagram.com/f.firman5",
+      "https://twitter.com/f_firman5",
+    ],
+    knowsAbout: [
+      "Full Stack Web Development",
+      "SEO",
+      "React",
+      "Next.js",
+      "Laravel",
+      "Tailwind CSS",
+      "Google Search Console",
+      "WordPress",
+    ],
+  };
+
   return (
     <html
       lang="id"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
