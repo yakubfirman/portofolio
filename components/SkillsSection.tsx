@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SKILL_CATEGORIES } from "@/lib/data";
+import { SKILL_CATEGORIES } from "@/lib/data/skills";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="py-20 px-5 sm:px-8 md:py-28">
+    <section id="skills" className="px-5 py-20 sm:px-8 md:py-28">
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <SectionHeading tag="Tech Stack" title="Keahlian Teknologi" />
@@ -54,5 +54,3 @@ export default function SkillsSection() {
     </section>
   );
 }
-
-

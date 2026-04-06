@@ -3,14 +3,14 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { PROJECTS } from "@/lib/data";
+import { PROJECTS } from "@/lib/data/projects";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="py-20 px-5 sm:px-8 md:py-28">
+    <section id="projects" className="px-5 py-20 sm:px-8 md:py-28">
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <SectionHeading tag="Portfolio" title="Proyek Saya" />
@@ -19,12 +19,12 @@ export default function ProjectsSection() {
         <div className="grid gap-5 sm:grid-cols-2">
           {PROJECTS.slice(0, 4).map((project, index) => (
             <Reveal key={project.name} delay={index * 80} className="h-full">
-              <div className="group relative flex flex-col h-full overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30">
+              <div className="group relative flex h-full flex-col overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30">
                 {/* ── Screenshot (links to detail page) ── */}
                 <Link
                   href={`/projects/${project.slug}`}
                   aria-label={`Lihat detail proyek ${project.name}`}
-                  className="relative block h-56 w-full overflow-hidden bg-[#0a0202]"
+                  className="relative block aspect-video w-full overflow-hidden bg-[#0a0202]"
                 >
                   {project.image ? (
                     <Image
@@ -46,7 +46,7 @@ export default function ProjectsSection() {
 
                 {/* ── Content ── */}
                 <div className="flex flex-1 flex-col p-5">
-                  <h3 className="mb-3 font-bold leading-snug text-white line-clamp-2">
+                  <h3 className="mb-3 line-clamp-2 leading-snug font-bold text-white">
                     {project.name}
                   </h3>
                   <div className="mb-5 flex flex-wrap gap-1.5">
@@ -92,16 +92,9 @@ export default function ProjectsSection() {
         {/* CTAs */}
         <Reveal delay={150}>
           <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Button
-              href="/projects"
-              variant="outline"
-              className="w-full sm:w-auto"
-            >
+            <Button href="/projects" variant="outline" className="w-full sm:w-auto">
               Lihat Semua Proyek
-              <FontAwesomeIcon
-                icon={faArrowUpRightFromSquare}
-                className="h-3 w-3"
-              />
+              <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
             </Button>
             <Button
               href="https://github.com/yakubfirman"
@@ -119,4 +112,3 @@ export default function ProjectsSection() {
     </section>
   );
 }
-

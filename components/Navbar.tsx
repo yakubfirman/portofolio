@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { NAV_LINKS } from "@/lib/data";
+import { NAV_LINKS } from "@/lib/data/nav";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -55,7 +55,6 @@ export default function Navbar() {
     >
       {/* ── Main bar ── */}
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-
         {/* Logo */}
         <Link
           href="/"
@@ -71,7 +70,7 @@ export default function Navbar() {
             <span className="text-[13px] font-bold tracking-tight text-white">
               Yakub <span className="text-red-500">Firman</span> Mustofa
             </span>
-            <span className="hidden text-[10px] font-medium uppercase tracking-widest text-gray-500 sm:block">
+            <span className="hidden text-[10px] font-medium tracking-widest text-gray-500 uppercase sm:block">
               Portfolio
             </span>
           </div>
@@ -134,7 +133,7 @@ export default function Navbar() {
           open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="border-t border-red-900/20 bg-[#0a0a0a]/98 px-5 pb-4 pt-2 backdrop-blur-xl">
+        <div className="border-t border-red-900/20 bg-[#0a0a0a]/98 px-5 pt-2 pb-4 backdrop-blur-xl">
           <nav className="flex flex-col gap-0.5">
             {NAV_LINKS.map((link, i) => {
               const active = isActive(link.href);
@@ -150,9 +149,7 @@ export default function Navbar() {
                   }`}
                   style={{ transitionDelay: open ? `${i * 35}ms` : "0ms" }}
                 >
-                  {active && (
-                    <span className="h-1 w-1 shrink-0 rounded-full bg-red-500" />
-                  )}
+                  {active && <span className="h-1 w-1 shrink-0 rounded-full bg-red-500" />}
                   {link.label}
                 </Link>
               );
@@ -171,4 +168,3 @@ export default function Navbar() {
     </header>
   );
 }
-
