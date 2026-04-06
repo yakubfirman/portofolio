@@ -8,10 +8,10 @@ export default function SectionHeading({
   centered?: boolean;
 }) {
   return (
-    <div className={`mb-10 sm:mb-14${centered ? " text-center" : ""}`}>
+    <div className={`mb-10 sm:mb-14${centered ? "text-center" : ""}`}>
       <p
-        className={`mb-2 flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-widest text-red-500${
-          centered ? " justify-center" : ""
+        className={`mb-2 flex items-center gap-2.5 text-[11px] font-semibold tracking-widest uppercase text-red-500${
+          centered ? "justify-center" : ""
         }`}
       >
         <span className="h-px w-6 bg-red-600/70" />

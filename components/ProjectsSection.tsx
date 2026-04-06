@@ -43,23 +43,12 @@ export default function ProjectsSection() {
                 </Link>
 
                 {/* ── Content ── */}
-                <div className="flex flex-1 flex-col p-5">
+                <div className="py2 flex flex-1 flex-col px-5 pt-2 pb-5">
                   <h3 className="mb-3 line-clamp-2 leading-snug font-bold text-white">
                     {project.name}
                   </h3>
-                  <div className="mb-5 flex flex-wrap gap-1.5">
-                    {project.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-xs bg-red-950/50 px-2 py-0.5 font-mono text-[10px] text-red-500/80"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
                   {/* ── Action buttons ── */}
-                  <div className="flex gap-1.5 border-t border-red-900/15 pt-4">
+                  <div className="flex gap-1.5">
                     <Button
                       href={`/projects/${project.slug}`}
                       variant="outline"
