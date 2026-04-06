@@ -18,9 +18,9 @@ export default function ContactSection() {
           <SectionHeading tag="Get In Touch" title="Mari Berkolaborasi" />
         </Reveal>
 
-        <div className="grid items-start gap-10 lg:grid-cols-5 lg:gap-14">
+        <div className="grid items-start gap-10 md:grid-cols-5 md:gap-14">
           {/* ── Left: headline + CTA ── */}
-          <Reveal delay={100} className="lg:col-span-3">
+          <Reveal delay={100} className="md:col-span-3">
             <div className="flex flex-col gap-6">
               <div>
                 <AvailabilityPill text="Open to Work" />
@@ -52,7 +52,7 @@ export default function ContactSection() {
           </Reveal>
 
           {/* ── Right: social links ── */}
-          <Reveal delay={200} className="lg:col-span-2">
+          <Reveal delay={200} className="md:col-span-2">
             <p className="mb-4 text-[10px] font-semibold tracking-widest text-gray-600 uppercase">
               Temukan saya di
             </p>

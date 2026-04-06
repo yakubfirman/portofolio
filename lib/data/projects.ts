@@ -63,7 +63,7 @@ export const PROJECTS = [
     },
   },
   {
-    name: "Web Developer Intern — SiData DISKOMINFO SP Kota Surakarta",
+    name: "SiData DISKOMINFO SP Kota Surakarta",
     slug: "sidata",
     description:
       "Menjalankan program magang sebagai Web Developer di Dinas Komunikasi, Informatika, Statistik dan Persandian (DISKOMINFO SP) Kota Surakarta, berkontribusi pada pengembangan aplikasi SiData menggunakan Laravel dan Tailwind CSS.",

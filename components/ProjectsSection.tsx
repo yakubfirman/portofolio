@@ -7,6 +7,7 @@ import { PROJECTS } from "@/lib/data/projects";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
+import TechBadge from "@/components/ui/TechBadge";
 
 export default function ProjectsSection() {
   return (
@@ -61,14 +62,14 @@ export default function ProjectsSection() {
                   </div>
 
                   {/* ── Action buttons ── */}
-                  <div className="flex gap-2 border-t border-red-900/15 pt-4">
+                  <div className="flex gap-1.5 border-t border-red-900/15 pt-4">
                     <Button
                       href={`/projects/${project.slug}`}
                       variant="outline"
                       size="sm"
-                      className="flex-1 justify-center"
+                      className="flex-1 justify-center gap-1.5 px-2 py-1.5 text-[11px] sm:gap-2.5 sm:px-4 sm:text-sm"
                     >
-                      <FontAwesomeIcon icon={faBookOpen} className="h-3 w-3" />
+                      <FontAwesomeIcon icon={faBookOpen} className="h-3 w-3 shrink-0" />
                       Lihat Detail
                     </Button>
                     <Button
@@ -77,9 +78,12 @@ export default function ProjectsSection() {
                       rel="noopener noreferrer"
                       variant="ghost"
                       size="sm"
-                      className="flex-1 justify-center"
+                      className="flex-1 justify-center gap-1.5 px-2 py-1.5 text-[11px] sm:gap-2.5 sm:px-4 sm:text-sm"
                     >
-                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
+                      <FontAwesomeIcon
+                        icon={faArrowUpRightFromSquare}
+                        className="h-3 w-3 shrink-0"
+                      />
                       Lihat Live
                     </Button>
                   </div>

@@ -13,6 +13,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
+import PageBackground from "@/components/ui/PageBackground";
+import TechBadge from "@/components/ui/TechBadge";
 
 export const metadata: Metadata = {
   title: "Proyek — Yakub Firman Mustofa",
@@ -24,29 +26,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div className="relative min-h-screen bg-[#0a0a0a]">
-      {/* ── Global decorative background ── */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(220,38,38,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(220,38,38,0.03) 1px, transparent 1px)",
-            backgroundSize: "64px 64px",
-          }}
-        />
-        <div className="absolute -top-48 -left-48 h-175 w-175 rounded-full bg-red-900/12 blur-[220px]" />
-        <div className="absolute top-[20%] -right-36 h-137.5 w-137.5 rounded-full bg-red-800/8 blur-[180px]" />
-        <div className="absolute bottom-[20%] -left-24 h-125 w-125 rounded-full bg-red-950/14 blur-[180px]" />
-        <div className="absolute right-[15%] -bottom-32 h-112.5 w-112.5 rounded-full bg-red-900/10 blur-[160px]" />
-        <div className="absolute top-0 left-1/2 h-62.5 w-200 -translate-x-1/2 rounded-full bg-red-800/7 blur-[120px]" />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 110% 110% at 50% 50%, transparent 45%, rgba(10,10,10,0.75) 100%)",
-          }}
-        />
-      </div>
+      <PageBackground />
 
       <Navbar />
 
@@ -110,31 +90,29 @@ export default function ProjectsPage() {
                     {/* Tech tags */}
                     <div className="mb-5 flex flex-wrap gap-1.5">
                       {project.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-xs bg-red-950/50 px-2 py-0.5 font-mono text-[10px] text-red-500/80"
-                        >
-                          {t}
-                        </span>
+                        <TechBadge key={t} label={t} />
                       ))}
                     </div>
 
                     {/* ── Action buttons ── */}
-                    <div className="mt-auto flex gap-2 border-t border-red-900/15 pt-4">
+                    <div className="mt-auto flex gap-1.5 border-t border-red-900/15 pt-4">
                       <Link
                         href={`/projects/${project.slug}`}
-                        className="flex flex-1 items-center justify-center gap-2 rounded-xs border border-red-800/50 bg-red-950/30 px-3 py-2 text-xs font-semibold text-gray-300 transition-all hover:border-red-600/60 hover:bg-red-950/50 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70"
+                        className="flex flex-1 items-center justify-center gap-1.5 rounded-xs border border-red-800/50 bg-red-950/30 px-2 py-1.5 text-[11px] font-semibold text-gray-300 transition-all hover:border-red-600/60 hover:bg-red-950/50 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs"
                       >
-                        <FontAwesomeIcon icon={faBookOpen} className="h-3 w-3" />
+                        <FontAwesomeIcon icon={faBookOpen} className="h-3 w-3 shrink-0" />
                         Lihat Detail
                       </Link>
                       <a
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex flex-1 items-center justify-center gap-2 rounded-xs border border-red-900/30 bg-red-950/20 px-3 py-2 text-xs font-medium text-gray-400 transition-all hover:border-red-700/50 hover:bg-red-950/30 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70"
+                        className="flex flex-1 items-center justify-center gap-1.5 rounded-xs border border-red-900/30 bg-red-950/20 px-2 py-1.5 text-[11px] font-medium text-gray-400 transition-all hover:border-red-700/50 hover:bg-red-950/30 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 sm:gap-2 sm:px-3 sm:py-2 sm:text-xs"
                       >
-                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
+                        <FontAwesomeIcon
+                          icon={faArrowUpRightFromSquare}
+                          className="h-3 w-3 shrink-0"
+                        />
                         Lihat Live
                       </a>
                     </div>

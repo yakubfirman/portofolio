@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
-import { ABOUT_META, ABOUT_EDUCATION, ABOUT_HIGHLIGHTS, ABOUT_FOCUS_TAGS } from "@/lib/data/about";
+import { ABOUT_META, ABOUT_EDUCATION } from "@/lib/data/about";
 
 export default function AboutSection() {
   return (
@@ -13,9 +13,9 @@ export default function AboutSection() {
           <SectionHeading tag="About Me" title="Tentang Saya" />
         </Reveal>
 
-        <div className="grid items-start gap-10 lg:grid-cols-5 lg:gap-14">
+        <div className="grid items-start gap-10 md:grid-cols-5 md:gap-14">
           {/* ── Left: Content ── */}
-          <Reveal delay={120} className="lg:col-span-3">
+          <Reveal delay={120} className="md:col-span-3">
             <div className="flex flex-col gap-7">
               {/* Bio */}
               <div className="space-y-4 text-sm leading-relaxed text-gray-400 sm:text-base">
@@ -90,7 +90,7 @@ export default function AboutSection() {
           </Reveal>
 
           {/* ── Right: Photo card ── */}
-          <Reveal delay={50} className="order-first lg:order-last lg:col-span-2">
+          <Reveal delay={50} className="order-first md:order-last md:col-span-2">
             <div className="relative mx-auto max-w-55 sm:max-w-xs lg:max-w-57.5 xl:max-w-62.5">
               {/* Corner bracket decorations */}
               <div
