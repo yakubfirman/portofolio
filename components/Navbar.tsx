@@ -58,6 +58,14 @@ export default function Navbar() {
 
   const isActive = (href: string) => {
     if (href.startsWith("/#")) return pathname === "/" && scrollActive === href;
+    // /projects juga aktif saat di home & scroll ke section #projects
+    if (href === "/projects") {
+      return (
+        pathname === "/projects" ||
+        pathname.startsWith("/projects/") ||
+        (pathname === "/" && scrollActive === "/#projects")
+      );
+    }
     return pathname === href || pathname.startsWith(href + "/");
   };
 
