@@ -46,7 +46,7 @@ export default function Footer() {
             {/* Brand */}
             <div className="col-span-2 sm:col-span-1">
               <p className="mb-0.5 text-2xl font-black tracking-tight text-white">
-                YFM<span className="text-red-500">.</span>
+                Yakub <span className="text-red-500">Firman </span> Mustofa
               </p>
               <p className="mb-5 text-[11px] font-medium text-gray-700">yakubfirman.id</p>
               <p className="text-xs leading-relaxed text-gray-600">

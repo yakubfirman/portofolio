@@ -16,7 +16,7 @@ import {
 } from "@/components/ui";
 
 export const metadata: Metadata = {
-  title: "Proyek — Yakub Firman Mustofa",
+  title: "Proyek - Yakub Firman Mustofa",
   description:
     "Kumpulan proyek web yang telah dikerjakan oleh Yakub Firman Mustofa — mulai dari aplikasi e-voting, website organisasi, hingga magang di instansi pemerintah.",
   alternates: { canonical: "/projects" },
