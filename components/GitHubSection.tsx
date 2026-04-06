@@ -22,20 +22,31 @@ const LANG_COLORS: Record<string, string> = {
 
 /** Warna sel per level kontribusi (0–4), disesuaikan dengan tema merah */
 const CONTRIBUTION_LEVELS = [
-  "bg-[#0f0303]",  // 0 – tidak ada
-  "bg-red-950",    // 1 – rendah
+  "bg-[#0f0303]", // 0 – tidak ada
+  "bg-red-950", // 1 – rendah
   "bg-red-800/60", // 2 – sedang-rendah
   "bg-red-600/70", // 3 – sedang-tinggi
-  "bg-red-500",    // 4 – tinggi
+  "bg-red-500", // 4 – tinggi
 ] as const;
 
 const CELL_PX = 10; // lebar/tinggi sel (px)
-const GAP_PX = 2;   // jarak antar sel (px)
+const GAP_PX = 2; // jarak antar sel (px)
 const STRIDE = CELL_PX + GAP_PX;
 
-interface GitHubUser { public_repos: number; followers: number; }
-interface GitHubRepo { language: string | null; stargazers_count: number; fork: boolean; }
-interface Contribution { date: string; count: number; level: 0 | 1 | 2 | 3 | 4; }
+interface GitHubUser {
+  public_repos: number;
+  followers: number;
+}
+interface GitHubRepo {
+  language: string | null;
+  stargazers_count: number;
+  fork: boolean;
+}
+interface Contribution {
+  date: string;
+  count: number;
+  level: 0 | 1 | 2 | 3 | 4;
+}
 
 /** Kelompokkan kontribusi menjadi kolom minggu, padding awal sesuai hari */
 function buildCalendar(contributions: Contribution[]): (Contribution | null)[][] {
@@ -168,7 +179,6 @@ export default async function GitHubSection() {
 
             {/* ── Languages + Contribution calendar ── */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-[14rem_1fr]">
-
               {/* Top languages */}
               {data.topLanguages.length > 0 && (
                 <Reveal delay={200}>

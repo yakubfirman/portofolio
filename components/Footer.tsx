@@ -13,33 +13,6 @@ export default function Footer() {
       <div className="pointer-events-none absolute -right-24 bottom-0 h-64 w-64 rounded-full bg-red-900/10 blur-[100px]" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-5 sm:px-8">
-        {/* ── Top CTA ── */}
-        <Reveal>
-          <div className="border-b border-red-900/15 py-14 sm:py-20">
-            <p className="mb-4 flex items-center gap-2 font-mono text-[11px] font-semibold tracking-widest text-red-700/70 uppercase">
-              <span className="h-px w-5 bg-red-700/50" />
-              Available for Work
-            </p>
-            <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
-              <h2 className="max-w-md text-3xl leading-tight font-black tracking-tighter text-white sm:text-4xl lg:text-5xl">
-                Punya proyek? <span className="text-red-600">Mari buat bersama.</span>
-              </h2>
-              <a
-                href="mailto:yakubfirmanmustofa@gmail.com"
-                className="group inline-flex shrink-0 items-center gap-3 rounded-xs bg-red-700 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-red-950/40 transition-all hover:bg-red-600 hover:shadow-lg hover:shadow-red-900/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70"
-              >
-                <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" aria-hidden="true" />
-                Kirim Email
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              </a>
-            </div>
-          </div>
-        </Reveal>
-
         {/* ── Middle: Links grid ── */}
         <Reveal delay={80}>
           <div className="grid grid-cols-2 gap-10 py-12 sm:grid-cols-3">
