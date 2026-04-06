@@ -24,9 +24,9 @@ export default function HeroSection() {
             </div>
 
             {/* Name */}
-            <h1 className="hero-animate hero-delay-3 mb-6 text-[clamp(2.4rem,8vw,5.5rem)] leading-none font-black tracking-tighter">
+            <h1 className="hero-animate hero-delay-3 font-display mb-6 text-[clamp(2.6rem,8.5vw,6rem)] leading-[0.9] font-black tracking-[-0.02em]">
               <span className="block text-white">
-                Yakub <span className="text-red-700">Firman</span>
+                Yakub <span className="text-red-600">Firman</span>
               </span>
               <span className="block text-white">Mustofa</span>
             </h1>

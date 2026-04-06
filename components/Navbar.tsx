@@ -64,165 +64,220 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`navbar-enter sticky top-0 z-[60] w-full transition-all duration-500 ${
+        className={`navbar-enter sticky top-0 z-60 w-full transition-all duration-500 ${
           scrolled || open
-            ? "border-b border-red-900/35 bg-[#0a0a0a]/95 shadow-md shadow-black/30 backdrop-blur-xl"
-            : "border-b border-transparent bg-transparent"
+            ? "bg-[#0a0a0a]/90 shadow-lg shadow-black/40 backdrop-blur-2xl"
+            : "bg-transparent"
         }`}
       >
+        {/* Bottom border line that appears on scroll */}
+        <div
+          className={`absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-red-800/35 to-transparent transition-opacity duration-500 ${
+            scrolled || open ? "opacity-100" : "opacity-0"
+          }`}
+        />
+
         {/* ── Main bar ── */}
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-          {/* Logo */}
+          {/* ── Logo ── */}
           <Link
             href="/"
-            className="group flex shrink-0 items-center gap-2.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500/70"
+            className="group flex shrink-0 items-center gap-3 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500/70"
           >
             <div className="relative">
-              <div className="absolute inset-0 rounded-full bg-red-600/20 blur-md transition-all duration-500 group-hover:bg-red-500/35 group-hover:blur-lg" />
-              <div className="relative h-8 w-8 overflow-hidden rounded-full ring-1 ring-red-800/50 transition-all duration-300 group-hover:ring-red-500/60">
+              {/* Glow ring */}
+              <div className="absolute inset-0 rounded-full bg-red-600/25 blur-lg transition-all duration-500 group-hover:bg-red-500/45 group-hover:blur-xl" />
+              <div className="relative h-9 w-9 scale-100 overflow-hidden rounded-full ring-1 ring-red-800/60 transition-all duration-300 group-hover:scale-105 group-hover:ring-red-500/80">
                 <Image src="/photo.png" alt="Yakub Firman Mustofa" fill className="object-cover" />
               </div>
+              {/* Online dot */}
+              <span className="absolute -right-0.5 -bottom-0.5 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-[#0a0a0a] ring-1 ring-[#0a0a0a]">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              </span>
             </div>
-            <div className="flex flex-col leading-none">
+            <div className="flex flex-col gap-0.5 leading-none">
               <span className="text-[13px] font-bold tracking-tight text-white">
                 Yakub <span className="text-red-500">Firman</span> Mustofa
               </span>
-              <span className="hidden text-[10px] font-medium tracking-widest text-gray-500 uppercase sm:block">
-                Portfolio
+              <span className="hidden text-[9px] font-semibold tracking-[0.18em] text-gray-600 uppercase sm:block">
+                Full Stack · SEO
               </span>
             </div>
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden items-center gap-0.5 md:flex">
-            {NAV_LINKS.map((link) => {
-              const active = isActive(link.href);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`relative rounded-sm px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${
-                    active ? "text-white" : "text-gray-500 hover:text-gray-200"
-                  }`}
-                >
-                  {link.label}
-                  <span
-                    className={`absolute bottom-0.5 left-1/2 h-0.5 -translate-x-1/2 rounded-full bg-red-500 transition-all duration-300 ${
-                      active ? "w-4 opacity-100" : "w-0 opacity-0"
+          {/* ── Desktop nav — floating pill ── */}
+          <nav className="hidden items-center md:flex" aria-label="Main navigation">
+            <div
+              className={`flex items-center gap-0.5 rounded-full px-1.5 py-1.5 transition-all duration-500 ${
+                scrolled ? "bg-white/4 shadow-lg ring-1 shadow-black/30 ring-white/8" : ""
+              }`}
+            >
+              {NAV_LINKS.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`relative rounded-full px-4 py-1.5 text-[13px] font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${
+                      active
+                        ? "bg-red-700/20 text-red-300 shadow-sm ring-1 ring-red-700/25"
+                        : "text-gray-400 hover:bg-white/5 hover:text-white"
                     }`}
-                  />
-                </Link>
-              );
-            })}
+                  >
+                    {link.label}
+                    {active && (
+                      <span className="absolute bottom-1 left-1/2 h-0.5 w-3 -translate-x-1/2 rounded-full bg-red-500/70" />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
           </nav>
 
-          {/* Right: CTA + hamburger */}
-          <div className="flex items-center gap-3">
+          {/* ── Right: CTA + hamburger ── */}
+          <div className="flex items-center gap-2.5">
             <a
               href="mailto:yakubfirmanmustofa@gmail.com"
-              className="btn-pulse hidden items-center gap-2 rounded-sm bg-red-700 px-4 py-1.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 md:inline-flex"
+              className="btn-pulse group hidden items-center gap-2 rounded-full bg-red-700 px-4 py-1.5 text-[13px] font-semibold text-white ring-1 ring-red-600/40 transition-all duration-200 hover:bg-red-600 hover:shadow-lg hover:shadow-red-950/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 md:inline-flex"
             >
+              <FontAwesomeIcon icon={faEnvelope} className="h-3 w-3 opacity-80" />
               Hire Me
             </a>
 
+            {/* Hamburger */}
             <button
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Tutup menu" : "Buka menu"}
               aria-expanded={open}
-              className={`relative flex h-9 w-9 items-center justify-center rounded-sm border transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 md:hidden ${
+              aria-controls="mobile-drawer"
+              className={`relative flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 md:hidden ${
                 open
-                  ? "border-red-600/60 bg-red-950/40 text-red-400"
-                  : "border-red-900/30 bg-transparent text-gray-400 hover:border-red-800/50 hover:text-gray-200"
+                  ? "border-red-600/50 bg-red-950/50 text-red-400"
+                  : "border-red-900/30 bg-white/3 text-gray-400 hover:border-red-800/50 hover:bg-white/7 hover:text-white"
               }`}
             >
               <FontAwesomeIcon
                 icon={open ? faXmark : faBars}
-                className={`h-4 w-4 transition-all duration-300 ${open ? "scale-110 rotate-90" : "scale-100 rotate-0"}`}
+                className={`h-4 w-4 transition-all duration-300 ${
+                  open ? "scale-110 rotate-90" : "scale-100 rotate-0"
+                }`}
               />
             </button>
           </div>
         </div>
       </header>
 
-      {/* ── Mobile fullscreen overlay ── */}
+      {/* ── Mobile: backdrop + right-side drawer ── */}
       <div
+        id="mobile-drawer"
         aria-hidden={!open}
-        className={`fixed inset-0 z-50 transition-opacity duration-300 md:hidden ${
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        className={`fixed inset-0 z-70 md:hidden ${
+          open ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-[#0a0a0a]/96 backdrop-blur-2xl"
+          className={`absolute inset-0 bg-black/55 backdrop-blur-sm transition-opacity duration-300 ${
+            open ? "opacity-100" : "opacity-0"
+          }`}
           onClick={() => setOpen(false)}
+          aria-hidden="true"
         />
 
-        {/* Glow decorations */}
-        <div className="pointer-events-none absolute top-0 -right-16 h-64 w-64 rounded-full bg-red-900/10 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-20 -left-8 h-56 w-56 rounded-full bg-red-950/15 blur-3xl" />
+        {/* Drawer panel */}
+        <div
+          className={`absolute top-0 right-0 flex h-full w-70 flex-col bg-[#0c0303]/98 shadow-2xl shadow-black/60 backdrop-blur-2xl transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+            open ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          {/* Ambient glow */}
+          <div className="pointer-events-none absolute -top-20 -left-20 h-72 w-72 rounded-full bg-red-900/12 blur-3xl" />
+          <div className="pointer-events-none absolute right-0 bottom-10 h-48 w-48 rounded-full bg-red-950/20 blur-3xl" />
 
-        {/* Menu content */}
-        <div className="relative flex h-full flex-col overflow-y-auto px-6 pt-24 pb-12">
-          {/* Nav links */}
-          <nav className="flex flex-col" role="navigation">
+          {/* ── Drawer header ── */}
+          <div className="relative flex h-16 shrink-0 items-center justify-between border-b border-red-900/20 px-5">
+            <div className="flex items-center gap-2">
+              <span className="ping-slow inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 opacity-80" />
+              <span className="font-mono text-[9px] font-semibold tracking-[0.2em] text-gray-600 uppercase">
+                Navigation
+              </span>
+            </div>
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Tutup menu"
+              className="flex h-7 w-7 items-center justify-center rounded-full border border-red-900/30 text-gray-500 transition-all duration-200 hover:border-red-700/50 hover:bg-red-950/30 hover:text-red-400"
+            >
+              <FontAwesomeIcon icon={faXmark} className="h-3 w-3" />
+            </button>
+          </div>
+
+          {/* ── Nav links ── */}
+          <nav
+            className="relative flex flex-1 flex-col overflow-y-auto px-3 py-5"
+            role="navigation"
+            aria-label="Mobile navigation"
+          >
             {NAV_LINKS.map((link, i) => {
               const active = isActive(link.href);
-              const delay = open ? i * 55 : 0;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`group flex items-center gap-4 border-l-2 py-4 pr-2 pl-5 text-xl font-semibold tracking-tight focus-visible:outline-none ${
+                  className={`group flex items-center gap-3 rounded-xl px-4 py-3 text-[15px] font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${
                     active
-                      ? "border-red-500 text-white"
-                      : "border-red-900/25 text-gray-500 hover:border-red-700/50 hover:text-white"
+                      ? "bg-red-700/15 text-white ring-1 ring-red-700/20"
+                      : "text-gray-400 hover:bg-white/4 hover:text-white"
                   }`}
                   style={{
-                    transform: open ? "translateX(0)" : "translateX(-20px)",
+                    transform: open ? "translateX(0)" : "translateX(20px)",
                     opacity: open ? 1 : 0,
-                    transition: `transform 350ms cubic-bezier(0.25,0.46,0.45,0.94) ${delay}ms, opacity 300ms ease ${delay}ms, color 200ms, border-color 200ms`,
+                    transition: `transform 340ms cubic-bezier(0.25,0.46,0.45,0.94) ${i * 45 + 80}ms, opacity 260ms ease ${i * 45 + 80}ms, background-color 200ms, color 200ms`,
                   }}
                 >
                   <span
-                    className={`w-5 shrink-0 font-mono text-[11px] tabular-nums transition-colors duration-200 ${
-                      active ? "text-red-500" : "text-gray-700 group-hover:text-red-700/70"
+                    className={`w-5 shrink-0 font-mono text-[10px] tabular-nums transition-colors duration-200 ${
+                      active ? "text-red-500" : "text-gray-700 group-hover:text-red-800/80"
                     }`}
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  {link.label}
+                  <span className="flex-1">{link.label}</span>
                   {active && (
-                    <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-500 shadow-sm shadow-red-500/50" />
                   )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Divider */}
+          {/* ── Divider ── */}
           <div
-            className="my-6 h-px bg-gradient-to-r from-red-900/40 to-transparent"
-            style={{
-              opacity: open ? 1 : 0,
-              transition: `opacity 300ms ease ${open ? NAV_LINKS.length * 55 : 0}ms`,
-            }}
+            className="mx-5 h-px bg-linear-to-r from-red-900/40 via-red-900/20 to-transparent transition-opacity duration-300"
+            style={{ opacity: open ? 1 : 0, transitionDelay: `${NAV_LINKS.length * 45 + 100}ms` }}
           />
 
-          {/* Hire Me CTA */}
-          <a
-            href="mailto:yakubfirmanmustofa@gmail.com"
-            onClick={() => setOpen(false)}
-            className="btn-pulse flex items-center justify-center gap-2.5 rounded bg-red-700 py-3.5 text-sm font-bold text-white hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 active:bg-red-800"
+          {/* ── CTA block ── */}
+          <div
+            className="relative shrink-0 px-5 py-5"
             style={{
-              transform: open ? "translateX(0)" : "translateX(-20px)",
+              transform: open ? "translateX(0)" : "translateX(20px)",
               opacity: open ? 1 : 0,
-              transition: `transform 350ms cubic-bezier(0.25,0.46,0.45,0.94) ${open ? NAV_LINKS.length * 55 + 60 : 0}ms, opacity 300ms ease ${open ? NAV_LINKS.length * 55 + 60 : 0}ms`,
+              transition: `transform 340ms cubic-bezier(0.25,0.46,0.45,0.94) ${NAV_LINKS.length * 45 + 150}ms, opacity 260ms ease ${NAV_LINKS.length * 45 + 150}ms`,
             }}
           >
-            <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />
-            Hire Me
-          </a>
+            <a
+              href="mailto:yakubfirmanmustofa@gmail.com"
+              onClick={() => setOpen(false)}
+              className="btn-pulse flex w-full items-center justify-center gap-2.5 rounded-full bg-red-700 py-2.5 text-sm font-bold text-white shadow-lg shadow-red-950/40 transition-all duration-200 hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 active:scale-[0.97]"
+            >
+              <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />
+              Hire Me
+            </a>
+            <p className="mt-3 text-center font-mono text-[9px] tracking-widest text-gray-700">
+              yakubfirmanmustofa@gmail.com
+            </p>
+          </div>
         </div>
       </div>
     </>
