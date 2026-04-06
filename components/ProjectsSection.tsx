@@ -1,5 +1,7 @@
+import Image from "next/image";
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUpRightFromSquare, faCodeBranch } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUpRightFromSquare, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { PROJECTS } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -14,77 +16,104 @@ export default function ProjectsSection() {
           <SectionHeading tag="Portfolio" title="Proyek Saya" />
         </Reveal>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {PROJECTS.map((project, index) => (
-            <Reveal key={project.name} delay={index * 100} className="h-full">
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Lihat proyek ${project.name}`}
-              className="group relative flex flex-col h-full overflow-hidden rounded-xs bg-[#0d0404] transition-all duration-300 hover:shadow-2xl hover:shadow-red-950/30 hover:-translate-y-1"
-            >
-              {/* Top accent line */}
-              <div className="h-px w-full bg-linear-to-r from-red-800/60 via-red-600/30 to-transparent" />
+        <div className="grid gap-5 sm:grid-cols-2">
+          {PROJECTS.slice(0, 4).map((project, index) => (
+            <Reveal key={project.name} delay={index * 80} className="h-full">
+              <div className="group relative flex flex-col h-full overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30">
+                {/* ── Screenshot (links to detail page) ── */}
+                <Link
+                  href={`/projects/${project.slug}`}
+                  aria-label={`Lihat detail proyek ${project.name}`}
+                  className="relative block h-56 w-full overflow-hidden bg-[#0a0202]"
+                >
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={`Screenshot ${project.name}`}
+                      fill
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center">
+                      <span className="text-4xl font-black text-red-900/30 select-none">
+                        {project.name.charAt(0)}
+                      </span>
+                    </div>
+                  )}
+                  <div className="absolute inset-x-0 bottom-0 h-10 bg-linear-to-t from-[#0d0404] to-transparent" />
+                </Link>
 
-              <div className="flex flex-1 flex-col p-5 sm:p-6">
-                {/* Card header */}
-                <div className="mb-5 flex items-start justify-between">
-                  <div className="flex items-center gap-2">
-                    <FontAwesomeIcon icon={faCodeBranch} className="h-4 w-4 text-red-700" />
-                    <span className="font-mono text-[10px] font-bold tracking-widest text-red-900/60">
-                      #{String(index + 1).padStart(2, "0")}
-                    </span>
+                {/* ── Content ── */}
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="mb-3 font-bold leading-snug text-white line-clamp-2">
+                    {project.name}
+                  </h3>
+                  <div className="mb-5 flex flex-wrap gap-1.5">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-xs bg-red-950/50 px-2 py-0.5 font-mono text-[10px] text-red-500/80"
+                      >
+                        {t}
+                      </span>
+                    ))}
                   </div>
-                  <FontAwesomeIcon
-                    icon={faArrowUpRightFromSquare}
-                    className="h-3.5 w-3.5 text-gray-700 transition-all group-hover:text-red-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
-                </div>
 
-                {/* Title + desc */}
-                <h3 className="mb-2 font-bold text-white group-hover:text-red-100 transition-colors">
-                  {project.name}
-                </h3>
-                <p className="mb-5 flex-1 text-sm leading-relaxed text-gray-500">
-                  {project.description}
-                </p>
-
-                {/* Tech tags */}
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-xs bg-red-950/50 px-2 py-0.5 font-mono text-[10px] text-red-500/80"
+                  {/* ── Action buttons ── */}
+                  <div className="flex gap-2 border-t border-red-900/15 pt-4">
+                    <Button
+                      href={`/projects/${project.slug}`}
+                      variant="outline"
+                      size="sm"
+                      className="flex-1 justify-center"
                     >
-                      {t}
-                    </span>
-                  ))}
+                      <FontAwesomeIcon icon={faBookOpen} className="h-3 w-3" />
+                      Lihat Detail
+                    </Button>
+                    <Button
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="ghost"
+                      size="sm"
+                      className="flex-1 justify-center"
+                    >
+                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
+                      Lihat Live
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </a>
             </Reveal>
           ))}
         </div>
 
-        {/* GitHub CTA */}
+        {/* CTAs */}
         <Reveal delay={150}>
-        <div className="mt-10 flex justify-center">
-          <Button
-            href="https://github.com/yakubfirman"
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="ghost"
-            className="w-full sm:w-auto"
-          >
-            <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
-            Lihat Semua Proyek di GitHub
-            <FontAwesomeIcon
-              icon={faArrowUpRightFromSquare}
-              className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
-          </Button>
-        </div>
+          <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+            <Button
+              href="/projects"
+              variant="outline"
+              className="w-full sm:w-auto"
+            >
+              Lihat Semua Proyek
+              <FontAwesomeIcon
+                icon={faArrowUpRightFromSquare}
+                className="h-3 w-3"
+              />
+            </Button>
+            <Button
+              href="https://github.com/yakubfirman"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="ghost"
+              className="w-full sm:w-auto"
+            >
+              <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
+              GitHub
+            </Button>
+          </div>
         </Reveal>
       </div>
     </section>

@@ -30,10 +30,10 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 export const NAV_LINKS = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#about", label: "About" },
+  { href: "/#skills", label: "Skills" },
+  { href: "/projects", label: "Projects" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export const SKILLS: { name: string; icon: IconDefinition }[] = [
@@ -144,37 +144,107 @@ export const SOCIALS: { label: string; href: string; icon: IconDefinition }[] = 
 export const PROJECTS = [
   {
     name: "Maroon Vote",
+    slug: "maroon-vote",
     description:
       "Mengembangkan aplikasi e-voting berbasis web menggunakan Laravel dan React dengan konsep modern monolith untuk menciptakan sistem pemungutan suara yang aman dan efisien.",
     tech: ["Laravel", "React", "Tailwind CSS", "SQL", "Google Search Console", "SEO"],
     url: "https://maroonvote.immsolo.or.id",
+    image: "/projects/maroon-vote.png",
+    details: {
+      role: "Full Stack Developer",
+      overview:
+        "Maroon Vote adalah aplikasi e-voting berbasis web yang dikembangkan untuk mendukung proses pemungutan suara organisasi secara digital. Dibangun dengan konsep modern monolith menggunakan Laravel sebagai backend dan React sebagai frontend, aplikasi ini dirancang untuk menjamin keamanan, transparansi, dan kemudahan penggunaan dalam proses demokrasi organisasi.",
+      contributions: [
+        "Merancang dan mengimplementasikan arsitektur modern monolith menggunakan Laravel sebagai backend REST API dan React sebagai frontend SPA.",
+        "Membangun sistem autentikasi berbasis token untuk memastikan hanya pemilih yang berhak dapat mengakses dan memberikan suara.",
+        "Mengintegrasikan database MySQL untuk penyimpanan data kandidat, daftar pemilih, dan rekap hasil suara secara real-time.",
+        "Membangun antarmuka pengguna yang responsif dan intuitif menggunakan Tailwind CSS agar mudah digunakan di berbagai perangkat.",
+        "Melakukan optimasi SEO teknis pada halaman publik dan mendaftarkan ke Google Search Console untuk monitoring performa.",
+      ],
+    },
   },
   {
     name: "Website PC IMM Kota Surakarta",
+    slug: "imm-solo",
     description:
-      "Membangun website resmi untuk PC IMM Kota Surakarta menggunakan Next.js dan Tailwind CSS, menampilkan informasi organisasi, kegiatan, dan berita terkini dengan desain responsif dan modern.",
+      "Membangun website resmi untuk PC IMM Kota Surakarta menggunakan WordPress dan Elementor, menampilkan informasi organisasi, kegiatan, dan berita terkini dengan desain responsif dan modern.",
     tech: ["WordPress", "Elementor", "Google Search Console", "Yoast SEO"],
     url: "https://immsolo.or.id",
+    image: "/projects/imm-solo.png",
+    details: {
+      role: "WordPress Developer & SEO Specialist",
+      overview:
+        "Website resmi PC IMM (Pimpinan Cabang Ikatan Mahasiswa Muhammadiyah) Kota Surakarta dibangun untuk menjadi pusat informasi organisasi secara digital. Platform ini menampilkan profil organisasi, agenda kegiatan, berita terkini, dan informasi penting lainnya dengan tampilan yang profesional dan mudah dikelola oleh pengurus.",
+      contributions: [
+        "Membangun dan mengkonfigurasi website organisasi menggunakan CMS WordPress dengan tema yang sesuai identitas organisasi.",
+        "Menyesuaikan tampilan halaman menggunakan Elementor Page Builder untuk menciptakan layout yang profesional dan informatif.",
+        "Menerapkan strategi SEO on-page komprehensif menggunakan plugin Yoast SEO termasuk optimasi meta tag, struktur heading, dan sitemap XML.",
+        "Mendaftarkan dan mengelola properti website di Google Search Console untuk monitoring performa pencarian organik dan indeksasi konten.",
+        "Memastikan website responsif, cepat diakses, dan ramah pengguna di berbagai perangkat termasuk mobile.",
+      ],
+    },
   },
   {
     name: "Website Perkaderan PC IMM Kota Surakarta",
+    slug: "perkaderan-imm",
     description:
-      "Sistem absensi berbasis web menggunakan Laravel/Blade, dibangun untuk memudahkan pencatatan kehadiran.",
+      "Mengelola dan mengoptimalkan website perkaderan PC IMM Kota Surakarta dengan fokus pada peningkatan visibilitas di mesin pencari melalui strategi SEO teknis dan on-page.",
     tech: ["Google Search Console", "Yoast SEO", "SEO"],
     url: "https://perkaderan.immsolo.or.id",
+    image: "/projects/perkaderan-imm.png",
+    details: {
+      role: "SEO Specialist",
+      overview:
+        "Website Perkaderan PC IMM Kota Surakarta adalah platform digital yang menampilkan informasi dan program kaderisasi organisasi. Fokus utama pekerjaan di proyek ini adalah meningkatkan visibilitas website di hasil pencarian Google sehingga informasi perkaderan dapat lebih mudah ditemukan oleh mahasiswa yang membutuhkan.",
+      contributions: [
+        "Melakukan audit SEO menyeluruh untuk mengidentifikasi kelemahan teknis dan peluang optimasi pada website.",
+        "Menerapkan optimasi on-page menggunakan Yoast SEO mencakup meta title, meta description, canonical tag, dan struktur konten yang teroptimasi.",
+        "Mendaftarkan dan mengelola website di Google Search Console untuk memantau performa pencarian, crawl errors, dan coverage indeksasi.",
+        "Membangun strategi internal linking yang kuat antar halaman untuk meningkatkan distribusi otoritas halaman.",
+        "Memonitor dan melaporkan perkembangan peringkat kata kunci target secara berkala menggunakan data dari Google Search Console.",
+      ],
+    },
   },
   {
-    name: "Web Developer Intern DISKOMINFO SP Kota Surakarta (SiData)",
+    name: "Web Developer Intern — SiData DISKOMINFO SP Kota Surakarta",
+    slug: "sidata",
     description:
-      "Halaman link-in-bio personal, menampilkan semua tautan penting dalam satu halaman yang bersih.",
+      "Menjalankan program magang sebagai Web Developer di Dinas Komunikasi, Informatika, Statistik dan Persandian (DISKOMINFO SP) Kota Surakarta, berkontribusi pada pengembangan aplikasi SiData menggunakan Laravel dan Tailwind CSS.",
     tech: ["Laravel", "Tailwind CSS", "Github"],
-    url: "https://github.com/yakubfirman/links",
+    url: "https://github.com/yakubfirman",
+    image: "/projects/sidata.png",
+    details: {
+      role: "Web Developer Intern",
+      overview:
+        "Program magang di Dinas Komunikasi, Informatika, Statistik dan Persandian (DISKOMINFO SP) Kota Surakarta memberikan pengalaman nyata dalam pengembangan perangkat lunak instansi pemerintah. Selama magang, berkontribusi pada pengembangan aplikasi SiData — sistem informasi data yang digunakan untuk pengelolaan data statistik kota Surakarta.",
+      contributions: [
+        "Mengembangkan fitur-fitur baru pada aplikasi SiData menggunakan framework Laravel dengan pendekatan arsitektur MVC.",
+        "Membangun komponen antarmuka yang responsif dan modern menggunakan Tailwind CSS sesuai standar desain instansi.",
+        "Mengelola versi kode menggunakan Git dan berkolaborasi dengan tim pengembang melalui platform GitHub.",
+        "Melakukan debugging dan perbaikan bug pada modul-modul yang telah ada untuk meningkatkan stabilitas aplikasi.",
+        "Berkoordinasi dengan tim teknis dan stakeholder untuk memahami kebutuhan pengguna dan menerjemahkannya ke dalam fitur aplikasi.",
+      ],
+    },
   },
   {
     name: "Pemateri Workshop HIMATIF PORTABLE CLUB HIMATIF UMS",
+    slug: "workshop-himatif",
     description:
       "Berbagi wawasan teknis mengenai arsitektur web modern serta mendemonstrasikan praktik pengembangan web yang efisien kepada mahasiswa untuk meningkatkan kompetensi teknis.",
-    tech: ["HTML","CSS3", "Tailwind CSS", "Github"],
+    tech: ["HTML", "CSS3", "Tailwind CSS", "Github"],
     url: "https://www.instagram.com/p/DJ89MGNSymE/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    image: "/projects/workshop-himatif.png",
+    details: {
+      role: "Speaker & Instructor",
+      overview:
+        "Workshop Portable Club HIMATIF UMS adalah kegiatan pengembangan kompetensi yang diselenggarakan oleh Himpunan Mahasiswa Teknik Informatika Universitas Muhammadiyah Surakarta. Saya diundang sebagai pemateri untuk berbagi pengalaman dan pengetahuan tentang pengembangan web modern kepada mahasiswa teknik informatika.",
+      contributions: [
+        "Menyiapkan materi workshop yang komprehensif mencakup dasar-dasar HTML, CSS3, dan pengenalan Tailwind CSS sebagai framework styling modern.",
+        "Mendemonstrasikan cara membangun halaman web responsif secara live coding di hadapan peserta workshop.",
+        "Menjelaskan konsep version control menggunakan Git dan workflow kolaborasi tim menggunakan GitHub.",
+        "Membimbing peserta dalam sesi hands-on praktik langsung untuk membangun proyek web sederhana dari nol.",
+        "Menjawab pertanyaan dan memberikan insight mengenai dunia industri web development kepada mahasiswa.",
+      ],
+    },
   },
 ];

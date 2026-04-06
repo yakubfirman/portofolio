@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { NAV_LINKS } from "@/lib/data";
@@ -9,24 +11,39 @@ import { NAV_LINKS } from "@/lib/data";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("");
+  const [scrollActive, setScrollActive] = useState("");
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
-      const ids = NAV_LINKS.map((l) => l.href.slice(1));
+      if (pathname !== "/") return;
+      // Scroll-based active detection only on home page
+      const anchorLinks = NAV_LINKS.filter((l) => l.href.startsWith("/#"));
+      const ids = anchorLinks.map((l) => l.href.slice(2)); // "/#about" → "about"
       for (const id of [...ids].reverse()) {
         const el = document.getElementById(id);
         if (el && el.getBoundingClientRect().top <= 96) {
-          setActive(`#${id}`);
+          setScrollActive(`/#${id}`);
           return;
         }
       }
-      setActive("");
+      setScrollActive("");
     };
+    // Run once on mount too
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
+
+  const isActive = (href: string) => {
+    if (href.startsWith("/#")) {
+      // Anchor section — active only on home page via scroll position
+      return pathname === "/" && scrollActive === href;
+    }
+    // Real page — active when pathname matches or is a sub-path
+    return pathname === href || pathname.startsWith(href + "/");
+  };
 
   return (
     <header
@@ -40,7 +57,10 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
 
         {/* Logo */}
-        <a href="#hero" className="group flex shrink-0 items-center gap-2.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500/70 rounded-sm">
+        <Link
+          href="/"
+          className="group flex shrink-0 items-center gap-2.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500/70"
+        >
           <div className="relative">
             <div className="absolute inset-0 rounded-full bg-red-600/20 blur-md transition-all duration-500 group-hover:bg-red-500/35 group-hover:blur-lg" />
             <div className="relative h-8 w-8 overflow-hidden rounded-full ring-1 ring-red-800/50 transition-all duration-300 group-hover:ring-red-500/60">
@@ -55,27 +75,27 @@ export default function Navbar() {
               Portfolio
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-0.5 md:flex">
           {NAV_LINKS.map((link) => {
-            const isActive = active === link.href;
+            const active = isActive(link.href);
             return (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 rounded-sm ${
-                  isActive ? "text-white" : "text-gray-500 hover:text-gray-200"
+                className={`relative rounded-sm px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${
+                  active ? "text-white" : "text-gray-500 hover:text-gray-200"
                 }`}
               >
                 {link.label}
                 <span
                   className={`absolute bottom-0.5 left-1/2 h-0.5 -translate-x-1/2 rounded-full bg-red-500 transition-all duration-300 ${
-                    isActive ? "w-4 opacity-100" : "w-0 opacity-0"
+                    active ? "w-4 opacity-100" : "w-0 opacity-0"
                   }`}
                 />
-              </a>
+              </Link>
             );
           })}
         </nav>
@@ -116,24 +136,27 @@ export default function Navbar() {
       >
         <div className="border-t border-red-900/20 bg-[#0a0a0a]/98 px-5 pb-4 pt-2 backdrop-blur-xl">
           <nav className="flex flex-col gap-0.5">
-            {NAV_LINKS.map((link, i) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className={`flex items-center gap-2.5 rounded-sm px-3 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${
-                  active === link.href
-                    ? "bg-red-950/30 text-white"
-                    : "text-gray-400 hover:bg-red-950/15 hover:text-white"
-                }`}
-                style={{ transitionDelay: open ? `${i * 35}ms` : "0ms" }}
-              >
-                {active === link.href && (
-                  <span className="h-1 w-1 shrink-0 rounded-full bg-red-500" />
-                )}
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link, i) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center gap-2.5 rounded-sm px-3 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70 ${
+                    active
+                      ? "bg-red-950/30 text-white"
+                      : "text-gray-400 hover:bg-red-950/15 hover:text-white"
+                  }`}
+                  style={{ transitionDelay: open ? `${i * 35}ms` : "0ms" }}
+                >
+                  {active && (
+                    <span className="h-1 w-1 shrink-0 rounded-full bg-red-500" />
+                  )}
+                  {link.label}
+                </Link>
+              );
+            })}
             <div className="my-1.5 h-px bg-red-900/20" />
             <a
               href="mailto:yakubfirmanmustofa@gmail.com"
@@ -148,3 +171,4 @@ export default function Navbar() {
     </header>
   );
 }
+
