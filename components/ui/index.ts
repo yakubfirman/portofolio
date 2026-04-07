@@ -1,5 +1,6 @@
 export { default as AvailabilityPill } from "./AvailabilityPill";
 export { default as Button } from "./Button";
+export { default as ProjectCard } from "./ProjectCard";
 export type { ButtonVariant, ButtonSize } from "./Button";
 export { BUTTON_VARIANTS, BUTTON_SIZES } from "./Button";
 export { default as PageBackground } from "./PageBackground";

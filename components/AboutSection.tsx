@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { SectionHeading, Reveal } from "@/components/ui";
-import { ABOUT_META, ABOUT_EDUCATION } from "@/lib/data";
+import { ABOUT_META, ABOUT_EDUCATION, ABOUT_HIGHLIGHTS } from "@/lib/data";
 
 export default function AboutSection() {
   return (
