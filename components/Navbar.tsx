@@ -145,11 +145,11 @@ export default function Navbar() {
           {/* ── Right: CTA + hamburger ── */}
           <div className="flex items-center gap-2.5">
             <a
-              href="mailto:yakubfirmanmustofa@gmail.com"
+              href="#contact"
               className="btn-pulse group hidden items-center gap-2 rounded-xs bg-red-700 px-4 py-1.5 text-[13px] font-semibold text-white ring-1 ring-red-600/40 transition-all duration-200 hover:bg-red-600 hover:shadow-lg hover:shadow-red-950/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 md:inline-flex"
             >
-              <FontAwesomeIcon icon={faEnvelope} className="h-3 w-3 opacity-80" />
-              Hire Me
+              {/* <FontAwesomeIcon icon={faEnvelope} className="h-3 w-3 opacity-80" /> */}
+              Contact Me
             </a>
 
             {/* Hamburger */}
