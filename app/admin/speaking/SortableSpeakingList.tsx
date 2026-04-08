@@ -36,7 +36,7 @@ function SortableRow({ event }: { event: SpeakingEvent }) {
     <div
       ref={setNodeRef}
       style={style}
-      className="flex items-center gap-3 rounded border border-white/5 bg-[#0d0d0d] p-4 transition-colors hover:border-white/10"
+      className="flex items-center gap-2 rounded border border-white/5 bg-[#0d0d0d] p-3 transition-colors hover:border-white/10 sm:gap-3 sm:p-4"
     >
       <button
         {...attributes}
@@ -72,7 +72,7 @@ function SortableRow({ event }: { event: SpeakingEvent }) {
       <div className="flex shrink-0 items-center gap-2">
         <Link
           href={`/admin/speaking/${event.id}`}
-          className="flex items-center gap-1.5 rounded border border-white/10 px-3 py-1.5 text-xs text-gray-400 transition-colors hover:border-white/20 hover:text-white"
+          className="flex items-center gap-1.5 rounded border border-white/10 px-2 py-1.5 text-xs text-gray-400 transition-colors hover:border-white/20 hover:text-white sm:px-3"
         >
           <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -82,7 +82,7 @@ function SortableRow({ event }: { event: SpeakingEvent }) {
               d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"
             />
           </svg>
-          Edit
+          <span className="hidden sm:inline">Edit</span>
         </Link>
         <DeleteSpeakingButton id={event.id!} title={event.title} />
       </div>

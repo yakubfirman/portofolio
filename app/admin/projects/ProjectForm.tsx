@@ -80,7 +80,7 @@ export default function ProjectForm({ initialData }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl">
-      <div className="space-y-5 rounded border border-white/5 bg-[#0d0d0d] p-6">
+      <div className="space-y-5 rounded border border-white/5 bg-[#0d0d0d] p-4 sm:p-6">
         <div>
           <label className={labelCls}>Nama Project *</label>
           <input
@@ -119,7 +119,7 @@ export default function ProjectForm({ initialData }: Props) {
             placeholder="React, Tailwind CSS, ..."
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className={labelCls}>URL Project</label>
             <input
@@ -185,7 +185,7 @@ export default function ProjectForm({ initialData }: Props) {
           </div>
         )}
       </div>
-      <div className="mt-4 flex items-center gap-3">
+      <div className="mt-4 flex flex-wrap items-center gap-3">
         <button
           type="submit"
           disabled={pending}

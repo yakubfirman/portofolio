@@ -59,7 +59,7 @@ export default function SpeakingForm({ initialData }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl">
-      <div className="space-y-5 rounded border border-white/5 bg-[#0d0d0d] p-6">
+      <div className="space-y-5 rounded border border-white/5 bg-[#0d0d0d] p-4 sm:p-6">
         <div>
           <label className={labelCls}>Judul Talk *</label>
           <input
@@ -78,7 +78,7 @@ export default function SpeakingForm({ initialData }: Props) {
             required
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className={labelCls}>Penyelenggara</label>
             <input
@@ -97,7 +97,7 @@ export default function SpeakingForm({ initialData }: Props) {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className={labelCls}>Lokasi</label>
             <input
@@ -151,7 +151,7 @@ export default function SpeakingForm({ initialData }: Props) {
           </div>
         )}
       </div>
-      <div className="mt-4 flex items-center gap-3">
+      <div className="mt-4 flex flex-wrap items-center gap-3">
         <button
           type="submit"
           disabled={pending}

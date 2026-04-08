@@ -20,7 +20,7 @@ export default function DeleteProjectButton({ slug, name }: { slug: string; name
     <button
       onClick={handleDelete}
       disabled={pending}
-      className="flex items-center gap-1.5 rounded border border-red-900/30 px-3 py-1.5 text-xs text-red-800 transition-colors hover:border-red-800/50 hover:text-red-400 disabled:opacity-50"
+      className="flex items-center gap-1.5 rounded border border-red-900/30 px-2 py-1.5 text-xs text-red-800 transition-colors hover:border-red-800/50 hover:text-red-400 disabled:opacity-50 sm:px-3"
     >
       {pending ? (
         <svg className="h-3 w-3 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -48,7 +48,7 @@ export default function DeleteProjectButton({ slug, name }: { slug: string; name
           />
         </svg>
       )}
-      Hapus
+      <span className="hidden sm:inline">Hapus</span>
     </button>
   );
 }

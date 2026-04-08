@@ -39,7 +39,7 @@ export default async function EditProjectPage({ params }: { params: Promise<{ sl
         <p className="mb-1 text-[10px] font-semibold tracking-widest text-red-500/70 uppercase">
           Admin · Projects
         </p>
-        <h1 className="text-2xl font-bold text-white">Edit Project</h1>
+        <h1 className="text-xl font-bold text-white sm:text-2xl">Edit Project</h1>
         <p className="mt-0.5 font-mono text-xs text-gray-600">{project.slug}</p>
       </div>
       <div className="mb-6 h-px bg-linear-to-r from-red-900/20 via-white/5 to-transparent" />
