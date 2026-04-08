@@ -36,26 +36,26 @@ function SortableRow({ event }: { event: SpeakingEvent }) {
     <div
       ref={setNodeRef}
       style={style}
-      className="bg-[#0f0f0f] border border-white/5 rounded p-4 flex items-center gap-3"
+      className="flex items-center gap-3 rounded border border-white/5 bg-[#0f0f0f] p-4"
     >
       <button
         {...attributes}
         {...listeners}
-        className="cursor-grab active:cursor-grabbing text-gray-600 hover:text-gray-400 px-1 touch-none"
+        className="cursor-grab touch-none px-1 text-gray-600 hover:text-gray-400 active:cursor-grabbing"
         aria-label="Drag to reorder"
       >
         ⠿
       </button>
-      <div className="flex-1 min-w-0">
-        <p className="text-white text-sm font-medium truncate">{event.title}</p>
-        <p className="text-gray-500 text-xs mt-0.5">
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-sm font-medium text-white">{event.title}</p>
+        <p className="mt-0.5 text-xs text-gray-500">
           {event.event} — {event.date}
         </p>
       </div>
-      <div className="flex items-center gap-2 shrink-0">
+      <div className="flex shrink-0 items-center gap-2">
         <Link
           href={`/admin/speaking/${event.id}`}
-          className="text-gray-400 hover:text-white text-sm px-3 py-1.5 border border-white/10 rounded transition-colors"
+          className="rounded border border-white/10 px-3 py-1.5 text-sm text-gray-400 transition-colors hover:text-white"
         >
           Edit
         </Link>
@@ -97,8 +97,8 @@ export default function SortableSpeakingList({
 
   return (
     <div>
-      {saved && <p className="text-green-400 text-xs mb-3">Urutan tersimpan ✓</p>}
-      {pending && <p className="text-gray-500 text-xs mb-3">Menyimpan urutan...</p>}
+      {saved && <p className="mb-3 text-xs text-green-400">Urutan tersimpan ✓</p>}
+      {pending && <p className="mb-3 text-xs text-gray-500">Menyimpan urutan...</p>}
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={events.map((ev) => ev.id!)} strategy={verticalListSortingStrategy}>
           <div className="space-y-2">
