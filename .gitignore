@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# backend (Flask/Python — deploy via PythonAnywhere, tidak perlu di GitHub)
+/backend/

@@ -46,8 +46,12 @@ function SortableRow({ project }: { project: Project }) {
         aria-label="Drag to reorder"
       >
         <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
-          <circle cx="5" cy="4" r="1.2" /><circle cx="5" cy="8" r="1.2" /><circle cx="5" cy="12" r="1.2" />
-          <circle cx="11" cy="4" r="1.2" /><circle cx="11" cy="8" r="1.2" /><circle cx="11" cy="12" r="1.2" />
+          <circle cx="5" cy="4" r="1.2" />
+          <circle cx="5" cy="8" r="1.2" />
+          <circle cx="5" cy="12" r="1.2" />
+          <circle cx="11" cy="4" r="1.2" />
+          <circle cx="11" cy="8" r="1.2" />
+          <circle cx="11" cy="12" r="1.2" />
         </svg>
       </button>
       <div className="min-w-0 flex-1">
@@ -57,7 +61,9 @@ function SortableRow({ project }: { project: Project }) {
       {/* Tech badges */}
       <div className="hidden shrink-0 items-center gap-1 sm:flex">
         {project.tech.slice(0, 3).map((t) => (
-          <span key={t} className="rounded bg-white/5 px-1.5 py-0.5 text-[10px] text-gray-500">{t}</span>
+          <span key={t} className="rounded bg-white/5 px-1.5 py-0.5 text-[10px] text-gray-500">
+            {t}
+          </span>
         ))}
         {project.tech.length > 3 && (
           <span className="text-[10px] text-gray-700">+{project.tech.length - 3}</span>
