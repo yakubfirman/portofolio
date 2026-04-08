@@ -1,10 +1,12 @@
 import { NAV_LINKS } from "@/lib/data";
-import { SOCIALS } from "@/lib/data";
+import type { Social } from "@/lib/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faMapPin } from "@fortawesome/free-solid-svg-icons";
 import { Reveal } from "@/components/ui";
 
-export default function Footer() {
+type Props = { socials: Social[] };
+
+export default function Footer({ socials }: Props) {
   return (
     <footer className="relative overflow-hidden border-t border-red-900/20 bg-[#060606]">
       {/* ── Decorative ── */}
@@ -61,7 +63,7 @@ export default function Footer() {
                 Sosial Media
               </p>
               <div className="flex flex-col gap-2.5">
-                {SOCIALS.map(({ label, href, icon }) => (
+                {socials.map(({ label, href, icon }) => (
                   <a
                     key={label}
                     href={href}

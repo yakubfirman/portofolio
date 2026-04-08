@@ -10,8 +10,17 @@ import {
   ContactSection,
   Footer,
 } from "@/components";
+import { getAbout, getSkillCategories, getProjects, getSpeaking, getSocials } from "@/lib/data";
 
-export default function Home() {
+export default async function Home() {
+  const [about, skillCategories, projects, speaking, socials] = await Promise.all([
+    getAbout(),
+    getSkillCategories(),
+    getProjects(),
+    getSpeaking(),
+    getSocials(),
+  ]);
+
   return (
     <div className="relative bg-[#0a0a0a]">
       {/* ── Global decorative background (fixed — always behind content) ── */}
@@ -49,15 +58,19 @@ export default function Home() {
         <Navbar />
         <main className="text-white">
           <HeroSection />
-          <AboutSection />
-          <SkillsSection />
-          <ProjectsSection />
-          <SpeakingSection />
+          <AboutSection
+            meta={about.meta}
+            education={about.education}
+            highlights={about.highlights}
+          />
+          <SkillsSection categories={skillCategories} />
+          <ProjectsSection projects={projects} />
+          <SpeakingSection events={speaking} />
           <WorkflowSection />
           <GitHubSection />
-          <ContactSection />
+          <ContactSection socials={socials} />
         </main>
-        <Footer />
+        <Footer socials={socials} />
       </div>
     </div>
   );

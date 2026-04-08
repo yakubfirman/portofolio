@@ -2,9 +2,15 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { SectionHeading, Reveal } from "@/components/ui";
-import { ABOUT_META, ABOUT_EDUCATION, ABOUT_HIGHLIGHTS } from "@/lib/data";
+import type { AboutMeta, AboutEducation, AboutHighlight } from "@/lib/data";
 
-export default function AboutSection() {
+type Props = {
+  meta: AboutMeta[];
+  education: AboutEducation[];
+  highlights: AboutHighlight[];
+};
+
+export default function AboutSection({ meta, education, highlights }: Props) {
   return (
     <section id="about" className="px-5 py-20 sm:px-8 md:py-28">
       <div className="mx-auto max-w-5xl">
@@ -35,7 +41,7 @@ export default function AboutSection() {
 
               {/* Meta pills */}
               <div className="flex flex-wrap gap-2">
-                {ABOUT_META.map(({ icon, text }) => (
+                {meta.map(({ icon, text }) => (
                   <span
                     key={text}
                     className="flex items-center gap-2 rounded-xs border border-red-900/30 bg-[#0f0505] px-3.5 py-2 text-xs text-gray-400"
@@ -53,7 +59,7 @@ export default function AboutSection() {
               {/* Education */}
               <div>
                 <div className="flex flex-col gap-3">
-                  {ABOUT_EDUCATION.map((edu) => (
+                  {education.map((edu) => (
                     <div
                       key={edu.school}
                       className="flex items-start gap-3.5 rounded-xs border border-red-900/20 bg-[#0f0505] px-4 py-3"

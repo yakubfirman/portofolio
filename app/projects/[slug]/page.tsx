@@ -10,12 +10,13 @@ import {
   faBriefcase,
   faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import { PROJECTS } from "@/lib/data";
+import { getProjectBySlug, getProjectSlugs, getSocials } from "@/lib/data";
 import { Navbar, Footer } from "@/components";
 import { Reveal, PageBackground, TechBadge } from "@/components/ui";
 
-export function generateStaticParams() {
-  return PROJECTS.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const slugs = await getProjectSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -24,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = PROJECTS.find((p) => p.slug === slug);
+  const project = await getProjectBySlug(slug);
   if (!project) return {};
   return {
     title: `${project.name} — Yakub Firman Mustofa`,
@@ -35,7 +36,7 @@ export async function generateMetadata({
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = PROJECTS.find((p) => p.slug === slug);
+  const [project, socials] = await Promise.all([getProjectBySlug(slug), getSocials()]);
   if (!project) notFound();
 
   return (
@@ -249,7 +250,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         </div>
       </main>
 
-      <Footer />
+      <Footer socials={socials} />
     </div>
   );
 }

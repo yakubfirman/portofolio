@@ -1,49 +1,52 @@
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import {
-  faLocationDot,
-  faBriefcase,
-  faGraduationCap,
-  faSchool,
-} from "@fortawesome/free-solid-svg-icons";
+import { ICON_MAP } from "@/lib/icon-map";
 
-export const ABOUT_META: { icon: IconDefinition; text: string }[] = [
-  { icon: faLocationDot, text: "Surakarta, Jawa Tengah" },
-  { icon: faBriefcase, text: "2+ Tahun Freelance" },
-];
-
-export const ABOUT_EDUCATION: {
+export type AboutMeta = { icon: IconDefinition; text: string };
+export type AboutEducation = {
   icon: IconDefinition;
   degree: string;
   school: string;
   year: string;
   note: string | null;
-}[] = [
-  {
-    icon: faGraduationCap,
-    degree: "S1 Teknik Informatika",
-    school: "Universitas Muhammadiyah Surakarta",
-    year: "2026",
-    note: "IPK 3.63",
-  },
-  {
-    icon: faSchool,
-    degree: "Teknik Komputer dan Jaringan",
-    school: "SMK Negeri 1 Tuban",
-    year: "2021",
-    note: null,
-  },
-];
+};
+export type AboutHighlight = { value: string; label: string };
 
-export const ABOUT_HIGHLIGHTS: { value: string; label: string }[] = [
-  { value: "2+", label: "Tahun\nPengalaman" },
-  { value: "14+", label: "Proyek\nSelesai" },
-  { value: "100%", label: "Klien\nPuas" },
-];
+export type AboutData = {
+  meta: AboutMeta[];
+  education: AboutEducation[];
+  highlights: AboutHighlight[];
+  focus_tags: string[];
+};
 
-export const ABOUT_FOCUS_TAGS: string[] = [
-  "React / Next.js",
-  "Laravel",
-  "Tailwind CSS",
-  "SEO & GSC",
-  "WordPress",
-];
+const API_URL = process.env.API_URL;
+
+export async function getAbout(): Promise<AboutData> {
+  const res = await fetch(`${API_URL}/api/about`, {
+    next: { revalidate: 3600 },
+  });
+  if (!res.ok) throw new Error("Failed to fetch about data");
+  const raw = await res.json();
+  return {
+    meta: raw.meta.map((m: { icon_key: string; text: string }) => ({
+      icon: ICON_MAP[m.icon_key],
+      text: m.text,
+    })),
+    education: raw.education.map(
+      (e: {
+        icon_key: string;
+        degree: string;
+        school: string;
+        year: string;
+        note: string | null;
+      }) => ({
+        icon: ICON_MAP[e.icon_key],
+        degree: e.degree,
+        school: e.school,
+        year: e.year,
+        note: e.note,
+      })
+    ),
+    highlights: raw.highlights,
+    focus_tags: raw.focus_tags,
+  };
+}

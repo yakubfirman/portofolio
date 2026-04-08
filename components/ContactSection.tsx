@@ -5,10 +5,12 @@ import {
   faMapPin,
   faArrowUpRightFromSquare,
 } from "@fortawesome/free-solid-svg-icons";
-import { SOCIALS } from "@/lib/data";
+import type { Social } from "@/lib/data";
 import { SectionHeading, AvailabilityPill, Reveal } from "@/components/ui";
 
-export default function ContactSection() {
+type Props = { socials: Social[] };
+
+export default function ContactSection({ socials }: Props) {
   return (
     <section id="contact" className="px-5 py-20 sm:px-8 md:py-28">
       <div className="mx-auto max-w-5xl">
@@ -55,7 +57,7 @@ export default function ContactSection() {
               Temukan saya di
             </p>
             <div className="flex flex-col gap-1">
-              {SOCIALS.map(({ label, href, icon }) => (
+              {socials.map(({ label, href, icon }) => (
                 <a
                   key={label}
                   href={href}

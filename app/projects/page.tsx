@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { PROJECTS } from "@/lib/data";
+import { getProjects, getSocials } from "@/lib/data";
 import { Navbar, Footer } from "@/components";
 import { Button, SectionHeading, Reveal, PageBackground, ProjectCard } from "@/components/ui";
 
@@ -13,7 +13,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/projects" },
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const [projects, socials] = await Promise.all([getProjects(), getSocials()]);
+
   return (
     <div className="relative min-h-screen bg-[#0a0a0a]">
       <PageBackground />
@@ -33,7 +35,7 @@ export default function ProjectsPage() {
 
           {/* ── Projects grid ── */}
           <div className="grid gap-6 sm:grid-cols-2">
-            {PROJECTS.map((project, index) => (
+            {projects.map((project, index) => (
               <Reveal key={project.slug} delay={index * 80} className="h-full">
                 <ProjectCard project={project} />
               </Reveal>
@@ -41,7 +43,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* ── GitHub CTA ── */}
-          <Reveal delay={PROJECTS.length * 80}>
+          <Reveal delay={projects.length * 80}>
             <div className="mt-14 flex justify-center">
               <a
                 href="https://github.com/yakubfirman"
@@ -61,7 +63,7 @@ export default function ProjectsPage() {
         </div>
       </main>
 
-      <Footer />
+      <Footer socials={socials} />
     </div>
   );
 }

@@ -11,16 +11,18 @@ import {
   faChevronDown,
   faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
-import { SPEAKING } from "@/lib/data";
+import type { SpeakingEvent } from "@/lib/data";
 import { SectionHeading, Reveal } from "@/components/ui";
+
+type Props = { events: SpeakingEvent[] };
 
 const INITIAL_SHOW = 2;
 
-export default function SpeakingSection() {
+export default function SpeakingSection({ events }: Props) {
   const [showAll, setShowAll] = useState(false);
 
-  const visible = showAll ? SPEAKING : SPEAKING.slice(0, INITIAL_SHOW);
-  const hasMore = SPEAKING.length > INITIAL_SHOW;
+  const visible = showAll ? events : events.slice(0, INITIAL_SHOW);
+  const hasMore = events.length > INITIAL_SHOW;
 
   return (
     <section id="speaking" className="px-5 py-20 sm:px-8 md:py-28">
@@ -121,7 +123,7 @@ export default function SpeakingSection() {
                   </>
                 ) : (
                   <>
-                    Lihat Semua ({SPEAKING.length - INITIAL_SHOW} lainnya)
+                    Lihat Semua ({events.length - INITIAL_SHOW} lainnya)
                     <FontAwesomeIcon icon={faChevronDown} className="h-3 w-3" />
                   </>
                 )}

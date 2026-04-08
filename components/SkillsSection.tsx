@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SKILL_CATEGORIES } from "@/lib/data";
 import { SectionHeading, Reveal } from "@/components/ui";
+import type { SkillCategory } from "@/lib/data";
 
-export default function SkillsSection() {
+type Props = { categories: SkillCategory[] };
+
+export default function SkillsSection({ categories }: Props) {
   return (
     <section id="skills" className="px-5 py-20 sm:px-8 md:py-28">
       <div className="mx-auto max-w-5xl">
@@ -11,7 +13,7 @@ export default function SkillsSection() {
         </Reveal>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {SKILL_CATEGORIES.map((cat, i) => (
+          {categories.map((cat, i) => (
             <Reveal key={cat.label} delay={i * 80}>
               <div className="flex h-full flex-col rounded-xs border border-red-900/20 bg-[#0f0505] p-5 transition-all duration-200 hover:border-red-800/40 hover:bg-red-950/20">
                 {/* Category header */}

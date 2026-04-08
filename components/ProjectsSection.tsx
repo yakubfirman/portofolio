@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { PROJECTS } from "@/lib/data";
+import type { Project } from "@/lib/data";
 import { SectionHeading, Button, Reveal, ProjectCard } from "@/components/ui";
 
-export default function ProjectsSection() {
+type Props = { projects: Project[] };
+
+export default function ProjectsSection({ projects }: Props) {
   return (
     <section id="projects" className="px-5 py-20 sm:px-8 md:py-28">
       <div className="mx-auto max-w-5xl">
@@ -13,7 +15,7 @@ export default function ProjectsSection() {
         </Reveal>
 
         <div className="grid gap-5 sm:grid-cols-2">
-          {PROJECTS.slice(0, 4).map((project, index) => (
+          {projects.slice(0, 4).map((project, index) => (
             <Reveal key={project.slug} delay={index * 80} className="h-full">
               <ProjectCard project={project} />
             </Reveal>
