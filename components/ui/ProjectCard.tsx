@@ -2,11 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faBookOpen } from "@fortawesome/free-solid-svg-icons";
-import type { PROJECTS } from "@/lib/data/projects";
+import type { Project } from "@/lib/data/projects";
 import Button from "./Button";
 import RoleBadge from "./RoleBadge";
-
-type Project = (typeof PROJECTS)[number];
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (
