@@ -394,6 +394,46 @@ def conn_max_order(table: str) -> int:
         conn.close()
 
 
+# ─── Reorder endpoints ────────────────────────────────────────────────────────
+
+@app.route("/api/projects/reorder", methods=["POST"])
+@require_api_key
+def reorder_projects():
+    """Body: { "order": ["slug1", "slug2", ...] }"""
+    data = request.get_json(silent=True) or {}
+    order = data.get("order", [])
+    if not isinstance(order, list):
+        return jsonify({"error": "order must be a list"}), 400
+    conn = get_db()
+    try:
+        for i, slug in enumerate(order):
+            if not SLUG_RE.match(str(slug)):
+                continue
+            conn.execute("UPDATE projects SET sort_order=? WHERE slug=?", (i, slug))
+        conn.commit()
+        return jsonify({"success": True})
+    finally:
+        conn.close()
+
+
+@app.route("/api/speaking/reorder", methods=["POST"])
+@require_api_key
+def reorder_speaking():
+    """Body: { "order": [1, 2, 3, ...] }  (list of IDs)"""
+    data = request.get_json(silent=True) or {}
+    order = data.get("order", [])
+    if not isinstance(order, list):
+        return jsonify({"error": "order must be a list"}), 400
+    conn = get_db()
+    try:
+        for i, event_id in enumerate(order):
+            conn.execute("UPDATE speaking_events SET sort_order=? WHERE id=?", (i, int(event_id)))
+        conn.commit()
+        return jsonify({"success": True})
+    finally:
+        conn.close()
+
+
 # ─── Entry point (development only) ─────────────────────────────────────────
 
 if __name__ == "__main__":

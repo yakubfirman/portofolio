@@ -99,3 +99,30 @@ export async function deleteSpeaking(id: number) {
   revalidatePath("/");
   revalidatePath("/admin/speaking");
 }
+
+// ─── Reorder ──────────────────────────────────────────────────────────────────
+
+export async function reorderProjects(order: string[]) {
+  const res = await fetch(`${API_URL}/api/projects/reorder`, {
+    method: "POST",
+    headers: authHeaders,
+    body: JSON.stringify({ order }),
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Gagal menyimpan urutan project");
+  revalidatePath("/");
+  revalidatePath("/projects");
+  revalidatePath("/admin/projects");
+}
+
+export async function reorderSpeaking(order: number[]) {
+  const res = await fetch(`${API_URL}/api/speaking/reorder`, {
+    method: "POST",
+    headers: authHeaders,
+    body: JSON.stringify({ order }),
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Gagal menyimpan urutan speaking");
+  revalidatePath("/");
+  revalidatePath("/admin/speaking");
+}

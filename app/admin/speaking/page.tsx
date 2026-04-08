@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { SpeakingEvent } from "@/lib/data";
-import DeleteSpeakingButton from "./DeleteSpeakingButton";
+import SortableSpeakingList from "./SortableSpeakingList";
 
 export const dynamic = "force-dynamic";
 
@@ -24,33 +24,8 @@ export default async function AdminSpeakingPage() {
           + Tambah Event
         </Link>
       </div>
-      <div className="space-y-3">
-        {events.map((ev) => (
-          <div
-            key={ev.id}
-            className="flex items-center justify-between gap-4 rounded border border-white/5 bg-[#0f0f0f] p-4"
-          >
-            <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-white">{ev.title}</p>
-              <p className="mt-0.5 text-xs text-gray-500">
-                {ev.event} — {ev.date}
-              </p>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
-              <Link
-                href={`/admin/speaking/${ev.id}`}
-                className="rounded border border-white/10 px-3 py-1.5 text-sm text-gray-400 transition-colors hover:text-white"
-              >
-                Edit
-              </Link>
-              <DeleteSpeakingButton id={ev.id!} title={ev.title} />
-            </div>
-          </div>
-        ))}
-        {events.length === 0 && (
-          <p className="py-8 text-center text-sm text-gray-600">Belum ada speaking event.</p>
-        )}
-      </div>
+      <p className="mb-3 text-xs text-gray-600">Drag ⠿ untuk mengubah urutan tampilan.</p>
+      <SortableSpeakingList initialEvents={events} />
     </div>
   );
 }
