@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { writeFile, mkdir } from "fs/promises";
+import { put } from "@vercel/blob";
 import path from "path";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-const MAX_SIZE = 4 * 1024 * 1024; // 4 MB — stays within Vercel 4.5 MB serverless limit
+const MAX_SIZE = 4 * 1024 * 1024; // 4 MB
 
 export async function POST(req: NextRequest) {
   // Auth check — cookie stores AUTH_SECRET (set by the login route)
@@ -29,13 +29,10 @@ export async function POST(req: NextRequest) {
   }
 
   if (file.size > MAX_SIZE) {
-    return NextResponse.json({ error: "Ukuran file maksimal 5 MB." }, { status: 400 });
+    return NextResponse.json({ error: "Ukuran file maksimal 4 MB." }, { status: 400 });
   }
 
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-
-  // Sanitize filename — keep only safe characters
+  // Sanitize filename
   const originalName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
   const ext = path.extname(originalName).toLowerCase() || ".jpg";
   const basename = path
@@ -43,13 +40,12 @@ export async function POST(req: NextRequest) {
     .toLowerCase()
     .replace(/[^a-z0-9-]/g, "-")
     .slice(0, 60);
-  const filename = `${basename}${ext}`;
+  const filename = `projects/${basename}${ext}`;
 
-  const uploadDir = path.join(process.cwd(), "public", "projects");
-  await mkdir(uploadDir, { recursive: true });
+  const blob = await put(filename, file, {
+    access: "public",
+    addRandomSuffix: true,
+  });
 
-  const filePath = path.join(uploadDir, filename);
-  await writeFile(filePath, buffer);
-
-  return NextResponse.json({ path: `/projects/${filename}` });
+  return NextResponse.json({ path: blob.url });
 }
