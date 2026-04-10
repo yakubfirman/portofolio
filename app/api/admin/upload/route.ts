@@ -4,13 +4,13 @@ import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
+const MAX_SIZE = 4 * 1024 * 1024; // 4 MB — stays within Vercel 4.5 MB serverless limit
 
 export async function POST(req: NextRequest) {
-  // Auth check — must have valid admin_token cookie
+  // Auth check — cookie stores AUTH_SECRET (set by the login route)
   const cookieStore = await cookies();
   const token = cookieStore.get("admin_token")?.value;
-  if (!token || token !== process.env.ADMIN_PASSWORD) {
+  if (!token || token !== process.env.AUTH_SECRET) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -38,7 +38,8 @@ export async function POST(req: NextRequest) {
   // Sanitize filename — keep only safe characters
   const originalName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
   const ext = path.extname(originalName).toLowerCase() || ".jpg";
-  const basename = path.basename(originalName, ext)
+  const basename = path
+    .basename(originalName, ext)
     .toLowerCase()
     .replace(/[^a-z0-9-]/g, "-")
     .slice(0, 60);

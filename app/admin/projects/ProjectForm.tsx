@@ -12,13 +12,7 @@ const inputCls =
   "w-full bg-[#0a0a0a] border border-white/8 rounded px-3 py-2.5 text-white text-sm placeholder-gray-700 focus:outline-none focus:border-red-800/60 focus:bg-[#0d0d0d] transition-all";
 const labelCls = "block text-[11px] font-medium text-gray-500 mb-1.5 tracking-wide uppercase";
 
-function ImageUploader({
-  value,
-  onChange,
-}: {
-  value: string;
-  onChange: (path: string) => void;
-}) {
+function ImageUploader({ value, onChange }: { value: string; onChange: (path: string) => void }) {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -66,13 +60,7 @@ function ImageUploader({
       >
         {value ? (
           <div className="relative h-32 w-full overflow-hidden rounded">
-            <Image
-              src={value}
-              alt="Preview"
-              fill
-              className="object-contain p-2"
-              unoptimized
-            />
+            <Image src={value} alt="Preview" fill className="object-contain p-2" unoptimized />
             <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
               <p className="text-xs text-white">Klik untuk ganti gambar</p>
             </div>
@@ -82,19 +70,41 @@ function ImageUploader({
             {uploading ? (
               <>
                 <svg className="h-6 w-6 animate-spin text-red-500" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  />
                 </svg>
                 <p className="text-xs text-gray-500">Mengupload...</p>
               </>
             ) : (
               <>
-                <svg className="h-8 w-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 21h18M3.75 3h16.5A.75.75 0 0121 3.75v12a.75.75 0 01-.75.75H3.75a.75.75 0 01-.75-.75v-12A.75.75 0 013.75 3z" />
+                <svg
+                  className="h-8 w-8 text-gray-700"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 21h18M3.75 3h16.5A.75.75 0 0121 3.75v12a.75.75 0 01-.75.75H3.75a.75.75 0 01-.75-.75v-12A.75.75 0 013.75 3z"
+                  />
                 </svg>
                 <div>
-                  <p className="text-sm text-gray-500">Drag &amp; drop atau <span className="text-red-400">pilih file</span></p>
+                  <p className="text-sm text-gray-500">
+                    Drag &amp; drop atau <span className="text-red-400">pilih file</span>
+                  </p>
                   <p className="mt-0.5 text-[11px] text-gray-700">JPG, PNG, WebP · maks 5 MB</p>
                 </div>
               </>
@@ -114,7 +124,11 @@ function ImageUploader({
       {uploadError && (
         <p className="flex items-center gap-1.5 text-xs text-red-400">
           <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+              clipRule="evenodd"
+            />
           </svg>
           {uploadError}
         </p>
@@ -131,7 +145,12 @@ function ImageUploader({
             title="Hapus gambar"
           >
             <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -229,7 +248,7 @@ export default function ProjectForm({ initialData }: Props) {
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
                 required
-                pattern="[a-z0-9-]+"
+                pattern="[-a-z0-9]+"
               />
             </div>
           </div>
@@ -301,8 +320,16 @@ export default function ProjectForm({ initialData }: Props) {
 
           {error && (
             <div className="flex items-center gap-2 rounded border border-red-900/30 bg-red-950/20 px-3 py-2">
-              <svg className="h-3.5 w-3.5 shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              <svg
+                className="h-3.5 w-3.5 shrink-0 text-red-500"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
               </svg>
               <p className="text-xs text-red-400">{error}</p>
             </div>
@@ -327,12 +354,28 @@ export default function ProjectForm({ initialData }: Props) {
         >
           {pending ? (
             <svg className="h-3.5 w-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              />
             </svg>
           ) : (
             <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.5 12.75l6 6 9-13.5" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4.5 12.75l6 6 9-13.5"
+              />
             </svg>
           )}
           {pending ? "Menyimpan..." : isEdit ? "Simpan Perubahan" : "Buat Project"}
@@ -343,7 +386,12 @@ export default function ProjectForm({ initialData }: Props) {
           className="flex items-center gap-1.5 rounded border border-white/10 px-4 py-2.5 text-sm text-gray-500 transition-colors hover:border-white/20 hover:text-white"
         >
           <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
           Batal
         </button>

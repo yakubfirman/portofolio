@@ -14,7 +14,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <div className="flex h-screen flex-col bg-[#0a0a0a] text-white overflow-hidden">
+    <div className="flex h-screen flex-col overflow-hidden bg-[#0a0a0a] text-white">
       {/* Top red accent line */}
       <div className="h-px w-full shrink-0 bg-linear-to-r from-transparent via-red-700/60 to-transparent" />
 
@@ -54,7 +54,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
         {/* Sidebar — fixed drawer on mobile, sticky panel on desktop */}
         <div
-          className={`fixed inset-y-0 left-0 z-50 transition-transform duration-200 ease-in-out md:static md:z-auto md:translate-x-0 md:flex md:h-full md:flex-col ${
+          className={`fixed inset-y-0 left-0 z-50 transition-transform duration-200 ease-in-out md:static md:z-auto md:flex md:h-full md:translate-x-0 md:flex-col ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
