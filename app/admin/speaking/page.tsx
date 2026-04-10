@@ -5,9 +5,13 @@ import SortableSpeakingList from "./SortableSpeakingList";
 export const dynamic = "force-dynamic";
 
 async function fetchSpeaking(): Promise<SpeakingEvent[]> {
-  const res = await fetch(`${process.env.API_URL}/api/speaking`, { cache: "no-store" });
-  if (!res.ok) return [];
-  return res.json();
+  try {
+    const res = await fetch(`${process.env.API_URL}/api/speaking`, { cache: "no-store" });
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
 }
 
 export default async function AdminSpeakingPage() {

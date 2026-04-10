@@ -5,9 +5,13 @@ import SortableProjectList from "./SortableProjectList";
 export const dynamic = "force-dynamic";
 
 async function fetchProjects(): Promise<Project[]> {
-  const res = await fetch(`${process.env.API_URL}/api/projects`, { cache: "no-store" });
-  if (!res.ok) return [];
-  return res.json();
+  try {
+    const res = await fetch(`${process.env.API_URL}/api/projects`, { cache: "no-store" });
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
 }
 
 export default async function AdminProjectsPage() {
