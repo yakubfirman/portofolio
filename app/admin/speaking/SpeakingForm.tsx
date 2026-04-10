@@ -58,7 +58,7 @@ export default function SpeakingForm({ initialData }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl">
+    <form onSubmit={handleSubmit} className="w-full">
       <div className="space-y-5 rounded border border-white/5 bg-[#0d0d0d] p-4 sm:p-6">
         <div>
           <label className={labelCls}>Judul Talk *</label>

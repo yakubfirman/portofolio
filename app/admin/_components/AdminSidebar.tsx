@@ -44,7 +44,7 @@ export default function AdminSidebar({ onClose }: { onClose?: () => void }) {
   }
 
   return (
-    <aside className="flex h-full min-h-screen w-64 shrink-0 flex-col border-r border-white/5 bg-[#0d0d0d] md:sticky md:top-0 md:h-screen md:w-56">
+    <aside className="flex h-full w-64 shrink-0 flex-col overflow-y-auto border-r border-white/5 bg-[#0d0d0d] md:w-56">
       {/* Brand */}
       <div className="flex items-center gap-3 border-b border-white/5 px-4 py-4">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm border border-red-900/40 bg-red-900/20">
@@ -61,7 +61,12 @@ export default function AdminSidebar({ onClose }: { onClose?: () => void }) {
             aria-label="Tutup menu"
           >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         )}

@@ -35,7 +35,7 @@ export default async function AdminProjectsPage() {
               d="M12 4.5v15m7.5-7.5h-15"
             />
           </svg>
-          <span className="hidden xs:inline sm:inline">Tambah Project</span>
+          <span className="xs:inline hidden sm:inline">Tambah Project</span>
           <span className="xs:hidden sm:hidden">Tambah</span>
         </Link>
       </div>
