@@ -42,10 +42,17 @@ export async function POST(req: NextRequest) {
     .slice(0, 60);
   const filename = `projects/${basename}${ext}`;
 
-  const blob = await put(filename, file, {
-    access: "public",
-    addRandomSuffix: true,
-  });
-
-  return NextResponse.json({ path: blob.url });
+  try {
+    const blob = await put(filename, file, {
+      access: "public",
+      addRandomSuffix: true,
+    });
+    return NextResponse.json({ path: blob.url });
+  } catch (err) {
+    console.error("[upload] Vercel Blob error:", err);
+    return NextResponse.json(
+      { error: "Upload gagal. Pastikan BLOB_READ_WRITE_TOKEN sudah diset di Vercel." },
+      { status: 500 }
+    );
+  }
 }
