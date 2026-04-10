@@ -22,7 +22,11 @@ export async function createProject(data: unknown) {
   if (!res.ok) {
     const text = await res.text().catch(() => "");
     let msg = `HTTP ${res.status}`;
-    try { msg += ": " + (JSON.parse(text).error ?? text); } catch { msg += ": " + text; }
+    try {
+      msg += ": " + (JSON.parse(text).error ?? text);
+    } catch {
+      msg += ": " + text;
+    }
     throw new Error(msg || "Gagal membuat project");
   }
   revalidatePath("/");
