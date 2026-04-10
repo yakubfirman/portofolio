@@ -18,15 +18,29 @@ function ImageUploader({ value, onChange }: { value: string; onChange: (path: st
   const inputRef = useRef<HTMLInputElement>(null);
 
   async function handleFile(file: File) {
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+    const preset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+    if (!cloudName || !preset) {
+      setUploadError("Cloudinary belum dikonfigurasi. Set NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME dan NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET.");
+      return;
+    }
+    if (file.size > 4 * 1024 * 1024) {
+      setUploadError("Ukuran file maksimal 4 MB.");
+      return;
+    }
     setUploadError("");
     setUploading(true);
     try {
       const fd = new FormData();
       fd.append("file", file);
-      const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
-      const json = (await res.json()) as { path?: string; error?: string };
-      if (!res.ok) throw new Error(json.error ?? "Upload gagal");
-      onChange(json.path!);
+      fd.append("upload_preset", preset);
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        { method: "POST", body: fd }
+      );
+      const json = (await res.json()) as { secure_url?: string; error?: { message: string } };
+      if (!res.ok) throw new Error(json.error?.message ?? "Upload gagal");
+      onChange(json.secure_url!);
     } catch (err) {
       setUploadError(err instanceof Error ? err.message : "Upload gagal");
     } finally {
