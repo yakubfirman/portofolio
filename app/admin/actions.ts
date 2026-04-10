@@ -20,8 +20,10 @@ export async function createProject(data: unknown) {
     cache: "no-store",
   });
   if (!res.ok) {
-    const err = (await res.json().catch(() => ({}))) as { error?: string };
-    throw new Error(err.error ?? "Gagal membuat project");
+    const text = await res.text().catch(() => "");
+    let msg = `HTTP ${res.status}`;
+    try { msg += ": " + (JSON.parse(text).error ?? text); } catch { msg += ": " + text; }
+    throw new Error(msg || "Gagal membuat project");
   }
   revalidatePath("/");
   revalidatePath("/projects");
