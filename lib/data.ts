@@ -5,3 +5,4 @@ export * from "./data/socials";
 export * from "./data/speaking";
 export * from "./data/projects";
 export * from "./data/skills";
+export * from "./data/profile";

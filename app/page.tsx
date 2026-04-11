@@ -10,10 +10,11 @@ import {
   ContactSection,
   Footer,
 } from "@/components";
-import { getAbout, getSkillCategories, getProjects, getSpeaking, getSocials } from "@/lib/data";
+import { getAbout, getSkillCategories, getProjects, getSpeaking, getSocials, getProfile } from "@/lib/data";
 
 export default async function Home() {
-  const [about, skillCategories, projects, speaking, socials] = await Promise.all([
+  const [profile, about, skillCategories, projects, speaking, socials] = await Promise.all([
+    getProfile(),
     getAbout(),
     getSkillCategories(),
     getProjects(),
@@ -57,7 +58,7 @@ export default async function Home() {
       <div className="relative z-10">
         <Navbar />
         <main className="text-white">
-          <HeroSection />
+          <HeroSection profile={profile} />
           <AboutSection
             meta={about.meta}
             education={about.education}

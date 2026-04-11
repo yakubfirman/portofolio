@@ -10,6 +10,179 @@ const authHeaders = {
   "X-Api-Key": API_KEY,
 };
 
+// ─── Profile ──────────────────────────────────────────────────────────────────
+
+export async function updateProfile(data: unknown) {
+  const res = await fetch(`${API_URL}/api/profile`, {
+    method: "PUT",
+    headers: authHeaders,
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? "Gagal mengupdate profil");
+  }
+  revalidatePath("/");
+  revalidatePath("/admin/profile");
+}
+
+// ─── Socials ──────────────────────────────────────────────────────────────────
+
+export async function createSocial(data: unknown) {
+  const res = await fetch(`${API_URL}/api/socials`, {
+    method: "POST",
+    headers: authHeaders,
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? "Gagal membuat sosial media");
+  }
+  revalidatePath("/");
+  revalidatePath("/admin/socials");
+}
+
+export async function updateSocial(id: number, data: unknown) {
+  const res = await fetch(`${API_URL}/api/socials/${id}`, {
+    method: "PUT",
+    headers: authHeaders,
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? "Gagal mengupdate sosial media");
+  }
+  revalidatePath("/");
+  revalidatePath("/admin/socials");
+}
+
+export async function deleteSocial(id: number) {
+  const res = await fetch(`${API_URL}/api/socials/${id}`, {
+    method: "DELETE",
+    headers: authHeaders,
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Gagal menghapus sosial media");
+  revalidatePath("/");
+  revalidatePath("/admin/socials");
+}
+
+export async function reorderSocials(order: number[]) {
+  const res = await fetch(`${API_URL}/api/socials/reorder`, {
+    method: "POST",
+    headers: authHeaders,
+    body: JSON.stringify({ order }),
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Gagal menyimpan urutan sosial media");
+  revalidatePath("/");
+  revalidatePath("/admin/socials");
+}
+
+// ─── Skills ───────────────────────────────────────────────────────────────────
+
+export async function createSkillCategory(data: unknown) {
+  const res = await fetch(`${API_URL}/api/skills/categories`, {
+    method: "POST",
+    headers: authHeaders,
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? "Gagal membuat kategori skill");
+  }
+  revalidatePath("/");
+  revalidatePath("/admin/skills");
+}
+
+export async function updateSkillCategory(id: number, data: unknown) {
+  const res = await fetch(`${API_URL}/api/skills/categories/${id}`, {
+    method: "PUT",
+    headers: authHeaders,
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? "Gagal mengupdate kategori skill");
+  }
+  revalidatePath("/");
+  revalidatePath("/admin/skills");
+}
+
+export async function deleteSkillCategory(id: number) {
+  const res = await fetch(`${API_URL}/api/skills/categories/${id}`, {
+    method: "DELETE",
+    headers: authHeaders,
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Gagal menghapus kategori skill");
+  revalidatePath("/");
+  revalidatePath("/admin/skills");
+}
+
+export async function createSkillItem(categoryId: number, data: unknown) {
+  const res = await fetch(`${API_URL}/api/skills/categories/${categoryId}/items`, {
+    method: "POST",
+    headers: authHeaders,
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? "Gagal menambah skill");
+  }
+  revalidatePath("/");
+  revalidatePath("/admin/skills");
+}
+
+export async function updateSkillItem(itemId: number, data: unknown) {
+  const res = await fetch(`${API_URL}/api/skills/items/${itemId}`, {
+    method: "PUT",
+    headers: authHeaders,
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? "Gagal mengupdate skill");
+  }
+  revalidatePath("/");
+  revalidatePath("/admin/skills");
+}
+
+export async function deleteSkillItem(itemId: number) {
+  const res = await fetch(`${API_URL}/api/skills/items/${itemId}`, {
+    method: "DELETE",
+    headers: authHeaders,
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Gagal menghapus skill");
+  revalidatePath("/");
+  revalidatePath("/admin/skills");
+}
+
+// ─── About ────────────────────────────────────────────────────────────────────
+
+export async function updateAbout(data: unknown) {
+  const res = await fetch(`${API_URL}/api/about`, {
+    method: "PUT",
+    headers: authHeaders,
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? "Gagal mengupdate about");
+  }
+  revalidatePath("/");
+  revalidatePath("/admin/about");
+}
+
 // ─── Projects ─────────────────────────────────────────────────────────────────
 
 export async function createProject(data: unknown) {

@@ -1,8 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTerminal, faArrowRight, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { AvailabilityPill, Button } from "@/components/ui";
+import type { Profile } from "@/lib/data";
 
-export default function HeroSection() {
+export default function HeroSection({ profile }: { profile: Profile }) {
+  // Split first_name at last space to apply red accent to last word of first_name
+  const nameParts = profile.first_name.split(" ");
+  const nameStart = nameParts.slice(0, -1).join(" ");
+  const nameAccent = nameParts[nameParts.length - 1];
   return (
     <section
       id="hero"
@@ -18,7 +23,7 @@ export default function HeroSection() {
               <span className="hidden h-px w-8 bg-linear-to-r from-transparent to-red-700/50 sm:block" />
               <span className="flex items-center gap-2 rounded-xs bg-red-950/50 px-3 py-1 text-[10px] font-semibold tracking-widest text-red-400/90 uppercase">
                 <FontAwesomeIcon icon={faTerminal} className="h-2.5 w-2.5" />
-                Full Stack Web Dev · SEO Specialist
+                {profile.role_badge}
               </span>
               <span className="hidden h-px w-8 bg-linear-to-l from-transparent to-red-700/50 sm:block" />
             </div>
@@ -26,15 +31,15 @@ export default function HeroSection() {
             {/* Name */}
             <h1 className="hero-animate hero-delay-3 font-display mb-6 text-[clamp(2.6rem,8.5vw,6rem)] leading-[0.9] font-black tracking-[-0.02em]">
               <span className="block text-white">
-                Yakub <span className="text-red-600">Firman</span>
+                {nameStart && <>{nameStart} </>}
+                <span className="text-red-600">{nameAccent}</span>
               </span>
-              <span className="block text-white">Mustofa</span>
+              <span className="block text-white">{profile.last_name}</span>
             </h1>
 
             {/* Tagline */}
             <p className="hero-animate hero-delay-4 mx-auto mb-7 max-w-sm text-sm leading-relaxed text-gray-400 sm:text-base lg:mx-0 lg:max-w-md">
-              Saya seorang Fullstack Web Developer dan SEO Specialist. Berfokus pada pengembangan
-              website yang fungsional sekaligus mudah ditemukan oleh mesin pencari.
+              {profile.tagline}
             </p>
 
             {/* CTAs */}
@@ -47,7 +52,7 @@ export default function HeroSection() {
                 />
               </Button>
               <Button
-                href="/resumefirman.pdf"
+                href={profile.cv_url}
                 download
                 variant="outline"
                 className="w-full sm:w-auto"
@@ -86,7 +91,7 @@ export default function HeroSection() {
                     <p>
                       <span className="text-red-300/70">name</span>
                       <span className="text-gray-400">: </span>
-                      <span className="text-green-400/80">&quot;Yakub Firman M.&quot;</span>
+                      <span className="text-green-400/80">&quot;{profile.first_name} {profile.last_name.charAt(0)}.&quot;</span>
                       <span className="text-gray-600">,</span>
                     </p>
                     <p>

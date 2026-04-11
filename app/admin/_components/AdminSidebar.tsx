@@ -34,6 +34,65 @@ const NAV = [
   },
 ];
 
+const NAV_PROFIL = [
+  {
+    href: "/admin/profile",
+    label: "Profil",
+    icon: (
+      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+        />
+      </svg>
+    ),
+  },
+  {
+    href: "/admin/socials",
+    label: "Sosial Media",
+    icon: (
+      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+        />
+      </svg>
+    ),
+  },
+  {
+    href: "/admin/skills",
+    label: "Skills",
+    icon: (
+      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
+        />
+      </svg>
+    ),
+  },
+  {
+    href: "/admin/about",
+    label: "About",
+    icon: (
+      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+        />
+      </svg>
+    ),
+  },
+];
+
 export default function AdminSidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -79,6 +138,29 @@ export default function AdminSidebar({ onClose }: { onClose?: () => void }) {
         </p>
         <div className="space-y-0.5">
           {NAV.map((link) => {
+            const isActive = pathname.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`flex items-center gap-3 rounded px-3 py-2 text-sm transition-all ${
+                  isActive
+                    ? "border-l-2 border-red-600 bg-red-900/10 pl-2.5 text-red-400"
+                    : "border-l-2 border-transparent text-gray-500 hover:bg-white/5 hover:text-white"
+                }`}
+              >
+                {link.icon}
+                {link.label}
+              </Link>
+            );
+          })}
+        </div>
+
+        <p className="mb-2 mt-5 px-3 text-[9px] font-semibold tracking-widest text-gray-700 uppercase">
+          Identitas
+        </p>
+        <div className="space-y-0.5">
+          {NAV_PROFIL.map((link) => {
             const isActive = pathname.startsWith(link.href);
             return (
               <Link
