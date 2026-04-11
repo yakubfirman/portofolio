@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { getProjects, getSocials } from "@/lib/data";
+import { getProjects, getSocials, getProfile } from "@/lib/data";
 import { Navbar, Footer } from "@/components";
 import { Button, SectionHeading, Reveal, PageBackground, ProjectCard } from "@/components/ui";
 
@@ -14,13 +14,13 @@ export const metadata: Metadata = {
 };
 
 export default async function ProjectsPage() {
-  const [projects, socials] = await Promise.all([getProjects(), getSocials()]);
+  const [projects, socials, profile] = await Promise.all([getProjects(), getSocials(), getProfile()]);
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0a]">
       <PageBackground />
 
-      <Navbar />
+      <Navbar profile={profile} />
 
       <main className="relative z-10 px-5 pt-5 pb-28 sm:px-8 md:pt-10">
         <div className="mx-auto max-w-5xl">
@@ -63,7 +63,7 @@ export default async function ProjectsPage() {
         </div>
       </main>
 
-      <Footer socials={socials} />
+      <Footer socials={socials} profile={profile} />
     </div>
   );
 }

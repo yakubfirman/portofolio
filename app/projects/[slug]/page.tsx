@@ -10,7 +10,7 @@ import {
   faBriefcase,
   faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import { getProjectBySlug, getProjectSlugs, getSocials } from "@/lib/data";
+import { getProjectBySlug, getProjectSlugs, getSocials, getProfile } from "@/lib/data";
 import { Navbar, Footer } from "@/components";
 import { Reveal, PageBackground, TechBadge } from "@/components/ui";
 
@@ -36,15 +36,13 @@ export async function generateMetadata({
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [project, socials] = await Promise.all([getProjectBySlug(slug), getSocials()]);
+  const [project, socials, profile] = await Promise.all([getProjectBySlug(slug), getSocials(), getProfile()]);
   if (!project) notFound();
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0a]">
       <PageBackground />
-      <Navbar />
-
-      <main className="relative z-10 px-5 pt-5 pb-28 sm:px-8 md:pt-10">
+      <Navbar profile={profile} /> className="relative z-10 px-5 pt-5 pb-28 sm:px-8 md:pt-10">
         <div className="mx-auto max-w-5xl">
           {/* ── Back button ── */}
           <div className="hero-animate hero-delay-1 mb-8">
@@ -250,7 +248,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         </div>
       </main>
 
-      <Footer socials={socials} />
+      <Footer socials={socials} profile={profile} />
     </div>
   );
 }
