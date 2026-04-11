@@ -1,7 +1,7 @@
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { ICON_MAP } from "@/lib/icon-map";
 
-export type AboutMeta = { icon: IconDefinition; text: string };
+export type AboutMeta = { icon: IconDefinition; icon_key: string; text: string };
 export type AboutEducation = {
   icon: IconDefinition;
   degree: string;
@@ -29,6 +29,7 @@ export async function getAbout(): Promise<AboutData> {
   return {
     meta: raw.meta.map((m: { icon_key: string; text: string }) => ({
       icon: ICON_MAP[m.icon_key],
+      icon_key: m.icon_key,
       text: m.text,
     })),
     education: raw.education.map(
