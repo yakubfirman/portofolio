@@ -1,12 +1,16 @@
 import { NAV_LINKS } from "@/lib/data";
-import type { Social } from "@/lib/data";
+import type { Social, Profile } from "@/lib/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faMapPin } from "@fortawesome/free-solid-svg-icons";
 import { Reveal } from "@/components/ui";
 
-type Props = { socials: Social[] };
+type Props = { socials: Social[]; profile: Profile; location?: string };
 
-export default function Footer({ socials }: Props) {
+export default function Footer({ socials, profile, location }: Props) {
+  const nameParts = profile.first_name.trim().split(" ");
+  const nameAccent = nameParts.pop() ?? "";
+  const nameStart = nameParts.join(" ");
+  const fullName = `${profile.first_name} ${profile.last_name}`.trim();
   return (
     <footer className="relative overflow-hidden border-t border-red-900/20 bg-[#060606]">
       {/* ── Decorative ── */}
@@ -21,21 +25,22 @@ export default function Footer({ socials }: Props) {
             {/* Brand */}
             <div className="col-span-2 sm:col-span-1">
               <p className="mb-0.5 text-2xl font-black tracking-tight text-white">
-                Yakub <span className="text-red-500">Firman </span> Mustofa
+                {nameStart}{nameStart ? " " : ""}<span className="text-red-500">{nameAccent} </span>{profile.last_name}
               </p>
               <p className="mb-5 text-[11px] font-medium text-gray-700">yakubfirman.id</p>
               <p className="text-xs leading-relaxed text-gray-600">
-                Full Stack Web Developer
-                <br />& SEO Specialist
+                {profile.role_badge}
               </p>
-              <p className="mt-3 flex items-center gap-1.5 text-xs text-gray-700">
-                <FontAwesomeIcon
-                  icon={faMapPin}
-                  className="h-2.5 w-2.5 text-red-900/50"
-                  aria-hidden="true"
-                />
-                Surakarta, Jawa Tengah
-              </p>
+              {location && (
+                <p className="mt-3 flex items-center gap-1.5 text-xs text-gray-700">
+                  <FontAwesomeIcon
+                    icon={faMapPin}
+                    className="h-2.5 w-2.5 text-red-900/50"
+                    aria-hidden="true"
+                  />
+                  {location}
+                </p>
+              )}
             </div>
 
             {/* Nav */}
@@ -89,7 +94,7 @@ export default function Footer({ socials }: Props) {
         <Reveal delay={130}>
           <div className="flex flex-col items-center justify-between gap-3 border-t border-red-900/10 py-6 sm:flex-row">
             <p className="text-xs text-gray-700">
-              © {new Date().getFullYear()} Yakub Firman Mustofa. All rights reserved.
+              © {new Date().getFullYear()} {fullName}. All rights reserved.
             </p>
             <div className="flex items-center gap-5">
               <a

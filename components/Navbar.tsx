@@ -7,8 +7,9 @@ import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { NAV_LINKS } from "@/lib/data";
+import type { Profile } from "@/lib/data";
 
-export default function Navbar() {
+export default function Navbar({ profile }: { profile: Profile }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollActive, setScrollActive] = useState("");
@@ -96,7 +97,7 @@ export default function Navbar() {
               {/* Glow ring */}
               <div className="absolute inset-0 rounded-full bg-red-600/25 blur-lg transition-all duration-500 group-hover:bg-red-500/45 group-hover:blur-xl" />
               <div className="relative h-9 w-9 scale-100 overflow-hidden rounded-full ring-1 ring-red-800/60 transition-all duration-300 group-hover:scale-105 group-hover:ring-red-500/80">
-                <Image src="/photo.png" alt="Yakub Firman Mustofa" fill className="object-cover" />
+                <Image src="/photo.png" alt={`${profile.first_name} ${profile.last_name}`} fill className="object-cover" />
               </div>
               {/* Online dot */}
               <span className="absolute -right-0.5 -bottom-0.5 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-[#0a0a0a] ring-1 ring-[#0a0a0a]">
@@ -105,7 +106,12 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col gap-0.5 leading-none">
               <span className="text-[13px] font-bold tracking-tight text-white">
-                Yakub <span className="text-red-500">Firman</span> Mustofa
+                {(() => {
+                  const parts = profile.first_name.trim().split(" ");
+                  const accent = parts.pop() ?? "";
+                  const start = parts.join(" ");
+                  return <>{start}{start ? " " : ""}<span className="text-red-500">{accent}</span>{" "}{profile.last_name}</>;
+                })()}
               </span>
               <span className="hidden text-[9px] font-semibold tracking-[0.18em] text-gray-600 uppercase sm:block">
                 Portofolio

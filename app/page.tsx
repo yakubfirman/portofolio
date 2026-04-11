@@ -56,7 +56,7 @@ export default async function Home() {
 
       {/* ── Site content ── */}
       <div className="relative z-10">
-        <Navbar />
+        <Navbar profile={profile} />
         <main className="text-white">
           <HeroSection profile={profile} />
           <AboutSection
@@ -71,7 +71,11 @@ export default async function Home() {
           <GitHubSection />
           <ContactSection socials={socials} />
         </main>
-        <Footer socials={socials} />
+        <Footer
+          socials={socials}
+          profile={profile}
+          location={about.meta.find((m) => m.icon_key === "faLocationDot")?.text}
+        />
       </div>
     </div>
   );
