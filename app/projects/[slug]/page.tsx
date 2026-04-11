@@ -42,7 +42,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   return (
     <div className="relative min-h-screen bg-[#0a0a0a]">
       <PageBackground />
-      <Navbar profile={profile} /> className="relative z-10 px-5 pt-5 pb-28 sm:px-8 md:pt-10">
+      <Navbar profile={profile} />
+
+      <main className="relative z-10 px-5 pt-5 pb-28 sm:px-8 md:pt-10">
         <div className="mx-auto max-w-5xl">
           {/* ── Back button ── */}
           <div className="hero-animate hero-delay-1 mb-8">
