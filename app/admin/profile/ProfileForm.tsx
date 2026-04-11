@@ -87,7 +87,7 @@ export default function ProfileForm({ initialData }: { initialData: Profile }) {
         <div>
           <label className={labelCls}>Tagline *</label>
           <textarea
-            className={`${inputCls} min-h-[80px] resize-y`}
+            className={`${inputCls} min-h-20 resize-y`}
             value={tagline}
             onChange={(e) => setTagline(e.target.value)}
             required

@@ -105,7 +105,7 @@ function SkillItemRow({
   return (
     <div className="flex items-center justify-between rounded bg-black/20 px-3 py-1.5">
       <div className="flex items-center gap-3">
-        <span className="min-w-[100px] text-sm text-white">{item.name}</span>
+        <span className="min-w-25 text-sm text-white">{item.name}</span>
         <div className="flex items-center gap-1.5">
           <div className="h-1.5 w-24 rounded-full bg-white/5">
             <div className="h-full rounded-full bg-red-700/70" style={{ width: `${item.pct}%` }} />

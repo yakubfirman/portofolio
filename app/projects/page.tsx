@@ -46,7 +46,7 @@ export default async function ProjectsPage() {
           <Reveal delay={projects.length * 80}>
             <div className="mt-14 flex justify-center">
               <a
-                href="https://github.com/yakubfirman"
+                href={socials.find((s) => s.label.toLowerCase() === "github")?.href ?? "https://github.com/yakubfirman"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2.5 rounded-xs border border-red-900/30 bg-red-950/20 px-6 py-3 text-sm font-medium text-gray-400 transition-all hover:border-red-700/50 hover:bg-red-950/30 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70"
