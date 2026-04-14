@@ -91,19 +91,19 @@ export default function HeroSection({ profile }: { profile: Profile }) {
                     <p>
                       <span className="text-red-300/70">name</span>
                       <span className="text-gray-400">: </span>
-                      <span className="text-green-400/80">&quot;{profile.first_name} {profile.last_name.charAt(0)}.&quot;</span>
+                      <span className="text-green-400/80">&quot;{profile.first_name} {profile.last_name}.&quot;</span>
                       <span className="text-gray-600">,</span>
                     </p>
                     <p>
                       <span className="text-red-300/70">role</span>
                       <span className="text-gray-400">: </span>
-                      <span className="text-green-400/80">&quot;Full Stack Web Dev&quot;</span>
+                      <span className="text-green-400/80">&quot;Full Stack Web Dev & SEO Specialist&quot;</span>
                       <span className="text-gray-600">,</span>
                     </p>
                     <p>
                       <span className="text-red-300/70">location</span>
                       <span className="text-gray-400">: </span>
-                      <span className="text-green-400/80">&quot;Surakarta, ID&quot;</span>
+                      <span className="text-green-400/80">&quot;Surakarta, Indonesia&quot;</span>
                       <span className="text-gray-600">,</span>
                     </p>
                     <p>
