@@ -10,7 +10,7 @@ export type Testimonial = {
   created_at?: string;
 };
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.API_URL || "https://yakubfirman.pythonanywhere.com";
 
 export async function getApprovedTestimonials(): Promise<Testimonial[]> {
   try {
