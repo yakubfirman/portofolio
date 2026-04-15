@@ -6,5 +6,6 @@ export { default as Navbar } from "./Navbar";
 export { default as ProjectsSection } from "./ProjectsSection";
 export { default as SkillsSection } from "./SkillsSection";
 export { default as SpeakingSection } from "./SpeakingSection";
+export { default as TestimonialsSection } from "./TestimonialsSection";
 export { default as GitHubSection } from "./GitHubSection";
 export { default as WorkflowSection } from "./WorkflowSection";

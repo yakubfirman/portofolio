@@ -32,6 +32,20 @@ const NAV = [
       </svg>
     ),
   },
+  {
+    href: "/admin/testimonials",
+    label: "Testimoni",
+    icon: (
+      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M7 8a4 4 0 100-8 4 4 0 000 8zM7 12c2.21 0 4 1.79 4 4v4H3v-4c0-2.21 1.79-4 4-4zm0 0h6m0 0a3 3 0 110 6H9m6 3v-2a3 3 0 00-3-3m3 3v2m0-6V9a3 3 0 00-3-3m3 3V9"
+        />
+      </svg>
+    ),
+  },
 ];
 
 const NAV_PROFIL = [

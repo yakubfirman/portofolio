@@ -305,3 +305,43 @@ export async function reorderSpeaking(order: number[]) {
   revalidatePath("/");
   revalidatePath("/admin/speaking");
 }
+
+// ─── Testimonials ─────────────────────────────────────────────────────────────
+
+export async function updateTestimonial(id: number, data: unknown) {
+  const res = await fetch(`${API_URL}/api/testimonials/${id}`, {
+    method: "PUT",
+    headers: authHeaders,
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? "Gagal mengupdate testimoni");
+  }
+  revalidatePath("/");
+  revalidatePath("/admin/testimonials");
+}
+
+export async function deleteTestimonial(id: number) {
+  const res = await fetch(`${API_URL}/api/testimonials/${id}`, {
+    method: "DELETE",
+    headers: authHeaders,
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Gagal menghapus testimoni");
+  revalidatePath("/");
+  revalidatePath("/admin/testimonials");
+}
+
+export async function reorderTestimonials(order: number[]) {
+  const res = await fetch(`${API_URL}/api/testimonials/reorder`, {
+    method: "POST",
+    headers: authHeaders,
+    body: JSON.stringify({ order }),
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Gagal menyimpan urutan testimoni");
+  revalidatePath("/");
+  revalidatePath("/admin/testimonials");
+}

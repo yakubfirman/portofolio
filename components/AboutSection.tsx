@@ -127,6 +127,7 @@ export default function AboutSection({ meta, education, highlights }: Props) {
                   src="/photo.png"
                   alt="Yakub Firman Mustofa"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover object-top"
                   priority
                 />

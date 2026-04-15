@@ -5,22 +5,34 @@ import {
   SkillsSection,
   SpeakingSection,
   ProjectsSection,
+  TestimonialsSection,
   WorkflowSection,
   GitHubSection,
   ContactSection,
   Footer,
 } from "@/components";
-import { getAbout, getSkillCategories, getProjects, getSpeaking, getSocials, getProfile } from "@/lib/data";
+import { getAbout, getSkillCategories, getProjects, getSpeaking, getSocials, getProfile, getApprovedTestimonials } from "@/lib/data";
 
 export default async function Home() {
-  const [profile, about, skillCategories, projects, speaking, socials] = await Promise.all([
+  // Use Promise.allSettled to prevent one failure from crashing entire page
+  const results = await Promise.allSettled([
     getProfile(),
     getAbout(),
     getSkillCategories(),
     getProjects(),
     getSpeaking(),
     getSocials(),
+    getApprovedTestimonials(),
   ]);
+
+  // Extract values with fallbacks
+  const profile = results[0].status === "fulfilled" ? results[0].value : { first_name: "Yakub", last_name: "Firman" };
+  const about = results[1].status === "fulfilled" ? results[1].value : { meta: [], education: [], highlights: [] };
+  const skillCategories = results[2].status === "fulfilled" ? results[2].value : [];
+  const projects = results[3].status === "fulfilled" ? results[3].value : [];
+  const speaking = results[4].status === "fulfilled" ? results[4].value : [];
+  const socials = results[5].status === "fulfilled" ? results[5].value : [];
+  const testimonials = results[6].status === "fulfilled" ? results[6].value : [];
 
   return (
     <div className="relative bg-[#0a0a0a]">
@@ -67,6 +79,7 @@ export default async function Home() {
           <SkillsSection categories={skillCategories} />
           <ProjectsSection projects={projects} />
           <SpeakingSection events={speaking} />
+          <TestimonialsSection testimonials={testimonials} />
           <WorkflowSection />
           <GitHubSection />
           <ContactSection socials={socials} />
