@@ -45,10 +45,10 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
   return (
     <div className="relative group">
       {/* Single Card Display with smooth transitions */}
-      <div className="relative mb-8">
+      <div className="relative mb-8 mx-auto">
         {displayItems.map((testimonial) => (
           <Reveal key={`${current}`} delay={0}>
-            <div className="group/card max-w-5xl flex flex-col overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30 animate-in fade-in p-6 sm:p-8">
+            <div className="group/card max-w-3xl flex flex-col overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30 animate-in fade-in p-6 sm:p-8">
               {/* Glow accent */}
               <div className="pointer-events-none absolute -top-8 -right-8 h-32 w-32 rounded-full bg-red-900/10 blur-[50px]" />
 
