@@ -12,6 +12,7 @@ import {
   Footer,
 } from "@/components";
 import { getAbout, getSkillCategories, getProjects, getSpeaking, getSocials, getProfile, getApprovedTestimonials } from "@/lib/data";
+import type { Profile } from "@/lib/data/profile";
 
 export default async function Home() {
   // Use Promise.allSettled to prevent one failure from crashing entire page
@@ -25,8 +26,17 @@ export default async function Home() {
     getApprovedTestimonials(),
   ]);
 
+  // Default profile when API fails
+  const defaultProfile: Profile = {
+    first_name: "Yakub Firman",
+    last_name: "Mustofa",
+    role_badge: "Full Stack Web Dev · SEO Specialist",
+    tagline: "Saya seorang Fullstack Web Developer dan SEO Specialist.",
+    cv_url: "/resumefirman.pdf",
+  };
+
   // Extract values with fallbacks
-  const profile = results[0].status === "fulfilled" ? results[0].value : { first_name: "Yakub", last_name: "Firman" };
+  const profile = results[0].status === "fulfilled" ? results[0].value : defaultProfile;
   const about = results[1].status === "fulfilled" ? results[1].value : { meta: [], education: [], highlights: [] };
   const skillCategories = results[2].status === "fulfilled" ? results[2].value : [];
   const projects = results[3].status === "fulfilled" ? results[3].value : [];
