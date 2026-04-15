@@ -1,6 +1,6 @@
 import { SectionHeading, Button, Reveal } from "@/components/ui";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUpRightFromSquare, faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 import type { Testimonial } from "@/lib/data";
 
 type Props = { testimonials: Testimonial[] };
@@ -21,33 +21,38 @@ export default function TestimonialsSection({ testimonials }: Props) {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {testimonials.slice(0, 6).map((testimonial, index) => (
             <Reveal key={testimonial.id} delay={index * 80}>
-              <div className="group relative rounded-lg border border-white/10 bg-[#0a0a0a] p-6 hover:border-white/20 transition-all hover:bg-[#0d0d0d] h-full flex flex-col justify-between">
-                {/* Star rating placeholder */}
-                <div className="mb-3 flex gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <div key={i} className="h-4 w-4 rounded-full bg-yellow-500/20 flex items-center justify-center text-[10px]">
-                      ★
-                    </div>
-                  ))}
+              <div className="group relative flex h-full flex-col overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30">
+                {/* Glow accent */}
+                <div className="pointer-events-none absolute -top-8 -right-8 h-32 w-32 rounded-full bg-red-900/10 blur-[50px]" />
+
+                {/* Icon & Quote */}
+                <div className="relative px-5 pt-5 pb-2">
+                  <FontAwesomeIcon 
+                    icon={faQuoteLeft} 
+                    className="h-6 w-6 text-red-800/40 opacity-60"
+                  />
                 </div>
 
                 {/* Message */}
-                <p className="mb-4 line-clamp-4 text-sm text-gray-400 leading-relaxed">
-                  "{testimonial.message}"
+                <p className="relative px-5 pb-4 text-sm text-gray-300 leading-relaxed line-clamp-4">
+                  {testimonial.message}
                 </p>
 
+                {/* Divider */}
+                <div className="relative border-t border-red-900/15" />
+
                 {/* Author */}
-                <div className="flex items-center gap-3 border-t border-white/8 pt-4">
+                <div className="relative flex items-center gap-3 px-5 py-4">
                   {testimonial.image && (
                     <img 
                       src={testimonial.image} 
                       alt={testimonial.name}
-                      className="h-10 w-10 rounded-full object-cover flex-shrink-0"
+                      className="h-12 w-12 rounded-full object-cover flex-shrink-0 border border-red-900/30"
                     />
                   )}
                   <div className="min-w-0 flex-1">
                     <p className="font-semibold text-white text-sm truncate">{testimonial.name}</p>
-                    <p className="text-[11px] text-gray-600 truncate">
+                    <p className="text-[11px] text-gray-500 truncate">
                       {testimonial.role}
                       {testimonial.company && ` · ${testimonial.company}`}
                     </p>
