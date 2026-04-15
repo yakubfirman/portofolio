@@ -5,6 +5,7 @@ import { submitTestimonial } from "@/lib/data";
 
 export default function TestimonialFormClient() {
   const [pending, startTransition] = useTransition();
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     role: "",
@@ -18,6 +19,36 @@ export default function TestimonialFormClient() {
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  }
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setError("");
+
+    try {
+      const uploadFormData = new FormData();
+      uploadFormData.append("file", file);
+      uploadFormData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "");
+      uploadFormData.append("cloud_name", process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "");
+
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        { method: "POST", body: uploadFormData }
+      );
+
+      if (!res.ok) throw new Error("Upload gagal");
+
+      const data = await res.json();
+      setFormData((prev) => ({ ...prev, image: data.secure_url }));
+    } catch (err) {
+      setError("Gagal upload foto. Periksa konfigurasi Cloudinary.");
+      console.error(err);
+    } finally {
+      setUploading(false);
+    }
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -94,15 +125,21 @@ export default function TestimonialFormClient() {
           />
         </div>
         <div>
-          <label className={labelCls}>URL Foto Profil</label>
+          <label className={labelCls}>Foto Profil</label>
           <input
-            type="url"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-            placeholder="https://example.com/photo.jpg (opsional)"
-            className={inputCls}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            disabled={uploading}
+            className={inputCls + " cursor-pointer file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-red-800 file:text-white hover:file:bg-red-700"}
           />
+          {uploading && <p className="text-xs text-gray-400 mt-1">⏳ Uploading...</p>}
+          {formData.image && (
+            <div className="mt-2 flex items-center gap-2">
+              <img src={formData.image} alt="Preview" className="h-10 w-10 rounded object-cover" />
+              <p className="text-xs text-green-400">✓ Foto uploaded</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -128,10 +165,10 @@ export default function TestimonialFormClient() {
 
       <button
         type="submit"
-        disabled={pending}
+        disabled={pending || uploading}
         className="w-full rounded bg-gradient-to-r from-red-800 to-red-900 px-4 py-3 font-semibold text-white hover:from-red-700 hover:to-red-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {pending ? "Mengirim..." : "Kirim Testimoni"}
+        {pending ? "Mengirim..." : uploading ? "Upload foto..." : "Kirim Testimoni"}
       </button>
 
       <p className="text-center text-xs text-gray-600">
