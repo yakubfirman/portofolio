@@ -45,15 +45,15 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
   return (
     <div className="relative group">
       {/* Single Card Display with smooth transitions */}
-      <div className="relative mb-8 h-96 sm:h-80">
-        {displayItems.map((testimonial, idx) => (
-          <Reveal key={`${current}-${idx}`} delay={0}>
-            <div className="absolute inset-0 group/card flex flex-col overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30 animate-in fade-in">
+      <div className="relative mb-8">
+        {displayItems.map((testimonial) => (
+          <Reveal key={`${current}`} delay={0}>
+            <div className="group/card flex flex-col overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30 animate-in fade-in p-8 sm:p-10">
               {/* Glow accent */}
               <div className="pointer-events-none absolute -top-8 -right-8 h-32 w-32 rounded-full bg-red-900/10 blur-[50px]" />
 
               {/* Icon & Quote */}
-              <div className="relative px-6 sm:px-8 pt-6 pb-3">
+              <div className="mb-4">
                 <FontAwesomeIcon 
                   icon={faQuoteLeft} 
                   className="h-8 w-8 text-red-800/40 opacity-60"
@@ -61,15 +61,15 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
               </div>
 
               {/* Message - centered */}
-              <p className="relative flex-1 px-6 sm:px-8 py-4 text-base sm:text-lg text-gray-300 leading-relaxed flex items-center justify-center text-center">
+              <p className="text-base sm:text-lg text-gray-300 leading-relaxed text-center mb-6 min-h-24 flex items-center justify-center">
                 &quot;{testimonial.message}&quot;
               </p>
 
               {/* Divider */}
-              <div className="relative border-t border-red-900/15" />
+              <div className="border-t border-red-900/15 my-4" />
 
               {/* Author - at bottom */}
-              <div className="relative flex items-center justify-start gap-4 px-6 sm:px-8 py-5">
+              <div className="flex items-center justify-center gap-4 mt-4">
                 {testimonial.image && (
                   <Image 
                     src={testimonial.image} 
@@ -79,9 +79,9 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
                     className="h-14 w-14 rounded-full object-cover shrink-0 border-2 border-red-900/40"
                   />
                 )}
-                <div className="min-w-0 flex-1">
-                  <p className="font-bold text-white text-base truncate">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500 truncate">
+                <div className="min-w-0">
+                  <p className="font-bold text-white text-base">{testimonial.name}</p>
+                  <p className="text-sm text-gray-500">
                     {testimonial.role}
                     {testimonial.company && ` · ${testimonial.company}`}
                   </p>
