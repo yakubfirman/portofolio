@@ -39,8 +39,8 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
     setIsAutoplay(false);
   };
 
-  // Show 3 cards at a time for larger screens, 1 for mobile
-  const visibleCount = 3;
+  // Show 3 cards at a time for larger screens, but don't exceed total count to prevent duplication
+  const visibleCount = Math.min(3, testimonials.length);
   const displayItems = [];
   for (let i = 0; i < visibleCount; i++) {
     displayItems.push(testimonials[(current + i) % testimonials.length]);
@@ -49,7 +49,13 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
   return (
     <div className="relative group">
       {/* Cards Grid - responsive layout */}
-      <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-3 mb-8">
+      <div className={`grid gap-6 mb-8 ${
+        visibleCount === 1 
+          ? "sm:grid-cols-1" 
+          : visibleCount === 2 
+          ? "sm:grid-cols-2 lg:grid-cols-2" 
+          : "sm:grid-cols-1 lg:grid-cols-3"
+      }`}>
         {displayItems.map((testimonial, idx) => (
           <Reveal key={`${current}-${idx}`} delay={idx * 80}>
             <div className="group/card relative flex h-full flex-col overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30 animate-in fade-in">
@@ -134,14 +140,14 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
       </div>
 
       {/* Autoplay indicator */}
-      <div className="mt-6 text-center">
+      {/* <div className="mt-6 text-center">
         <button
           onClick={() => setIsAutoplay(!isAutoplay)}
           className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
         >
           {isAutoplay ? "⏸ Auto-playing..." : "▶ Resume autoplay"}
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
