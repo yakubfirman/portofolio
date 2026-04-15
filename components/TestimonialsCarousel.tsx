@@ -48,40 +48,40 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
       <div className="relative mb-8">
         {displayItems.map((testimonial) => (
           <Reveal key={`${current}`} delay={0}>
-            <div className="group/card flex flex-col overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30 animate-in fade-in p-8 sm:p-10">
+            <div className="group/card flex flex-col overflow-hidden rounded-xs border border-red-900/20 bg-[#0d0404] transition-all duration-300 hover:-translate-y-1 hover:border-red-800/40 hover:shadow-xl hover:shadow-red-950/30 animate-in fade-in p-6 sm:p-8">
               {/* Glow accent */}
               <div className="pointer-events-none absolute -top-8 -right-8 h-32 w-32 rounded-full bg-red-900/10 blur-[50px]" />
 
               {/* Icon & Quote */}
-              <div className="mb-4">
+              <div className="mb-3">
                 <FontAwesomeIcon 
                   icon={faQuoteLeft} 
-                  className="h-8 w-8 text-red-800/40 opacity-60"
+                  className="h-6 w-6 text-red-800/35 opacity-50"
                 />
               </div>
 
-              {/* Message - centered */}
-              <p className="text-base sm:text-lg text-gray-300 leading-relaxed text-center mb-6 min-h-24 flex items-center justify-center">
+              {/* Message - limited height */}
+              <p className="text-sm sm:text-base text-gray-300 leading-relaxed text-center mb-4 line-clamp-5">
                 &quot;{testimonial.message}&quot;
               </p>
 
               {/* Divider */}
-              <div className="border-t border-red-900/15 my-4" />
+              <div className="border-t border-red-900/15 my-3" />
 
               {/* Author - at bottom */}
-              <div className="flex items-center justify-center gap-4 mt-4">
+              <div className="flex items-center justify-center gap-3 mt-3">
                 {testimonial.image && (
                   <Image 
                     src={testimonial.image} 
                     alt={testimonial.name}
-                    width={56}
-                    height={56}
-                    className="h-14 w-14 rounded-full object-cover shrink-0 border-2 border-red-900/40"
+                    width={48}
+                    height={48}
+                    className="h-12 w-12 rounded-full object-cover shrink-0 border border-red-900/30"
                   />
                 )}
-                <div className="min-w-0">
-                  <p className="font-bold text-white text-base">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">
+                <div className="min-w-0 text-left">
+                  <p className="font-semibold text-white text-sm truncate">{testimonial.name}</p>
+                  <p className="text-xs text-gray-500 truncate">
                     {testimonial.role}
                     {testimonial.company && ` · ${testimonial.company}`}
                   </p>
