@@ -52,8 +52,6 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/photo.png",
-        width: 512,
-        height: 512,
         alt: "Yakub Firman Mustofa",
       },
     ],
