@@ -46,15 +46,15 @@ export const metadata: Metadata = {
     description:
       "Full Stack Web Developer dan SEO Specialist di Surakarta. Membangun website modern dengan React, Next.js, Laravel, dan mengoptimalkan peringkat di Google Search.",
     url: "https://yakubfirman.id",
-    siteName: "Porto Folio Yakub Firman Mustofa",
+    siteName: "Yakub Firman Mustofa",
     locale: "id_ID",
     type: "website",
     images: [
       {
-        url: "/iconweb.png",
+        url: "/photo.png",
         width: 512,
         height: 512,
-        alt: "Yakub Firman Mustofa — Full Stack Dev & SEO Specialist",
+        alt: "Yakub Firman Mustofa",
       },
     ],
   },
