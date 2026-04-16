@@ -29,16 +29,6 @@ export default function ProjectsSection({ projects }: Props) {
               Lihat Semua Proyek
               <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
             </Button>
-            <Button
-              href="https://github.com/yakubfirman"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="ghost"
-              className="w-full sm:w-auto"
-            >
-              <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
-              GitHub
-            </Button>
           </div>
         </Reveal>
       </div>
