@@ -2,8 +2,9 @@ import { Metadata } from "next";
 import TestimonialFormClient from "./TestimonialFormClient";
 
 export const metadata: Metadata = {
-  title: "Kirim Testimoni - Yakub Firman",
-  description: "Bagikan pengalaman Anda bekerja dengan saya. Testimoni akan membantu profesional lain.",
+  title: "Kirim Testimoni",
+  description: "Bagikan pengalaman Anda bekerja dengan Yakub Firman Mustofa. Testimoni akan membantu profesional lain mengenal kualitas pekerjaan saya.",
+  alternates: { canonical: "/testimonial" },
 };
 
 export default function TestimonialPage() {

@@ -6,22 +6,28 @@ import { PageLoader } from "@/components/ui";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const outfit = Outfit({
   variable: "--font-syne",
   subsets: ["latin"],
   weight: ["700", "800", "900"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://yakubfirman.id"),
-  title: "Yakub Firman Mustofa",
+  title: {
+    default: "Yakub Firman Mustofa | Full Stack Web Developer & SEO Specialist",
+    template: "%s — Yakub Firman Mustofa",
+  },
   description:
     "Full Stack Web Developer dan SEO Specialist di Surakarta. Yakub Firman Mustofa — membangun website modern dengan React, Next.js, Laravel, dan mengoptimalkan peringkat di Google Search.",
   keywords: [
@@ -52,7 +58,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/photo.png",
-        alt: "Yakub Firman Mustofa",
+        width: 1200,
+        height: 630,
+        alt: "Yakub Firman Mustofa — Full Stack Web Developer & SEO Specialist",
       },
     ],
   },
@@ -95,7 +103,7 @@ export default function RootLayout({
     },
     sameAs: [
       "https://github.com/yakubfirman",
-      "https://linkedin.com/in/Yakub-Firman-Mustofa",
+      "https://linkedin.com/in/yakubfirman",
       "https://instagram.com/f.firman5",
       "https://twitter.com/f_firman5",
     ],

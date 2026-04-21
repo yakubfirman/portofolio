@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,7 +17,7 @@ export default function Navbar({ profile }: { profile: Profile }) {
 
   // Close on route change
   useEffect(() => {
-    setOpen(false);
+    startTransition(() => setOpen(false));
   }, [pathname]);
 
   // Lock body scroll while mobile menu is open
@@ -97,7 +97,7 @@ export default function Navbar({ profile }: { profile: Profile }) {
               {/* Glow ring */}
               <div className="absolute inset-0 rounded-full bg-red-600/25 blur-lg transition-all duration-500 group-hover:bg-red-500/45 group-hover:blur-xl" />
               <div className="relative h-9 w-9 scale-100 overflow-hidden rounded-full ring-1 ring-red-800/60 transition-all duration-300 group-hover:scale-105 group-hover:ring-red-500/80">
-                <Image src="/photo.png" alt={`${profile.first_name} ${profile.last_name}`} fill sizes="36px" className="object-cover" />
+                <Image src="/photo.png" alt={`${profile.first_name} ${profile.last_name}`} fill sizes="36px" className="object-cover" priority />
               </div>
               {/* Online dot */}
               <span className="absolute -right-0.5 -bottom-0.5 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-[#0a0a0a] ring-1 ring-[#0a0a0a]">

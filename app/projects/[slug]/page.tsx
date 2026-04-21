@@ -28,9 +28,15 @@ export async function generateMetadata({
   const project = await getProjectBySlug(slug);
   if (!project) return {};
   return {
-    title: `${project.name} — Yakub Firman Mustofa`,
-    description: project.details.overview,
+    title: project.name,
+    description: project.details.overview || project.description,
     alternates: { canonical: `/projects/${slug}` },
+    openGraph: {
+      title: `${project.name} — Yakub Firman Mustofa`,
+      description: project.details.overview || project.description,
+      url: `https://yakubfirman.id/projects/${slug}`,
+      images: project.image ? [{ url: project.image, alt: project.name }] : [],
+    },
   };
 }
 
@@ -39,8 +45,28 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   const [project, socials, profile] = await Promise.all([getProjectBySlug(slug), getSocials(), getProfile()]);
   if (!project) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: project.name,
+    description: project.details.overview || project.description,
+    url: project.url,
+    applicationCategory: "WebApplication",
+    author: {
+      "@type": "Person",
+      name: "Yakub Firman Mustofa",
+      url: "https://yakubfirman.id",
+    },
+    ...(project.image && { image: project.image }),
+    keywords: project.tech.join(", "),
+  };
+
   return (
     <div className="relative min-h-screen bg-[#0a0a0a]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <PageBackground />
       <Navbar profile={profile} />
 

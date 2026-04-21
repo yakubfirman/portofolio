@@ -7,10 +7,15 @@ import { Navbar, Footer } from "@/components";
 import { Button, SectionHeading, Reveal, PageBackground, ProjectCard } from "@/components/ui";
 
 export const metadata: Metadata = {
-  title: "Proyek - Yakub Firman Mustofa",
+  title: "Proyek",
   description:
     "Kumpulan proyek web yang telah dikerjakan oleh Yakub Firman Mustofa — mulai dari aplikasi e-voting, website organisasi, hingga magang di instansi pemerintah.",
   alternates: { canonical: "/projects" },
+  openGraph: {
+    title: "Proyek — Yakub Firman Mustofa",
+    description: "Kumpulan proyek web yang telah dikerjakan oleh Yakub Firman Mustofa — mulai dari aplikasi e-voting, website organisasi, hingga magang di instansi pemerintah.",
+    url: "https://yakubfirman.id/projects",
+  },
 };
 
 export default async function ProjectsPage() {
