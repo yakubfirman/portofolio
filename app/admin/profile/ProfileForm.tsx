@@ -21,26 +21,89 @@ export default function ProfileForm({ initialData }: { initialData: Profile }) {
   const [roleBadge, setRoleBadge] = useState(initialData.role_badge);
   const [tagline, setTagline] = useState(initialData.tagline);
   const [cvUrl, setCvUrl] = useState(initialData.cv_url);
+  const [cvFile, setCvFile] = useState<File | null>(null);
+  const [cvUploading, setCvUploading] = useState(false);
+
+  async function handleCvUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.type !== "application/pdf") {
+      setError("Hanya file PDF yang diperbolehkan");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      setError("Ukuran file maksimal 10 MB");
+      return;
+    }
+
+    setCvFile(file);
+    setError("");
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setSuccess(false);
-    startTransition(async () => {
-      try {
-        await updateProfile({
-          first_name: firstName.trim(),
-          last_name: lastName.trim(),
-          role_badge: roleBadge.trim(),
-          tagline: tagline.trim(),
-          cv_url: cvUrl.trim(),
+
+    // Jika ada file CV baru, upload dulu
+    if (cvFile) {
+      setCvUploading(true);
+      const formData = new FormData();
+      formData.append("file", cvFile);
+      formData.append("type", "cv");
+
+      fetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) throw new Error(data.error);
+          setCvUrl(data.path);
+          setCvFile(null);
+          setCvUploading(false);
+
+          // Setelah upload berhasil, simpan profile
+          startTransition(async () => {
+            try {
+              await updateProfile({
+                first_name: firstName.trim(),
+                last_name: lastName.trim(),
+                role_badge: roleBadge.trim(),
+                tagline: tagline.trim(),
+                cv_url: data.path,
+              });
+              setSuccess(true);
+              router.refresh();
+            } catch (err) {
+              setError(err instanceof Error ? err.message : "Terjadi kesalahan");
+            }
+          });
+        })
+        .catch((err) => {
+          setError(err.message || "Upload CV gagal");
+          setCvUploading(false);
         });
-        setSuccess(true);
-        router.refresh();
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Terjadi kesalahan");
-      }
-    });
+    } else {
+      // Tidak ada file baru, langsung simpan profile
+      startTransition(async () => {
+        try {
+          await updateProfile({
+            first_name: firstName.trim(),
+            last_name: lastName.trim(),
+            role_badge: roleBadge.trim(),
+            tagline: tagline.trim(),
+            cv_url: cvUrl.trim(),
+          });
+          setSuccess(true);
+          router.refresh();
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "Terjadi kesalahan");
+        }
+      });
+    }
   }
 
   return (
@@ -97,13 +160,25 @@ export default function ProfileForm({ initialData }: { initialData: Profile }) {
           </p>
         </div>
         <div>
-          <label className={labelCls}>URL CV / Resume</label>
-          <input
-            className={inputCls}
-            value={cvUrl}
-            onChange={(e) => setCvUrl(e.target.value)}
-            placeholder="/resumefirman.pdf"
-          />
+          <label className={labelCls}>Upload CV / Resume (PDF)</label>
+          <div className="flex flex-col gap-2">
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={handleCvUpload}
+              disabled={cvUploading || pending}
+              className="rounded border border-white/8 bg-[#0a0a0a] px-3 py-2.5 text-sm text-white file:cursor-pointer file:border-0 file:bg-red-900 file:px-3 file:py-1.5 file:text-white hover:file:bg-red-800 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+            {cvFile && (
+              <p className="text-xs text-blue-400">📄 {cvFile.name} akan diupload</p>
+            )}
+            {cvUrl && !cvFile && (
+              <p className="text-xs text-green-400">✓ CV sudah ada: {cvUrl.split('/').pop()}</p>
+            )}
+          </div>
+          <p className="mt-1 text-[10px] text-gray-700">
+            Upload file PDF maksimal 10 MB
+          </p>
         </div>
 
         {error && (
@@ -127,10 +202,10 @@ export default function ProfileForm({ initialData }: { initialData: Profile }) {
       <div className="mt-4">
         <button
           type="submit"
-          disabled={pending}
+          disabled={pending || cvUploading}
           className="flex items-center gap-2 rounded bg-red-900 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-red-950/30 transition-all hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {pending ? "Menyimpan..." : "Simpan Perubahan"}
+          {cvUploading ? "Upload CV..." : pending ? "Menyimpan..." : "Simpan Perubahan"}
         </button>
       </div>
     </form>
