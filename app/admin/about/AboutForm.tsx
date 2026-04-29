@@ -1,28 +1,347 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
+import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { updateAbout } from "@/app/admin/actions";
 
-type MetaItem = { icon_key: string; text: string };
-type EduItem = { icon_key: string; degree: string; school: string; year: string; note: string | null };
-type HighlightItem = { value: string; label: string };
+// ── Types ──────────────────────────────────────────────────────────────────
+
+type MetaItem = { _id: string; icon_key: string; text: string };
+type EduItem = {
+  _id: string;
+  icon_key: string;
+  degree: string;
+  school: string;
+  year: string;
+  note: string | null;
+};
+type HighlightItem = { _id: string; value: string; label: string };
 type AboutData = {
-  meta: MetaItem[];
-  education: EduItem[];
-  highlights: HighlightItem[];
+  meta: Omit<MetaItem, "_id">[];
+  education: Omit<EduItem, "_id">[];
+  highlights: Omit<HighlightItem, "_id">[];
   focus_tags: string[];
 };
 
-const inputCls =
-  "w-full bg-[#0a0a0a] border border-white/8 rounded px-3 py-2 text-white text-sm placeholder-gray-700 focus:outline-none focus:border-red-800/60 transition-all";
-const labelCls =
-  "block text-[11px] font-medium text-gray-500 mb-1 tracking-wide uppercase";
-const sectionTitle =
-  "text-sm font-semibold text-gray-300 mb-3";
+// ── Helpers ────────────────────────────────────────────────────────────────
 
-const META_ICONS = ["faLocationDot", "faBriefcase", "faCode", "faGraduationCap"];
-const EDU_ICONS = ["faGraduationCap", "faSchool"];
+let _ctr = 0;
+function uid() { return `id-${++_ctr}-${Math.random().toString(36).slice(2)}`; }
+function withId<T extends object>(arr: T[]): (T & { _id: string })[] {
+  return arr.map((x) => ({ ...x, _id: uid() }));
+}
+
+const META_ICONS = [
+  "faLocationDot",
+  "faBriefcase",
+  "faCode",
+  "faGraduationCap",
+  "faEnvelope",
+  "faGlobe",
+];
+const EDU_ICONS = ["faGraduationCap", "faSchool", "faUniversity"];
+
+// ── Shared styles ─────────────────────────────────────────────────────────
+
+const inp =
+  "w-full bg-[#0a0a0a] border border-white/8 rounded px-3 py-2 text-white text-sm placeholder-gray-700 focus:outline-none focus:border-red-800/60 transition-all";
+const lbl = "block text-[11px] font-medium text-gray-500 mb-1 tracking-wide uppercase";
+
+// ── Drag handle ───────────────────────────────────────────────────────────
+
+function DragHandle(props: Record<string, unknown>) {
+  return (
+    <button
+      type="button"
+      {...props}
+      className="cursor-grab touch-none text-gray-700 hover:text-gray-500 active:cursor-grabbing shrink-0"
+      aria-label="Drag to reorder"
+    >
+      <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
+        <circle cx="5" cy="4" r="1.2" />
+        <circle cx="5" cy="8" r="1.2" />
+        <circle cx="5" cy="12" r="1.2" />
+        <circle cx="11" cy="4" r="1.2" />
+        <circle cx="11" cy="8" r="1.2" />
+        <circle cx="11" cy="12" r="1.2" />
+      </svg>
+    </button>
+  );
+}
+
+// ── Section wrapper ───────────────────────────────────────────────────────
+
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <div className="rounded border border-white/5 bg-[#0d0d0d] p-4 sm:p-5">
+      <p className="mb-3 text-sm font-semibold text-gray-300">{title}</p>
+      {children}
+    </div>
+  );
+}
+
+// ── Add button ────────────────────────────────────────────────────────────
+
+function AddBtn({ onClick, label }: { onClick: () => void; label: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="mt-3 flex items-center gap-1.5 text-xs text-gray-600 hover:text-red-400 transition-colors"
+    >
+      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+      {label}
+    </button>
+  );
+}
+
+// ── Sortable DnD wrapper ──────────────────────────────────────────────────
+
+function SortableList({
+  ids,
+  onDragEnd,
+  children,
+}: {
+  ids: string[];
+  onDragEnd: (e: DragEndEvent) => void;
+  children: ReactNode;
+}) {
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } })
+  );
+  return (
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+      <SortableContext items={ids} strategy={verticalListSortingStrategy}>
+        <div className="space-y-2">{children}</div>
+      </SortableContext>
+    </DndContext>
+  );
+}
+
+// ── Meta row (inline sortable) ────────────────────────────────────────────
+
+function MetaRow({
+  item,
+  onChange,
+  onRemove,
+}: {
+  item: MetaItem;
+  onChange: (updated: MetaItem) => void;
+  onRemove: () => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: item._id });
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{ transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.4 : 1 }}
+      className="flex items-center gap-2 rounded border border-white/5 bg-[#0a0a0a] px-2 py-2"
+    >
+      <DragHandle {...attributes} {...listeners} />
+      <select
+        className="w-36 shrink-0 bg-[#0a0a0a] border border-white/8 rounded px-2 py-1.5 text-white text-xs focus:outline-none focus:border-red-800/60"
+        value={item.icon_key}
+        onChange={(e) => onChange({ ...item, icon_key: e.target.value })}
+      >
+        {META_ICONS.map((k) => (
+          <option key={k} value={k}>{k}</option>
+        ))}
+        {!META_ICONS.includes(item.icon_key) && (
+          <option value={item.icon_key}>{item.icon_key}</option>
+        )}
+      </select>
+      <input
+        className={`flex-1 bg-[#0a0a0a] border border-white/8 rounded px-3 py-2 text-white text-sm placeholder-gray-700 focus:outline-none focus:border-red-800/60 transition-all`}
+        value={item.text}
+        onChange={(e) => onChange({ ...item, text: e.target.value })}
+        placeholder="Surakarta, Jawa Tengah"
+      />
+      <button
+        type="button"
+        onClick={onRemove}
+        className="shrink-0 px-1 text-gray-700 hover:text-red-500 transition-colors"
+      >
+        ✕
+      </button>
+    </div>
+  );
+}
+
+// ── Education card (collapsible sortable) ─────────────────────────────────
+
+function EduCard({
+  item,
+  onChange,
+  onRemove,
+}: {
+  item: EduItem;
+  onChange: (updated: EduItem) => void;
+  onRemove: () => void;
+}) {
+  const [open, setOpen] = useState(!item.degree);
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: item._id });
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{ transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.4 : 1 }}
+      className="overflow-hidden rounded border border-white/5 bg-[#0a0a0a]"
+    >
+      <div className="flex items-center gap-2 px-3 py-2.5">
+        <DragHandle {...attributes} {...listeners} />
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="min-w-0 flex-1 text-left"
+        >
+          <p className="truncate text-sm text-gray-200">
+            {item.degree || <span className="italic text-gray-600">Pendidikan baru</span>}
+          </p>
+          {(item.school || item.year) && (
+            <p className="truncate text-xs text-gray-600">
+              {[item.school, item.year].filter(Boolean).join(" · ")}
+            </p>
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="shrink-0 rounded px-2 py-1 text-xs text-gray-600 hover:text-gray-300 transition-colors"
+        >
+          {open ? "↑" : "↓"}
+        </button>
+        <button
+          type="button"
+          onClick={onRemove}
+          className="shrink-0 px-1 text-gray-700 hover:text-red-500 transition-colors"
+        >
+          ✕
+        </button>
+      </div>
+      {open && (
+        <div className="grid grid-cols-1 gap-3 border-t border-white/5 p-3 sm:grid-cols-2">
+          <div>
+            <label className={lbl}>Icon</label>
+            <select
+              className={inp}
+              value={item.icon_key}
+              onChange={(e) => onChange({ ...item, icon_key: e.target.value })}
+            >
+              {EDU_ICONS.map((k) => (
+                <option key={k} value={k}>{k}</option>
+              ))}
+              {!EDU_ICONS.includes(item.icon_key) && (
+                <option value={item.icon_key}>{item.icon_key}</option>
+              )}
+            </select>
+          </div>
+          <div>
+            <label className={lbl}>Gelar / Program</label>
+            <input
+              className={inp}
+              value={item.degree}
+              onChange={(e) => onChange({ ...item, degree: e.target.value })}
+              placeholder="S1 Teknik Informatika"
+            />
+          </div>
+          <div>
+            <label className={lbl}>Sekolah / Universitas</label>
+            <input
+              className={inp}
+              value={item.school}
+              onChange={(e) => onChange({ ...item, school: e.target.value })}
+              placeholder="Universitas Muhammadiyah Surakarta"
+            />
+          </div>
+          <div>
+            <label className={lbl}>Tahun Lulus</label>
+            <input
+              className={inp}
+              value={item.year}
+              onChange={(e) => onChange({ ...item, year: e.target.value })}
+              placeholder="2026"
+            />
+          </div>
+          <div className="sm:col-span-2">
+            <label className={lbl}>Catatan (opsional)</label>
+            <input
+              className={inp}
+              value={item.note ?? ""}
+              onChange={(e) => onChange({ ...item, note: e.target.value || null })}
+              placeholder="IPK 3.63"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Highlight row (inline sortable) ──────────────────────────────────────
+
+function HighlightRow({
+  item,
+  onChange,
+  onRemove,
+}: {
+  item: HighlightItem;
+  onChange: (updated: HighlightItem) => void;
+  onRemove: () => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: item._id });
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{ transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.4 : 1 }}
+      className="flex items-center gap-2 rounded border border-white/5 bg-[#0a0a0a] px-2 py-2"
+    >
+      <DragHandle {...attributes} {...listeners} />
+      <input
+        className="w-24 shrink-0 bg-[#0a0a0a] border border-white/8 rounded px-2 py-1.5 text-white text-sm placeholder-gray-700 focus:outline-none focus:border-red-800/60 transition-all"
+        value={item.value}
+        onChange={(e) => onChange({ ...item, value: e.target.value })}
+        placeholder="2+"
+      />
+      <input
+        className="flex-1 bg-[#0a0a0a] border border-white/8 rounded px-3 py-2 text-white text-sm placeholder-gray-700 focus:outline-none focus:border-red-800/60 transition-all"
+        value={item.label}
+        onChange={(e) => onChange({ ...item, label: e.target.value })}
+        placeholder="Tahun Pengalaman"
+      />
+      <button
+        type="button"
+        onClick={onRemove}
+        className="shrink-0 px-1 text-gray-700 hover:text-red-500 transition-colors"
+      >
+        ✕
+      </button>
+    </div>
+  );
+}
+
+// ── Main form ─────────────────────────────────────────────────────────────
 
 export default function AboutForm({ initialData }: { initialData: AboutData }) {
   const [pending, startTransition] = useTransition();
@@ -30,49 +349,43 @@ export default function AboutForm({ initialData }: { initialData: AboutData }) {
   const [success, setSuccess] = useState(false);
   const router = useRouter();
 
-  const [meta, setMeta] = useState<MetaItem[]>(initialData.meta);
-  const [education, setEducation] = useState<EduItem[]>(initialData.education);
-  const [highlights, setHighlights] = useState<HighlightItem[]>(initialData.highlights);
+  const [meta, setMeta] = useState<MetaItem[]>(() => withId(initialData.meta));
+  const [education, setEducation] = useState<EduItem[]>(() => withId(initialData.education));
+  const [highlights, setHighlights] = useState<HighlightItem[]>(() => withId(initialData.highlights));
   const [focusTags, setFocusTags] = useState(initialData.focus_tags.join(", "));
 
-  // ── Meta helpers ──────────────────────────────────────────────────────────
-  function setMetaField(i: number, field: keyof MetaItem, value: string) {
-    setMeta((prev) => prev.map((m, idx) => (idx === i ? { ...m, [field]: value } : m)));
-  }
-  function addMeta() {
-    setMeta((prev) => [...prev, { icon_key: "faBriefcase", text: "" }]);
-  }
-  function removeMeta(i: number) {
-    setMeta((prev) => prev.filter((_, idx) => idx !== i));
-  }
-
-  // ── Education helpers ─────────────────────────────────────────────────────
-  function setEduField(i: number, field: keyof EduItem, value: string | null) {
-    setEducation((prev) =>
-      prev.map((e, idx) => (idx === i ? { ...e, [field]: value } : e))
-    );
-  }
-  function addEdu() {
-    setEducation((prev) => [
-      ...prev,
-      { icon_key: "faGraduationCap", degree: "", school: "", year: "", note: null },
-    ]);
-  }
-  function removeEdu(i: number) {
-    setEducation((prev) => prev.filter((_, idx) => idx !== i));
+  // ── DnD handlers ──────────────────────────────────────────────────────────
+  function handleMetaDragEnd(e: DragEndEvent) {
+    const { active, over } = e;
+    if (over && active.id !== over.id) {
+      setMeta((prev) => {
+        const from = prev.findIndex((x) => x._id === String(active.id));
+        const to = prev.findIndex((x) => x._id === String(over.id));
+        return arrayMove(prev, from, to);
+      });
+    }
   }
 
-  // ── Highlights helpers ────────────────────────────────────────────────────
-  function setHighlightField(i: number, field: keyof HighlightItem, value: string) {
-    setHighlights((prev) =>
-      prev.map((h, idx) => (idx === i ? { ...h, [field]: value } : h))
-    );
+  function handleEduDragEnd(e: DragEndEvent) {
+    const { active, over } = e;
+    if (over && active.id !== over.id) {
+      setEducation((prev) => {
+        const from = prev.findIndex((x) => x._id === String(active.id));
+        const to = prev.findIndex((x) => x._id === String(over.id));
+        return arrayMove(prev, from, to);
+      });
+    }
   }
-  function addHighlight() {
-    setHighlights((prev) => [...prev, { value: "", label: "" }]);
-  }
-  function removeHighlight(i: number) {
-    setHighlights((prev) => prev.filter((_, idx) => idx !== i));
+
+  function handleHighlightDragEnd(e: DragEndEvent) {
+    const { active, over } = e;
+    if (over && active.id !== over.id) {
+      setHighlights((prev) => {
+        const from = prev.findIndex((x) => x._id === String(active.id));
+        const to = prev.findIndex((x) => x._id === String(over.id));
+        return arrayMove(prev, from, to);
+      });
+    }
   }
 
   // ── Submit ────────────────────────────────────────────────────────────────
@@ -82,205 +395,128 @@ export default function AboutForm({ initialData }: { initialData: AboutData }) {
     setSuccess(false);
     startTransition(async () => {
       try {
-        await updateAbout({
-          meta,
-          education,
-          highlights,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const result = await updateAbout({
+          meta: meta.map(({ _id, ...rest }) => rest),
+          education: education.map(({ _id, ...rest }) => rest),
+          highlights: highlights.map(({ _id, ...rest }) => rest),
           focus_tags: focusTags
             .split(",")
             .map((t) => t.trim())
             .filter(Boolean),
         });
-        setSuccess(true);
-        router.refresh();
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Terjadi kesalahan");
+        if (result?.error) {
+          setError(result.error);
+        } else {
+          setSuccess(true);
+          router.refresh();
+        }
+      } catch {
+        setError("Terjadi kesalahan tidak terduga");
       }
     });
   }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl space-y-6">
-      {/* Meta (lokasi, status, dll) */}
-      <div className="rounded border border-white/5 bg-[#0d0d0d] p-4 sm:p-5">
-        <p className={sectionTitle}>Info Meta</p>
-        <div className="space-y-3">
-          {meta.map((m, i) => (
-            <div key={i} className="flex items-end gap-2">
-              <div className="w-36 shrink-0">
-                {i === 0 && <label className={labelCls}>Icon</label>}
-                <select
-                  className={inputCls}
-                  value={m.icon_key}
-                  onChange={(e) => setMetaField(i, "icon_key", e.target.value)}
-                >
-                  {META_ICONS.map((k) => <option key={k} value={k}>{k}</option>)}
-                  {!META_ICONS.includes(m.icon_key) && (
-                    <option value={m.icon_key}>{m.icon_key}</option>
-                  )}
-                </select>
-              </div>
-              <div className="flex-1">
-                {i === 0 && <label className={labelCls}>Teks</label>}
-                <input
-                  className={inputCls}
-                  value={m.text}
-                  onChange={(e) => setMetaField(i, "text", e.target.value)}
-                  placeholder="Surakarta, Jawa Tengah"
-                />
-              </div>
-              <button
-                type="button"
-                onClick={() => removeMeta(i)}
-                className="mb-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded border border-white/8 text-gray-600 hover:text-red-500"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={addMeta}
-          className="mt-3 flex items-center gap-1.5 text-xs text-gray-600 hover:text-red-400"
-        >
-          <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-          Tambah baris
-        </button>
-      </div>
 
-      {/* Education */}
-      <div className="rounded border border-white/5 bg-[#0d0d0d] p-4 sm:p-5">
-        <p className={sectionTitle}>Pendidikan</p>
-        <div className="space-y-4">
-          {education.map((e, i) => (
-            <div key={i} className="rounded border border-white/5 p-3">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="text-xs text-gray-600">#{i + 1}</span>
-                <button
-                  type="button"
-                  onClick={() => removeEdu(i)}
-                  className="text-xs text-gray-700 hover:text-red-500"
-                >
-                  Hapus
-                </button>
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <div>
-                  <label className={labelCls}>Icon</label>
-                  <select
-                    className={inputCls}
-                    value={e.icon_key}
-                    onChange={(ev) => setEduField(i, "icon_key", ev.target.value)}
-                  >
-                    {EDU_ICONS.map((k) => <option key={k} value={k}>{k}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className={labelCls}>Gelar / Program</label>
-                  <input className={inputCls} value={e.degree} onChange={(ev) => setEduField(i, "degree", ev.target.value)} placeholder="S1 Teknik Informatika" />
-                </div>
-                <div>
-                  <label className={labelCls}>Sekolah / Universitas</label>
-                  <input className={inputCls} value={e.school} onChange={(ev) => setEduField(i, "school", ev.target.value)} placeholder="Universitas Muhammadiyah Surakarta" />
-                </div>
-                <div>
-                  <label className={labelCls}>Tahun</label>
-                  <input className={inputCls} value={e.year} onChange={(ev) => setEduField(i, "year", ev.target.value)} placeholder="2026" />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className={labelCls}>Catatan (opsional)</label>
-                  <input className={inputCls} value={e.note ?? ""} onChange={(ev) => setEduField(i, "note", ev.target.value || null)} placeholder="IPK 3.63" />
-                </div>
-              </div>
-            </div>
+      {/* ── Info Meta ── */}
+      <Section title="Info Meta">
+        <SortableList ids={meta.map((m) => m._id)} onDragEnd={handleMetaDragEnd}>
+          {meta.map((m) => (
+            <MetaRow
+              key={m._id}
+              item={m}
+              onChange={(updated) =>
+                setMeta((prev) => prev.map((x) => (x._id === m._id ? updated : x)))
+              }
+              onRemove={() => setMeta((prev) => prev.filter((x) => x._id !== m._id))}
+            />
           ))}
-        </div>
-        <button
-          type="button"
-          onClick={addEdu}
-          className="mt-3 flex items-center gap-1.5 text-xs text-gray-600 hover:text-red-400"
-        >
-          <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-          Tambah pendidikan
-        </button>
-      </div>
+        </SortableList>
+        <AddBtn
+          onClick={() =>
+            setMeta((prev) => [...prev, { _id: uid(), icon_key: "faBriefcase", text: "" }])
+          }
+          label="Tambah baris"
+        />
+      </Section>
 
-      {/* Highlights (2+, 14+, 100%) */}
-      <div className="rounded border border-white/5 bg-[#0d0d0d] p-4 sm:p-5">
-        <p className={sectionTitle}>Highlight Statistik</p>
-        <div className="space-y-3">
-          {highlights.map((h, i) => (
-            <div key={i} className="flex items-end gap-2">
-              <div className="w-24 shrink-0">
-                {i === 0 && <label className={labelCls}>Nilai</label>}
-                <input className={inputCls} value={h.value} onChange={(e) => setHighlightField(i, "value", e.target.value)} placeholder="2+" />
-              </div>
-              <div className="flex-1">
-                {i === 0 && <label className={labelCls}>Label</label>}
-                <input className={inputCls} value={h.label} onChange={(e) => setHighlightField(i, "label", e.target.value)} placeholder="Tahun Pengalaman" />
-              </div>
-              <button
-                type="button"
-                onClick={() => removeHighlight(i)}
-                className="mb-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded border border-white/8 text-gray-600 hover:text-red-500"
-              >
-                ✕
-              </button>
-            </div>
+      {/* ── Pendidikan ── */}
+      <Section title="Pendidikan">
+        <SortableList ids={education.map((e) => e._id)} onDragEnd={handleEduDragEnd}>
+          {education.map((e) => (
+            <EduCard
+              key={e._id}
+              item={e}
+              onChange={(updated) =>
+                setEducation((prev) => prev.map((x) => (x._id === e._id ? updated : x)))
+              }
+              onRemove={() => setEducation((prev) => prev.filter((x) => x._id !== e._id))}
+            />
           ))}
-        </div>
-        <button
-          type="button"
-          onClick={addHighlight}
-          className="mt-3 flex items-center gap-1.5 text-xs text-gray-600 hover:text-red-400"
-        >
-          <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-          Tambah highlight
-        </button>
-      </div>
+        </SortableList>
+        <AddBtn
+          onClick={() =>
+            setEducation((prev) => [
+              ...prev,
+              { _id: uid(), icon_key: "faGraduationCap", degree: "", school: "", year: "", note: null },
+            ])
+          }
+          label="Tambah pendidikan"
+        />
+      </Section>
 
-      {/* Focus tags */}
-      <div className="rounded border border-white/5 bg-[#0d0d0d] p-4 sm:p-5">
-        <p className={sectionTitle}>Tag Fokus Teknologi</p>
+      {/* ── Highlight Statistik ── */}
+      <Section title="Highlight Statistik">
+        <SortableList ids={highlights.map((h) => h._id)} onDragEnd={handleHighlightDragEnd}>
+          {highlights.map((h) => (
+            <HighlightRow
+              key={h._id}
+              item={h}
+              onChange={(updated) =>
+                setHighlights((prev) => prev.map((x) => (x._id === h._id ? updated : x)))
+              }
+              onRemove={() => setHighlights((prev) => prev.filter((x) => x._id !== h._id))}
+            />
+          ))}
+        </SortableList>
+        <AddBtn
+          onClick={() =>
+            setHighlights((prev) => [...prev, { _id: uid(), value: "", label: "" }])
+          }
+          label="Tambah highlight"
+        />
+      </Section>
+
+      {/* ── Tag Fokus Teknologi ── */}
+      <Section title="Tag Fokus Teknologi">
         <input
-          className={inputCls}
+          className={inp}
           value={focusTags}
           onChange={(e) => setFocusTags(e.target.value)}
           placeholder="React / Next.js, Laravel, Tailwind CSS, SEO & GSC"
         />
         <p className="mt-1.5 text-[10px] text-gray-700">Pisahkan dengan koma</p>
-      </div>
+      </Section>
 
       {error && (
-        <div className="flex items-center gap-2 rounded border border-red-900/30 bg-red-950/20 px-3 py-2">
-          <svg className="h-3.5 w-3.5 shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-          </svg>
-          <p className="text-xs text-red-400">{error}</p>
-        </div>
+        <p className="rounded border border-red-900/40 bg-red-950/20 px-3 py-2 text-xs text-red-400">
+          {error}
+        </p>
       )}
       {success && (
-        <div className="flex items-center gap-2 rounded border border-green-900/30 bg-green-950/20 px-3 py-2">
-          <svg className="h-3.5 w-3.5 shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
-          <p className="text-xs text-green-400">About berhasil disimpan!</p>
-        </div>
+        <p className="rounded border border-green-900/40 bg-green-950/20 px-3 py-2 text-xs text-green-400">
+          Data berhasil disimpan.
+        </p>
       )}
 
       <button
         type="submit"
         disabled={pending}
-        className="flex items-center gap-2 rounded bg-red-900 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-red-950/30 transition-all hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded bg-red-700 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {pending ? "Menyimpan..." : "Simpan Semua"}
+        {pending ? "Menyimpan..." : "Simpan Perubahan"}
       </button>
     </form>
   );
