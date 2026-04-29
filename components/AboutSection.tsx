@@ -1,6 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { SectionHeading, Reveal } from "@/components/ui";
 import type { AboutMeta, AboutEducation, AboutHighlight } from "@/lib/data";
 
@@ -91,6 +92,18 @@ export default function AboutSection({ meta, education, highlights }: Props) {
                   ))}
                 </div>
               </div>
+
+              {/* Link to full About page */}
+              <Link
+                href="/about"
+                className="group inline-flex items-center gap-2 text-xs font-medium text-gray-500 transition-colors hover:text-red-400"
+              >
+                Lihat riwayat lengkap
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
+                />
+              </Link>
             </div>
           </Reveal>
 

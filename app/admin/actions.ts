@@ -183,6 +183,21 @@ export async function updateAbout(data: unknown) {
   revalidatePath("/admin/about");
 }
 
+export async function updateAboutFull(data: unknown) {
+  const res = await fetch(`${API_URL}/api/about/full`, {
+    method: "PUT",
+    headers: authHeaders,
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? "Gagal mengupdate data about");
+  }
+  revalidatePath("/about");
+  revalidatePath("/admin/about");
+}
+
 // ─── Projects ─────────────────────────────────────────────────────────────────
 
 export async function createProject(data: unknown) {
