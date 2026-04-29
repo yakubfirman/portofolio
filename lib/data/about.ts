@@ -18,13 +18,16 @@ export type AboutData = {
   focus_tags: string[];
 };
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.API_URL || "https://yakubfirman.pythonanywhere.com";
+
+const FALLBACK_ABOUT: AboutData = { meta: [], education: [], highlights: [], focus_tags: [] };
 
 export async function getAbout(): Promise<AboutData> {
+  try {
   const res = await fetch(`${API_URL}/api/about`, {
     next: { revalidate: 3600 },
   });
-  if (!res.ok) throw new Error("Failed to fetch about data");
+  if (!res.ok) return FALLBACK_ABOUT;
   const raw = await res.json();
   return {
     meta: raw.meta.map((m: { icon_key: string; text: string }) => ({
@@ -50,4 +53,7 @@ export async function getAbout(): Promise<AboutData> {
     highlights: raw.highlights,
     focus_tags: raw.focus_tags,
   };
+  } catch {
+    return FALLBACK_ABOUT;
+  }
 }

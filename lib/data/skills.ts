@@ -8,13 +8,14 @@ export type SkillCategory = {
   skills: { name: string; pct: number }[];
 };
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.API_URL || "https://yakubfirman.pythonanywhere.com";
 
 export async function getSkillCategories(): Promise<SkillCategory[]> {
+  try {
   const res = await fetch(`${API_URL}/api/skills`, {
     next: { revalidate: 3600 },
   });
-  if (!res.ok) throw new Error("Failed to fetch skills");
+  if (!res.ok) return [];
   const raw = await res.json();
   return raw.categories.map(
     (cat: {
@@ -29,4 +30,7 @@ export async function getSkillCategories(): Promise<SkillCategory[]> {
       skills: cat.skills,
     })
   );
+  } catch {
+    return [];
+  }
 }

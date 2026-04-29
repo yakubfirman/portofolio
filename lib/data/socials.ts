@@ -7,17 +7,21 @@ export type Social = {
   icon: IconDefinition;
 };
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.API_URL || "https://yakubfirman.pythonanywhere.com";
 
 export async function getSocials(): Promise<Social[]> {
-  const res = await fetch(`${API_URL}/api/socials`, {
-    next: { revalidate: 3600 },
-  });
-  if (!res.ok) throw new Error("Failed to fetch socials");
-  const raw = await res.json();
-  return raw.map((s: { label: string; href: string; icon_key: string }) => ({
-    label: s.label,
-    href: s.href,
-    icon: ICON_MAP[s.icon_key],
-  }));
+  try {
+    const res = await fetch(`${API_URL}/api/socials`, {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return [];
+    const raw = await res.json();
+    return raw.map((s: { label: string; href: string; icon_key: string }) => ({
+      label: s.label,
+      href: s.href,
+      icon: ICON_MAP[s.icon_key],
+    }));
+  } catch {
+    return [];
+  }
 }
