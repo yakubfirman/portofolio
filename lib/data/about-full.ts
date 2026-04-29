@@ -1,17 +1,7 @@
-import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { ICON_MAP } from "@/lib/icon-map";
+import type { AboutMeta, AboutEducation, AboutHighlight } from "./about";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-
-export type AboutMeta = { icon: IconDefinition; icon_key: string; text: string };
-export type AboutEducation = {
-  icon: IconDefinition;
-  degree: string;
-  school: string;
-  year: string;
-  note: string | null;
-};
-export type AboutHighlight = { value: string; label: string };
 
 export type AboutExperience = {
   company: string;
