@@ -183,19 +183,24 @@ export async function updateAbout(data: unknown) {
   revalidatePath("/admin/about");
 }
 
-export async function updateAboutFull(data: unknown) {
-  const res = await fetch(`${API_URL}/api/about/full`, {
-    method: "PUT",
-    headers: authHeaders,
-    body: JSON.stringify(data),
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    const err = (await res.json().catch(() => ({}))) as { error?: string };
-    throw new Error(err.error ?? "Gagal mengupdate data about");
+export async function updateAboutFull(data: unknown): Promise<{ error?: string }> {
+  try {
+    const res = await fetch(`${API_URL}/api/about/full`, {
+      method: "PUT",
+      headers: authHeaders,
+      body: JSON.stringify(data),
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      const err = (await res.json().catch(() => ({}))) as { error?: string };
+      return { error: err.error ?? `Gagal mengupdate data about (${res.status})` };
+    }
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : "Koneksi ke server gagal" };
   }
   revalidatePath("/about");
   revalidatePath("/admin/about");
+  return {};
 }
 
 // ─── Projects ─────────────────────────────────────────────────────────────────

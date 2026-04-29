@@ -118,16 +118,20 @@ export default function AboutFullForm({ initialData }: { initialData: FullData }
     setSuccess(false);
     startTransition(async () => {
       try {
-        await updateAboutFull({
+        const result = await updateAboutFull({
           birthdate: birthdate || null,
           experiences,
           organizations,
           certificates,
         });
-        setSuccess(true);
-        router.refresh();
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Terjadi kesalahan");
+        if (result?.error) {
+          setError(result.error);
+        } else {
+          setSuccess(true);
+          router.refresh();
+        }
+      } catch {
+        setError("Terjadi kesalahan tidak terduga");
       }
     });
   }
