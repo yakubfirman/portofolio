@@ -91,7 +91,7 @@ export default async function Home() {
           <SpeakingSection events={speaking} />
           <TestimonialsSection testimonials={testimonials} />
           <WorkflowSection />
-          <GitHubSection />
+          {/* <GitHubSection /> */}
           <ContactSection socials={socials} />
         </main>
         <Footer
