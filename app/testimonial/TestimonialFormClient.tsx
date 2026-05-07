@@ -29,25 +29,21 @@ export default function TestimonialFormClient() {
     setError("");
 
     try {
-      const uploadFormData = new FormData();
-      uploadFormData.append("file", file);
-      uploadFormData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "");
-      uploadFormData.append("cloud_name", process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "");
+      const fd = new FormData();
+      fd.append("file", file);
 
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-        { method: "POST", body: uploadFormData }
-      );
-
-      if (!res.ok) throw new Error("Upload gagal");
-
+      const res = await fetch("/api/testimonial/upload", { method: "POST", body: fd });
       const data = await res.json();
-      setFormData((prev) => ({ ...prev, image: data.secure_url }));
+
+      if (!res.ok) throw new Error(data.error || "Upload gagal");
+
+      setFormData((prev) => ({ ...prev, image: data.path }));
     } catch (err) {
-      setError("Gagal upload foto. Periksa konfigurasi Cloudinary.");
+      setError(err instanceof Error ? err.message : "Gagal upload foto. Coba lagi.");
       console.error(err);
     } finally {
       setUploading(false);
+      e.target.value = "";
     }
   }
 
