@@ -44,15 +44,23 @@ body {
   color: #fff;
 }
 
-/* Infinite icon marquee */
-@keyframes marquee-scroll {
+/* Infinite skills marquee — two rows, opposite directions */
+@keyframes marquee-to-left {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-.marquee-track {
-  animation: marquee-scroll 18s linear infinite;
+@keyframes marquee-to-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
 }
-.marquee-track:hover {
+.skills-marquee-left {
+  animation: marquee-to-left 28s linear infinite;
+}
+.skills-marquee-right {
+  animation: marquee-to-right 22s linear infinite;
+}
+.skills-marquee-left:hover,
+.skills-marquee-right:hover {
   animation-play-state: paused;
 }
 
