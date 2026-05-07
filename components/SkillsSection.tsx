@@ -69,11 +69,7 @@ export default function SkillsSection({ categories }: Props) {
 
   if (skills.length === 0) return null;
 
-  const mid = Math.ceil(skills.length / 2);
-  const row1 = skills.slice(0, mid);
-  const row2 = skills.slice(mid);
-
-  // Repeat each row twice → translateX(-50%) loops seamlessly
+  // Repeat twice → translateX(-50%) loops seamlessly
   const dbl = <T,>(a: T[]) => [...a, ...a];
 
   return (
@@ -85,27 +81,17 @@ export default function SkillsSection({ categories }: Props) {
         </Reveal>
       </div>
 
-      {/* Two-row infinite marquee */}
-      <div className="relative mt-14 flex flex-col gap-6 overflow-hidden py-2">
+      {/* Single-row infinite marquee */}
+      <div className="relative mt-14 overflow-hidden py-2">
         {/* Gradient fade edges */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-[#0a0a0a] to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-[#0a0a0a] to-transparent" />
 
-        {/* Row 1 — scrolls left */}
-        <div className="skills-marquee-left flex w-max gap-5">
-          {dbl(row1).map((s, i) => (
-            <SkillIcon key={`r1-${s.name}-${i}`} skill={s} />
+        <div className="skills-marquee-left flex w-max gap-10">
+          {dbl(skills).map((s, i) => (
+            <SkillIcon key={`${s.name}-${i}`} skill={s} />
           ))}
         </div>
-
-        {/* Row 2 — scrolls right */}
-        {row2.length > 0 && (
-          <div className="skills-marquee-right flex w-max gap-5">
-            {dbl(row2).map((s, i) => (
-              <SkillIcon key={`r2-${s.name}-${i}`} skill={s} />
-            ))}
-          </div>
-        )}
       </div>
     </section>
   );
@@ -114,32 +100,16 @@ export default function SkillsSection({ categories }: Props) {
 function SkillIcon({ skill }: { skill: SkillDef }) {
   const Icon = skill.icon;
   return (
-    <div
-      className="group relative flex w-[100px] shrink-0 cursor-default flex-col items-center gap-2.5 rounded-2xl border border-white/[0.06] bg-[#0e0e0e] px-3 py-4 transition-all duration-300 hover:-translate-y-1.5 hover:border-white/20 hover:bg-[#161616]"
-    >
-      {/* coloured glow on hover */}
-      <div
-        className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{
-          boxShadow: `0 0 24px 5px ${skill.color}28, inset 0 0 14px 2px ${skill.color}15`,
-        }}
-      />
-      {/* bottom accent line */}
-      <div
-        className="absolute bottom-0 left-5 right-5 h-[2px] rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ background: skill.color }}
-      />
-
+    <div className="group flex shrink-0 cursor-default flex-col items-center gap-2 transition-transform duration-300 hover:-translate-y-1.5">
       {/* Brand icon with official color */}
       <Icon
         style={{ color: skill.color }}
-        className="relative z-10 h-9 w-9 transition-transform duration-300 group-hover:scale-110"
+        className="h-10 w-10 transition-transform duration-300 group-hover:scale-110"
         aria-hidden="true"
       />
-
-      {/* Brand name — always visible, styled with brand color */}
+      {/* Brand name with official color */}
       <span
-        className="relative z-10 text-center text-[11px] font-semibold leading-tight tracking-wide"
+        className="text-center text-[11px] font-semibold leading-tight tracking-wide"
         style={{ color: skill.color }}
       >
         {skill.name}
