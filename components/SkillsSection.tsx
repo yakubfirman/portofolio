@@ -12,9 +12,6 @@ import { SectionHeading, Reveal } from "@/components/ui";
 import type { SkillCategory } from "@/lib/data";
 
 type IconDef = { icon: IconType; color: string };
-type Item =
-  | { type: "cat"; label: string }
-  | { type: "skill"; name: string; icon: IconType; color: string };
 
 const SKILL_ICONS: Record<string, IconDef> = {
   "HTML5":        { icon: SiHtml5,       color: "#E34F26" },
@@ -50,22 +47,26 @@ const SKILL_ICONS: Record<string, IconDef> = {
   "WordPress":    { icon: SiWordpress,   color: "#21759B" },
 };
 
+type SkillItem = { name: string; icon: IconType; color: string };
+type TrackItem = { type: "cat"; label: string } | ({ type: "skill" } & SkillItem);
 type Props = { categories: SkillCategory[] };
 
 export default function SkillsSection({ categories }: Props) {
-  const cycle: Item[] = [];
-  for (const cat of categories) {
+  const rows: TrackItem[][] = [[], []];
+  let totalSkills = 0;
+
+  categories.forEach((cat, i) => {
     const catSkills = cat.skills
       .filter((s) => SKILL_ICONS[s.name])
-      .map((s) => ({ type: "skill" as const, name: s.name, ...SKILL_ICONS[s.name] }));
-    if (catSkills.length === 0) continue;
-    cycle.push({ type: "cat", label: cat.label });
-    cycle.push(...catSkills);
-  }
+      .map((s): TrackItem => ({ type: "skill", name: s.name, ...SKILL_ICONS[s.name] }));
+    if (catSkills.length === 0) return;
+    totalSkills += catSkills.length;
+    rows[i % 2].push({ type: "cat", label: cat.label }, ...catSkills);
+  });
 
-  if (cycle.length === 0) return null;
+  if (totalSkills === 0) return null;
 
-  const track = [...cycle, ...cycle];
+  const tracks = rows.map((row) => (row.length > 0 ? [...row, ...row] : []));
 
   return (
     <section id="skills" className="py-20 md:py-28">
@@ -73,19 +74,38 @@ export default function SkillsSection({ categories }: Props) {
         <Reveal>
           <SectionHeading tag="Tech Stack" title="Keahlian Teknologi" />
         </Reveal>
+        <Reveal delay={80}>
+          <p className="mt-3 text-[12px] font-medium tracking-widest text-gray-600 uppercase">
+            {totalSkills} teknologi &amp; tools
+          </p>
+        </Reveal>
       </div>
 
-      <div className="relative mt-14 overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-40 bg-linear-to-r from-[#0a0a0a] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-40 bg-linear-to-l from-[#0a0a0a] to-transparent" />
+      <div className="relative mt-12 overflow-hidden py-2">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="h-32 w-[600px] rounded-full bg-red-900/5 blur-[80px]" />
+        </div>
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-36 bg-linear-to-r from-[#0a0a0a] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-36 bg-linear-to-l from-[#0a0a0a] to-transparent" />
 
-        <div className="skills-marquee-left flex w-max items-center gap-3 py-2">
-          {track.map((item, i) =>
-            item.type === "cat" ? (
-              <CategoryDivider key={`cat-${item.label}-${i}`} label={item.label} />
-            ) : (
-              <SkillChip key={`skill-${item.name}-${i}`} skill={item} />
-            )
+        <div className="space-y-3">
+          {tracks[0].length > 0 && (
+            <div className="skills-marquee-left flex w-max items-center gap-2.5">
+              {tracks[0].map((item, i) =>
+                item.type === "cat"
+                  ? <CategoryDivider key={`r0-${item.label}-${i}`} label={item.label} />
+                  : <SkillChip key={`r0-${item.name}-${i}`} skill={item} />
+              )}
+            </div>
+          )}
+          {tracks[1].length > 0 && (
+            <div className="skills-marquee-right flex w-max items-center gap-2.5">
+              {tracks[1].map((item, i) =>
+                item.type === "cat"
+                  ? <CategoryDivider key={`r1-${item.label}-${i}`} label={item.label} />
+                  : <SkillChip key={`r1-${item.name}-${i}`} skill={item} />
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -95,28 +115,35 @@ export default function SkillsSection({ categories }: Props) {
 
 function CategoryDivider({ label }: { label: string }) {
   return (
-    <div className="mx-4 flex shrink-0 items-center gap-3">
-      <span className="h-px w-6 bg-red-900/60" />
-      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-red-700/80">
+    <div className="mx-6 flex shrink-0 items-center gap-2">
+      <span className="h-px w-5 bg-linear-to-r from-transparent to-red-900/50" />
+      <span className="h-1 w-1 shrink-0 rounded-full bg-red-800/50" />
+      <span className="select-none text-[9px] font-black uppercase tracking-[0.24em] text-red-900/60">
         {label}
       </span>
-      <span className="h-px w-6 bg-red-900/60" />
+      <span className="h-1 w-1 shrink-0 rounded-full bg-red-800/50" />
+      <span className="h-px w-5 bg-linear-to-l from-transparent to-red-900/50" />
     </div>
   );
 }
 
-function SkillChip({ skill }: { skill: { name: string; icon: IconType; color: string } }) {
+function SkillChip({ skill }: { skill: SkillItem }) {
   const Icon = skill.icon;
   return (
     <div
-      className="group flex shrink-0 cursor-default items-center gap-3 rounded-xs border border-white/8 px-5 py-3 transition-all duration-300 hover:border-white/20"
+      className="group relative flex shrink-0 cursor-default items-center gap-2.5 overflow-hidden rounded border border-white/[0.07] px-4 py-2.5 transition-all duration-300 hover:border-white/[0.18]"
       style={{ "--brand": skill.color } as React.CSSProperties}
     >
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ background: `radial-gradient(ellipse at 30% 50%, ${skill.color}20 0%, transparent 70%)` }}
+      />
       <Icon
-        className="h-5 w-5 shrink-0 text-white/30 transition-colors duration-300 group-hover:text-(--brand)"
+        className="relative z-10 h-[18px] w-[18px] shrink-0 text-white/20 transition-colors duration-300 group-hover:text-(--brand)"
         aria-hidden="true"
       />
-      <span className="text-[14px] font-medium text-white/40 transition-colors duration-300 group-hover:text-white/85">
+      <span className="relative z-10 whitespace-nowrap text-[13px] font-medium tracking-wide text-white/35 transition-colors duration-300 group-hover:text-white/85">
         {skill.name}
       </span>
     </div>
