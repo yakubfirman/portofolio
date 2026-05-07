@@ -345,6 +345,7 @@ export async function updateTestimonial(id: number, data: unknown) {
     throw new Error(err.error ?? "Gagal mengupdate testimoni");
   }
   revalidatePath("/");
+  revalidatePath("/testimonial");
   revalidatePath("/admin/testimonials");
 }
 
@@ -356,6 +357,7 @@ export async function deleteTestimonial(id: number) {
   });
   if (!res.ok) throw new Error("Gagal menghapus testimoni");
   revalidatePath("/");
+  revalidatePath("/testimonial");
   revalidatePath("/admin/testimonials");
 }
 

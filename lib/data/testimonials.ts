@@ -23,7 +23,7 @@ export async function getApprovedTestimonials(): Promise<Testimonial[]> {
     
     try {
       const res = await fetch(`${API_URL}/api/testimonials`, {
-        next: { revalidate: 3600 },
+        next: { revalidate: 60 },
         signal: controller.signal,
       });
       clearTimeout(timeoutId);
