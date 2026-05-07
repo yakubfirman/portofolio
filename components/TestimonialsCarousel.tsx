@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { Reveal } from "@/components/ui";
@@ -71,18 +70,22 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
               {/* Author - at bottom */}
               <div className="flex items-center justify-center gap-3 mt-3">
                 {testimonial.image ? (
-                  <Image 
-                    src={testimonial.image} 
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={testimonial.image}
                     alt={testimonial.name}
                     width={48}
                     height={48}
                     className="h-12 w-12 rounded-full object-cover shrink-0 border border-red-900/30"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; (e.currentTarget.nextElementSibling as HTMLElement | null)?.removeAttribute("style"); }}
                   />
-                ) : (
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-red-900/30 bg-red-950/40 text-sm font-bold text-red-400">
-                    {testimonial.name.trim().split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase()}
-                  </div>
-                )}
+                ) : null}
+                <div
+                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-red-900/30 bg-red-950/40 text-sm font-bold text-red-400"
+                  style={testimonial.image ? { display: "none" } : undefined}
+                >
+                  {testimonial.name.trim().split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase()}
+                </div>
                 <div className="min-w-0 text-left">
                   <p className="font-semibold text-white text-sm truncate">{testimonial.name}</p>
                   <p className="text-xs text-gray-500 truncate">
