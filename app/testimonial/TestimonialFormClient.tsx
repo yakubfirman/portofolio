@@ -28,16 +28,23 @@ export default function TestimonialFormClient() {
     setUploading(true);
     setError("");
 
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+    const preset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+
     try {
       const fd = new FormData();
       fd.append("file", file);
+      fd.append("upload_preset", preset || "");
 
-      const res = await fetch("/api/testimonial/upload", { method: "POST", body: fd });
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        { method: "POST", body: fd }
+      );
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error || "Upload gagal");
+      if (!res.ok) throw new Error(data.error?.message || "Upload gagal");
 
-      setFormData((prev) => ({ ...prev, image: data.path }));
+      setFormData((prev) => ({ ...prev, image: data.secure_url }));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Gagal upload foto. Coba lagi.");
       console.error(err);
