@@ -62,10 +62,8 @@ export default function SkillsSection({ categories }: Props) {
 
   if (skills.length === 0) return null;
 
-  const mid = Math.ceil(skills.length / 2);
-  // duplicate each row so -50% translateX loops seamlessly
-  const row1 = [...skills.slice(0, mid), ...skills.slice(0, mid)];
-  const row2 = [...skills.slice(mid), ...skills.slice(mid)];
+  // duplicate so -50% translateX loops seamlessly
+  const row = [...skills, ...skills];
 
   return (
     <section id="skills" className="py-20 md:py-28">
@@ -75,23 +73,15 @@ export default function SkillsSection({ categories }: Props) {
         </Reveal>
       </div>
 
-      {/* Brand chip scroller */}
-      <div className="relative mt-14 flex flex-col gap-4 overflow-hidden">
+      {/* Single-row brand chip scroller */}
+      <div className="relative mt-14 overflow-hidden">
         {/* fade masks */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-40 bg-gradient-to-r from-[#0a0a0a] to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-40 bg-gradient-to-l from-[#0a0a0a] to-transparent" />
 
-        {/* Row 1 → left */}
-        <div className="skills-marquee-left flex w-max items-center gap-3">
-          {row1.map((s, i) => (
-            <SkillChip key={`r1-${s.name}-${i}`} skill={s} />
-          ))}
-        </div>
-
-        {/* Row 2 → right */}
-        <div className="skills-marquee-right flex w-max items-center gap-3">
-          {row2.map((s, i) => (
-            <SkillChip key={`r2-${s.name}-${i}`} skill={s} />
+        <div className="skills-marquee-left flex w-max items-center gap-4">
+          {row.map((s, i) => (
+            <SkillChip key={`${s.name}-${i}`} skill={s} />
           ))}
         </div>
       </div>
@@ -103,14 +93,14 @@ function SkillChip({ skill }: { skill: SkillDef }) {
   const Icon = skill.icon;
   return (
     <div
-      className="group flex shrink-0 cursor-default items-center gap-2.5 rounded-full border border-white/[0.08] px-4 py-2 transition-all duration-300 hover:border-white/20"
+      className="group flex shrink-0 cursor-default items-center gap-3 rounded-xs border border-white/[0.08] px-5 py-3 transition-all duration-300 hover:border-white/20"
       style={{ "--brand": skill.color } as React.CSSProperties}
     >
       <Icon
-        className="h-[18px] w-[18px] shrink-0 text-white/30 transition-colors duration-300 group-hover:text-[var(--brand)]"
+        className="h-6 w-6 shrink-0 text-white/30 transition-colors duration-300 group-hover:text-[var(--brand)]"
         aria-hidden="true"
       />
-      <span className="text-[13px] font-medium text-white/40 transition-colors duration-300 group-hover:text-white/85">
+      <span className="text-[15px] font-medium text-white/40 transition-colors duration-300 group-hover:text-white/85">
         {skill.name}
       </span>
     </div>
