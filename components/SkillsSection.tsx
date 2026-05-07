@@ -1,3 +1,5 @@
+"use client";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SectionHeading, Reveal } from "@/components/ui";
 import type { SkillCategory } from "@/lib/data";
@@ -5,50 +7,35 @@ import type { SkillCategory } from "@/lib/data";
 type Props = { categories: SkillCategory[] };
 
 export default function SkillsSection({ categories }: Props) {
+  // Duplicate the array 4× so the loop appears seamless at any screen width
+  const repeated = [...categories, ...categories, ...categories, ...categories];
+
   return (
     <section id="skills" className="px-5 py-20 sm:px-8 md:py-28">
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <SectionHeading tag="Tech Stack" title="Keahlian Teknologi" />
         </Reveal>
+      </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((cat, i) => (
-            <Reveal key={cat.label} delay={i * 80}>
-              <div className="flex h-full flex-col rounded-xs border border-red-900/20 bg-[#0f0505] p-5 transition-all duration-200 hover:border-red-800/40 hover:bg-red-950/20">
-                {/* Category header */}
-                <div className="mb-5 flex items-center gap-3">
-                  <div
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xs ${cat.iconBg}`}
-                  >
-                    <FontAwesomeIcon
-                      icon={cat.icon}
-                      aria-hidden="true"
-                      className="h-5 w-5 text-white"
-                    />
-                  </div>
-                  <h3 className="text-base font-bold text-white">{cat.label}</h3>
-                </div>
+      {/* Infinite icon marquee — no text, no progress bars */}
+      <div className="relative mt-10 overflow-hidden">
+        {/* left/right fade masks */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-[#0a0a0a] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-linear-to-l from-[#0a0a0a] to-transparent" />
 
-                {/* Skills list */}
-                <div className="space-y-3.5">
-                  {cat.skills.map(({ name, pct }) => (
-                    <div key={name}>
-                      <div className="mb-1.5 flex items-center justify-between">
-                        <span className="text-xs text-gray-400">{name}</span>
-                        <span className="text-xs font-semibold text-red-400">{pct}%</span>
-                      </div>
-                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-red-950/60">
-                        <div
-                          className="h-full rounded-full bg-linear-to-r from-red-900 to-red-500"
-                          style={{ width: `${pct}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
+        <div className="marquee-track flex gap-6 w-max">
+          {repeated.map((cat, i) => (
+            <div
+              key={`${cat.label}-${i}`}
+              className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-xs ${cat.iconBg} opacity-90 hover:opacity-100 transition-opacity`}
+            >
+              <FontAwesomeIcon
+                icon={cat.icon}
+                aria-hidden="true"
+                className="h-7 w-7 text-white"
+              />
+            </div>
           ))}
         </div>
       </div>
