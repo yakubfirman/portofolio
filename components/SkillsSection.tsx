@@ -2,11 +2,11 @@
 
 import type { IconType } from "react-icons";
 import {
-  SiHtml5, SiCss3, SiJavascript, SiTypescript, SiReact, SiNextdotjs,
+  SiHtml5, SiCss, SiJavascript, SiTypescript, SiReact, SiNextdotjs,
   SiTailwindcss, SiPhp, SiLaravel, SiPython, SiFlask, SiMysql,
   SiSqlite, SiPostgresql, SiGit, SiGithub, SiWordpress, SiPhpmyadmin,
   SiNodedotjs, SiDocker, SiLinux, SiFirebase, SiMongodb, SiRedis,
-  SiVuedotjs, SiAngular, SiSass, SiBootstrap, SiNginx, SiAmazonwebservices,
+  SiVuedotjs, SiAngular, SiSass, SiBootstrap, SiNginx,
 } from "react-icons/si";
 import { SectionHeading, Reveal } from "@/components/ui";
 import type { SkillCategory } from "@/lib/data";
@@ -17,7 +17,7 @@ type SkillDef = { name: string; icon: IconType; color: string };
 const SKILL_ICONS: Record<string, { icon: IconType; color: string }> = {
   // Frontend
   "HTML5":        { icon: SiHtml5,          color: "#E34F26" },
-  "CSS3":         { icon: SiCss3,           color: "#1572B6" },
+  "CSS3":         { icon: SiCss,            color: "#1572B6" },
   "JavaScript":   { icon: SiJavascript,     color: "#F7DF1E" },
   "TypeScript":   { icon: SiTypescript,     color: "#3178C6" },
   "React":        { icon: SiReact,          color: "#61DAFB" },
@@ -49,7 +49,6 @@ const SKILL_ICONS: Record<string, { icon: IconType; color: string }> = {
   "Docker":       { icon: SiDocker,         color: "#2496ED" },
   "Linux":        { icon: SiLinux,          color: "#FCC624" },
   "Nginx":        { icon: SiNginx,          color: "#009639" },
-  "AWS":          { icon: SiAmazonwebservices, color: "#FF9900" },
   // CMS
   "WordPress":    { icon: SiWordpress,      color: "#21759B" },
 };
