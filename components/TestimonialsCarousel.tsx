@@ -77,7 +77,6 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
                     width={48}
                     height={48}
                     className="h-12 w-12 rounded-full object-cover shrink-0 border border-red-900/30"
-                    unoptimized
                   />
                 ) : (
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-red-900/30 bg-red-950/40 text-sm font-bold text-red-400">
