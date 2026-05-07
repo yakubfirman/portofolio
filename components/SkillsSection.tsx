@@ -16,8 +16,6 @@ type SkillDef = { name: string; icon: IconType; color: string };
 /** Map any skill name (as stored in the DB) → real brand icon + official color */
 const SKILL_ICONS: Record<string, { icon: IconType; color: string }> = {
   // Frontend
-  "HTML5":        { icon: SiHtml5,          color: "#E34F26" },
-  "CSS3":         { icon: SiCss,            color: "#1572B6" },
   "JavaScript":   { icon: SiJavascript,     color: "#F7DF1E" },
   "TypeScript":   { icon: SiTypescript,     color: "#3178C6" },
   "React":        { icon: SiReact,          color: "#61DAFB" },
@@ -28,7 +26,6 @@ const SKILL_ICONS: Record<string, { icon: IconType; color: string }> = {
   "Vue.js":       { icon: SiVuedotjs,       color: "#4FC08D" },
   "Angular":      { icon: SiAngular,        color: "#DD0031" },
   // Backend
-  "PHP":          { icon: SiPhp,            color: "#777BB4" },
   "Laravel":      { icon: SiLaravel,        color: "#FF2D20" },
   "Python":       { icon: SiPython,         color: "#3776AB" },
   "Flask":        { icon: SiFlask,          color: "#ffffff" },
@@ -36,19 +33,14 @@ const SKILL_ICONS: Record<string, { icon: IconType; color: string }> = {
   // Database
   "MySQL":        { icon: SiMysql,          color: "#4479A1" },
   "SQLite":       { icon: SiSqlite,         color: "#44A1C5" },
-  "SQL Query":    { icon: SiPostgresql,     color: "#4169E1" },
   "PostgreSQL":   { icon: SiPostgresql,     color: "#4169E1" },
   "phpMyAdmin":   { icon: SiPhpmyadmin,     color: "#6C78AF" },
   "MongoDB":      { icon: SiMongodb,        color: "#47A248" },
-  "Redis":        { icon: SiRedis,          color: "#DC382D" },
-  "Firebase":     { icon: SiFirebase,       color: "#FFCA28" },
   // Tools & DevOps
   "Git / GitHub": { icon: SiGit,            color: "#F05032" },
-  "Git":          { icon: SiGit,            color: "#F05032" },
   "GitHub":       { icon: SiGithub,         color: "#ffffff" },
   "Docker":       { icon: SiDocker,         color: "#2496ED" },
   "Linux":        { icon: SiLinux,          color: "#FCC624" },
-  "Nginx":        { icon: SiNginx,          color: "#009639" },
   // CMS
   "WordPress":    { icon: SiWordpress,      color: "#21759B" },
 };
