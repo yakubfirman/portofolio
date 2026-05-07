@@ -115,29 +115,33 @@ function SkillIcon({ skill }: { skill: SkillDef }) {
   const Icon = skill.icon;
   return (
     <div
-      className="group relative flex h-[84px] w-[84px] shrink-0 cursor-default flex-col items-center justify-center rounded-2xl border border-white/[0.06] bg-[#0e0e0e] transition-all duration-300 hover:-translate-y-1.5 hover:border-white/20 hover:bg-[#161616]"
+      className="group relative flex w-[100px] shrink-0 cursor-default flex-col items-center gap-2.5 rounded-2xl border border-white/[0.06] bg-[#0e0e0e] px-3 py-4 transition-all duration-300 hover:-translate-y-1.5 hover:border-white/20 hover:bg-[#161616]"
     >
-      {/* coloured glow ring – only on hover */}
+      {/* coloured glow on hover */}
       <div
         className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          boxShadow: `0 0 22px 4px ${skill.color}30, inset 0 0 14px 2px ${skill.color}18`,
+          boxShadow: `0 0 24px 5px ${skill.color}28, inset 0 0 14px 2px ${skill.color}15`,
         }}
       />
       {/* bottom accent line */}
       <div
-        className="absolute bottom-0 left-4 right-4 h-[2px] rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className="absolute bottom-0 left-5 right-5 h-[2px] rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{ background: skill.color }}
       />
 
+      {/* Brand icon with official color */}
       <Icon
         style={{ color: skill.color }}
         className="relative z-10 h-9 w-9 transition-transform duration-300 group-hover:scale-110"
-        aria-label={skill.name}
+        aria-hidden="true"
       />
 
-      {/* Tooltip */}
-      <span className="pointer-events-none absolute -bottom-9 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-lg bg-[#1c1c1c] px-3 py-1 text-[11px] font-medium tracking-wide text-gray-200 opacity-0 shadow-xl ring-1 ring-white/10 transition-all duration-200 group-hover:opacity-100">
+      {/* Brand name — always visible, styled with brand color */}
+      <span
+        className="relative z-10 text-center text-[11px] font-semibold leading-tight tracking-wide"
+        style={{ color: skill.color }}
+      >
         {skill.name}
       </span>
     </div>
