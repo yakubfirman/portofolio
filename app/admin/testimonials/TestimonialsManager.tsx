@@ -38,6 +38,28 @@ function TestimonialRow({
   const [image, setImage] = useState(testimonial.image || "");
   const [approved, setApproved] = useState(testimonial.approved === 1);
   const [error, setError] = useState("");
+  const [uploading, setUploading] = useState(false);
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setError("");
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("type", "image");
+      const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Upload gagal");
+      setImage(data.path);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Gagal upload foto");
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
+  }
 
   function handleSave() {
     setError("");
@@ -92,8 +114,37 @@ function TestimonialRow({
             <input className={inputCls} value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Nama perusahaan" />
           </div>
           <div>
-            <label className={labelCls}>URL Foto Profil (Opsional)</label>
-            <input className={inputCls} value={image} onChange={(e) => setImage(e.target.value)} placeholder="https://..." />
+            <label className={labelCls}>Foto Profil (Opsional)</label>
+            <div className="flex items-center gap-3">
+              {image && (
+                <img src={image} alt="preview" className="h-10 w-10 rounded-full object-cover shrink-0 border border-white/10" />
+              )}
+              <label className="flex-1 cursor-pointer">
+                <div className={`${inputCls} flex items-center justify-between gap-2 cursor-pointer`}>
+                  <span className="text-gray-500 truncate text-xs">
+                    {uploading ? "Mengupload..." : image ? "Ganti foto" : "Pilih foto..."}
+                  </span>
+                  <span className="shrink-0 text-xs text-red-400">{uploading ? "⏳" : "📁"}</span>
+                </div>
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="hidden"
+                  onChange={handleImageUpload}
+                  disabled={uploading}
+                />
+              </label>
+              {image && (
+                <button
+                  type="button"
+                  onClick={() => setImage("")}
+                  className="shrink-0 text-xs text-gray-600 hover:text-red-400"
+                  title="Hapus foto"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
         </div>
         <div className="mt-3">

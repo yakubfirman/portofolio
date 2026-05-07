@@ -70,7 +70,7 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
 
               {/* Author - at bottom */}
               <div className="flex items-center justify-center gap-3 mt-3">
-                {testimonial.image && (
+                {testimonial.image ? (
                   <Image 
                     src={testimonial.image} 
                     alt={testimonial.name}
@@ -78,6 +78,10 @@ export default function TestimonialsCarousel({ testimonials }: Props) {
                     height={48}
                     className="h-12 w-12 rounded-full object-cover shrink-0 border border-red-900/30"
                   />
+                ) : (
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-red-900/30 bg-red-950/40 text-sm font-bold text-red-400">
+                    {testimonial.name.trim().split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase()}
+                  </div>
                 )}
                 <div className="min-w-0 text-left">
                   <p className="font-semibold text-white text-sm truncate">{testimonial.name}</p>
