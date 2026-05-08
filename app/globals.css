@@ -44,7 +44,7 @@ body {
   color: #fff;
 }
 
-/* Infinite skills marquee — two rows, opposite directions */
+/* Infinite skills marquee — three rows, varying directions/speeds */
 @keyframes marquee-to-left {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -54,13 +54,17 @@ body {
   to   { transform: translateX(0); }
 }
 .skills-marquee-left {
-  animation: marquee-to-left 28s linear infinite;
+  animation: marquee-to-left 30s linear infinite;
 }
 .skills-marquee-right {
-  animation: marquee-to-right 22s linear infinite;
+  animation: marquee-to-right 24s linear infinite;
+}
+.skills-marquee-left-slow {
+  animation: marquee-to-left 38s linear infinite;
 }
 .skills-marquee-left:hover,
-.skills-marquee-right:hover {
+.skills-marquee-right:hover,
+.skills-marquee-left-slow:hover {
   animation-play-state: paused;
 }
 
